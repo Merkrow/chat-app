@@ -40,6 +40,10 @@ router.get('/', function(req, res) {
   });
 });
 
+router.put('/user/:id', (req, res) => {
+
+})
+
 router.post('/auth', (req, res) => {
   User.findOne({
     email: req.body.email
@@ -64,6 +68,7 @@ router.post('/auth', (req, res) => {
             username: user.username,
             picture: user.picture,
             id: user._id,
+            rooms: user.rooms,
           });
         } else {
           res.send({

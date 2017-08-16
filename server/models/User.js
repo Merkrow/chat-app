@@ -1,6 +1,6 @@
-let mongoose = require('mongoose');
-let bcrypt = require('bcrypt');
-let Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   email: {
@@ -20,7 +20,11 @@ const UserSchema = new Schema({
   picture: {
     type: String,
     default: '',
-  }
+  },
+  rooms: {
+    type: Array,
+    default: [],
+  },
 });
 
 UserSchema.pre('save', function(next) {

@@ -11,9 +11,12 @@ const config = require('./config');
 
 // const routes = require('./routes/index');
 const users = require('./routes/user');
+const rooms = require('./routes/room');
 
 mongoose.Promise = Promise;
-mongoose.connect(config.database.local);
+mongoose.connect(config.database.local, {
+  useMongoClient: true,
+});
 mongoose.connection.on('error', console.error);
 
 app.use(bodyParser.json());
@@ -24,6 +27,14 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 app.use('/users', users);
+app.use('/rooms', rooms);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('chat message', message => {
+    console.log(message);
+  })
+});
 
 app.use(function(req, res, next) {
   const err = new Error('Not Found');
