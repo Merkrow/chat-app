@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User } = require('../controllers');
 const config = require('../config');
 
 router.post('/register', function(req, res) {
@@ -12,14 +12,12 @@ router.post('/register', function(req, res) {
       message: 'Please enter email, password and username.'
     });
   } else {
-    let newUser = new User({
+    User.create({
       email: req.body.email,
       password: req.body.password,
       username: req.body.username,
       picture: req.body.picture,
-    });
-
-    newUser.save(function(err) {
+    }, (err) => {
       if (err) {
         return res.json({
           success: false,
@@ -35,7 +33,7 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-  User.find({}, function(err, users) {
+  User.find({}, (err, users) => {
     res.json(users);
   });
 });
@@ -47,7 +45,7 @@ router.put('/user/:id', (req, res) => {
 router.post('/auth', (req, res) => {
   User.findOne({
     email: req.body.email
-  }, function(err, user) {
+  }, (err, user) => {
     if (err) throw err;
 
     if (!user) {
@@ -68,7 +66,7 @@ router.post('/auth', (req, res) => {
             username: user.username,
             picture: user.picture,
             id: user._id,
-            rooms: user.rooms,
+            friends: user.friends,
           });
         } else {
           res.send({

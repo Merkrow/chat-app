@@ -9,6 +9,8 @@ const passport = require('passport');
 
 const config = require('./config');
 
+const { Message } = require('./controllers');
+
 // const routes = require('./routes/index');
 const users = require('./routes/user');
 const rooms = require('./routes/room');
@@ -30,10 +32,14 @@ app.use('/users', users);
 app.use('/rooms', rooms);
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('chat message', message => {
-    console.log(message);
-  })
+  socket.on('chat message', (chatMessage) => {
+    Message.create({ sender: chatMessage.email, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.id }, (err, text) => {
+      if (err) {
+        return;
+      }
+      socket.emit('message_response', text);
+    });
+  });
 });
 
 app.use(function(req, res, next) {

@@ -1,9 +1,9 @@
 const User = require('./User.js');
-const Counter = require('./Increment.js');
 const Room = require('./Room.js');
+const Message = require('./Message.js');
 
 module.exports = {
   User,
-  Counter,
   Room,
+  Message,
 }

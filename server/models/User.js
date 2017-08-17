@@ -21,10 +21,7 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
-  rooms: {
-    type: Array,
-    default: [],
-  },
+  friends: [String],
 });
 
 UserSchema.pre('save', function(next) {
