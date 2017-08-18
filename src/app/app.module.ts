@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ChatModule } from './chat/chat.module';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
+
 @NgModule({
   declarations: [
     AppComponent,

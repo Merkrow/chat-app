@@ -1,0 +1,94 @@
+%svg-common {
+	background: url("svg/sprite.css-f03828db.svg") no-repeat;
+}
+
+.svg-attach {
+	@extend %svg-common;
+	background-position: 72.54161331626119% 52.38095238095238%;
+}
+
+.svg-attach-dims {
+	width: 24px;
+	height: 24px;
+}
+
+.svg-bell {
+	@extend %svg-common;
+	background-position: 0 100%;
+}
+
+.svg-bell-dims {
+	width: 512px;
+	height: 512px;
+}
+
+.svg-emoji {
+	@extend %svg-common;
+	background-position: 70.85585585585585% 52.659574468085104%;
+}
+
+.svg-emoji-dims {
+	width: 32px;
+	height: 32px;
+}
+
+.svg-more {
+	@extend %svg-common;
+	background-position: 75.30604437643457% 51.80533751962324%;
+}
+
+.svg-more-dims {
+	width: 17.6px;
+	height: 7.2px;
+}
+
+.svg-phone {
+	@extend %svg-common;
+	background-position: 64.6148738379814% 54.395604395604394%;
+}
+
+.svg-phone-dims {
+	width: 80px;
+	height: 80px;
+}
+
+.svg-send {
+	@extend %svg-common;
+	background-position: 68.47204161248374% 53.225806451612904%;
+}
+
+.svg-send-dims {
+	width: 48px;
+	height: 48px;
+}
+
+.svg-user {
+	@extend %svg-common;
+	background-position: 99.90759753593429% 0;
+}
+
+.svg-user-dims {
+	width: 612px;
+	height: 792px;
+}
+
+.svg-video {
+	@extend %svg-common;
+	background-position: 74.07810499359795% 52.38095238095238%;
+}
+
+.svg-video-dims {
+	width: 24px;
+	height: 24px;
+}
+
+.svg-zoom {
+	@extend %svg-common;
+	background-position: 0 0;
+}
+
+.svg-zoom-dims {
+	width: 973.1px;
+	height: 1024px;
+}
+

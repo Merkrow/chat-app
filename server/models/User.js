@@ -9,6 +9,8 @@ const UserSchema = new Schema({
     unique: true,
     required: true
   },
+  firstName: String,
+  lastName: String,
   password: {
     type: String,
     required: true
@@ -21,6 +23,15 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
+  telephone: {
+    type: String,
+  },
+  birthday: {
+    type: Date,
+  },
+  gender: String,
+  language: String,
+  address: String,
   friends: [String],
 });
 

@@ -1,17 +1,22 @@
 <div class="container">
   <div class="chat-container">
     <div class="menu">
-      <h3>Inbox</h3><img src="" alt="">
+      <h3>Inbox</h3>
+      <div class="friend-image">
+        <svg viewBox="0 0 612 792">
+          <use xlink:href="assets/sprite.svg#user"></use>
+        </svg>
+      </div>
       <ul class="nav first-nav">
-        <li><span>All Messages</span><span>21</span></li>
-        <li><span>Unread</span><span>89</span></li>
-        <li><span>Important</span><span>6</span></li>
-        <li><span>Drafts</span><span>27</span></li>
+        <li><a href="#">All Messages</a><span>21</span></li>
+        <li><a href="#">Unread</a><span>89</span></li>
+        <li><a href="#">Important</a><span>6</span></li>
+        <li><a href="#">Drafts</a><span>27</span></li>
       </ul>
 
       <ul class="nav second-nav">
-        <li><span>Help</span></li>
-        <li><span>Settings</span></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Settings</a></li>
       </ul>
     </div>
 
@@ -22,6 +27,7 @@
 
       <div class="chat-person">
         <div class="chat-image">
+          <span class="online-status"></span>
           <img src="" alt="">
         </div>
         <div class="user-meta">
@@ -29,7 +35,9 @@
           <span>Thanks again you have been...</span>
         </div>
         <div class="chat-settings">
-          <div><strong>...</strong></div>
+          <svg viewBox="0 0 17.6 17.2">
+            <use xlink:href="assets/sprite.svg#more"></use>
+          </svg>
           <span>5 min</span>
         </div>
       </div>
@@ -43,7 +51,9 @@
           <span>My selfie game is lacking can...</span>
         </div>
         <div class="chat-settings">
-          <div><strong>...</strong></div>
+          <svg viewBox="0 0 17.6 17.2">
+            <use xlink:href="assets/sprite.svg#more"></use>
+          </svg>
           <span>10 min</span>
         </div>
       </div>
@@ -52,11 +62,19 @@
     <div class="chat-block">
       <div class="chat">
         <div class="chat-header">
-          <ul class="chat-nav">
-            <li><strong>Kirsten Mckellar</strong> is typing...</li>
-            <li><img src="" alt=""></li>
-            <li><img src="" alt=""></li>
-          </ul>
+          <div class="chat-nav">
+            <div class="person-typing"><span><strong>Kirsten Mckellar</strong> is typing...</span></div>
+            <div class="star">
+              <svg viewBox="0 0 100 100">
+                <use xlink:href="assets/sprite.svg#phone"></use>
+              </svg>
+            </div>
+            <div class="phone">
+              <svg viewBox="0 0 100 100">
+                <use xlink:href="assets/sprite.svg#video"></use>
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div class="messages-container">
@@ -94,22 +112,39 @@
       </div>
 
       <div class="chat-input">
-        <img src="" alt="" class="load-file">
+        <svg class="load-file" viewBox="0 0 24 24">
+          <use xlink:href="assets/sprite.svg#attach"></use>
+        </svg>
         <div class="input-container">
           <input type="text" placeholder="Type your message...">
         </div>
-        <img src="" class="smile-button">
-        <button type="button" class="submit-button"></button>
+        <svg viewBox="0 0 32 32" class="smile-button">
+          <use xlink:href="assets/sprite.svg#emoji"></use>
+        </svg>
+        <button type="button" class="submit-button">
+          <svg viewBox="0 0 48 48">
+            <use xlink:href="assets/sprite.svg#send"></use>
+          </svg>
+        </button>
       </div>
     </div>
 
     <div class="user-info-container">
       <div class="user-header">
-        <img src="" alt="">
+        <div>
+          <svg viewBox="0 50 512 512">
+            <use xlink:href="assets/sprite.svg#bell"></use>
+          </svg>
+        </div>
         <span>Matt Thompson</span>
       </div>
 
       <div class="user-info">
+        <div class="svg-more">
+          <svg viewBox="0 0 17.6 17.2">
+            <use xlink:href="assets/sprite.svg#more"></use>
+          </svg>
+        </div>
         <img src="" alt="">
         <h3>Kirsten Mckellar</h3>
         <div class="city-info"><span>Cape Town, RSA</span></div>
