@@ -21,6 +21,14 @@ const addMessage = (id, message, callback) => {
   Room.update({ _id: id, }, { $push: { messages: message } }, callback);
 }
 
+const updateRoom = (id, data, callback) => {
+  Room.update({ _id: id, }, { $set: data }, { upsert:true }, callback);
+}
+
+const deleteRoom = (id, callback) => {
+  Room.deleteOne({ _id: id }, callback);
+}
+
 module.exports = {
   create,
   find,

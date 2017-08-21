@@ -50,8 +50,8 @@ router.put('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-  User.deleteUser(req.params.id, (err, res) => {
-    if (!res) {
+  User.deleteUser(req.params.id, (err, status) => {
+    if (!status) {
       res.send({
         success: false,
         message: 'Delete error',
@@ -59,7 +59,7 @@ router.delete('/:id', (req, res) => {
     } else {
       res.send({
         success: true,
-        res,
+        status,
       });
     }
   })
