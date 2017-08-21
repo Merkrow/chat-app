@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { UserService } from '../shared';
 
 @Component({
@@ -19,6 +21,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -35,8 +38,11 @@ export class RegistrationComponent implements OnInit {
       address: this.address,
       language: this.language,
       username: this.username,
-    }).subscribe(user => {
-      console.log(user);
+    }).subscribe(res => {
+      if (res.success) {
+        this.userService.attemptAuth({ email: this.email, password: this.password })
+        .subscribe(data => this.router.navigateByUrl('/chat'));
+      }
     });
   }
 

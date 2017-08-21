@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { ApiService } from './api.service';
+import { JwtService } from './jwt.service';
 import { User } from '../models';
 
 const userUrl = '/users';
@@ -23,24 +24,24 @@ export class UserService {
   constructor (
     private apiService: ApiService,
     private http: Http,
+    private jwtService: JwtService,
   ) {}
 
-  // populate() {
-  //   const credentials = this.storage.getCredentials();
-  //   if (credentials) {
-  //     this.apiService.post(`${userUrl}/login`, credentials)
-  //     .subscribe(
-  //      data => {
-  //        this.setAuth(data);
-  //      },
-  //      err => this.purgeAuth()
-  //     );
-  //    } else {
-  //      this.purgeAuth();
-  //    }
-  // }
+  populate() {
+    const token = this.jwtService.getToken();
+    if (token) {
+      this.apiService.get(userUrl)
+      .subscribe(
+        data => this.setAuth(data.user, token),
+        err => this.purgeAuth(),
+      );
+    } else {
+      this.purgeAuth();
+    }
+  }
 
-  setAuth(user: User) {
+  setAuth(user: User, token) {
+    this.jwtService.saveToken(token);
     this.currentUserSubject.next(user);
     this.isAuthenticatedSubject.next(true);
   }
@@ -50,6 +51,7 @@ export class UserService {
   }
 
   purgeAuth() {
+    this.jwtService.destroyToken();
     this.currentUserSubject.next(new User());
     this.isAuthenticatedSubject.next(false);
   }
@@ -62,7 +64,7 @@ export class UserService {
     return this.apiService.post(`${userUrl}/auth`, credentials)
     .map(data => {
       if (data.success) {
-        this.setAuth(data.user);
+        this.setAuth(data.user, data.token);
         return data;
       }
       return false;
@@ -81,7 +83,7 @@ export class UserService {
     return this.apiService.put(userUrl, user);
   }
 
-  postUser(user): Observable<User> {
+  postUser(user): Observable<any> {
     return this.apiService.post(`${userUrl}/register`, user);
   }
 
