@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { AuthModule } from './auth/auth.module';
-import { ChatModule } from './chat/chat.module';
 import { ChatPageModule } from './chat-page/chat-page.module';
 import { RegistrationModule } from './registration/registration.module';
 import { SharedModule } from './shared';
@@ -22,7 +21,6 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
   imports: [
     BrowserModule,
     rootRouting,
-    ChatModule,
     FormsModule,
     SharedModule,
     AuthModule,
