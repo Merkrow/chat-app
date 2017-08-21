@@ -10,7 +10,7 @@ import { ChatPageModule } from './chat-page/chat-page.module';
 import { RegistrationModule } from './registration/registration.module';
 import { SharedModule } from './shared';
 
-import { UserService, ApiService, JwtService } from './shared';
+import { UserService, ApiService, JwtService, SocketService } from './shared';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
 
@@ -31,6 +31,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     UserService,
     ApiService,
     JwtService,
+    SocketService,
   ],
   bootstrap: [AppComponent]
 })
