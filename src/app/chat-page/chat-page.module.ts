@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared';
-import { AuthComponent } from './auth.component';
+import { ChatPageComponent } from './chat-page.component';
 
 const authRouting: ModuleWithProviders = RouterModule.forChild([
   {
-    path: 'login',
-    component: AuthComponent,
+    path: 'chat',
+    component: ChatPageComponent,
   },
 ]);
 
@@ -21,9 +21,9 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
     ReactiveFormsModule,
   ],
   declarations: [
-    AuthComponent,
+    ChatPageComponent,
   ],
   exports: [
   ]
 })
-export class AuthModule { }
+export class ChatPageModule { }

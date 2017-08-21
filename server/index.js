@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const cors = require('cors');
 
 const config = require('./config');
 
@@ -20,6 +21,8 @@ mongoose.connect(config.database.local, {
   useMongoClient: true,
 });
 mongoose.connection.on('error', console.error);
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -2,7 +2,7 @@ const { User } = require('../models');
 
 const create = (data, callback) => {
   const newUser = new User(data);
-  newRoom.save(callback);
+  newUser.save(callback);
 }
 
 const find = (data, callback) => {
@@ -18,7 +18,11 @@ const findById = (id, callback) => {
 }
 
 const updateUser = (id, data, callback) => {
-  User.update({ _id: id, }, data, callback);
+  User.update({ _id: id, }, { $set: data }, { upsert:true }, callback);
+}
+
+const deleteUser = (id, callback) => {
+  User.deleteOne({ _id: id }, callback);
 }
 
 module.exports = {
@@ -27,4 +31,5 @@ module.exports = {
   findOne,
   findById,
   updateUser,
+  deleteUser,
 }

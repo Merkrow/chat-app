@@ -18,7 +18,7 @@ const MessageSchema = new Schema({
   chatId: {
     type: String,
     required: true,
-  }
+  },
 });
 
 module.exports = mongoose.model('Message', MessageSchema);

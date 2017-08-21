@@ -12,12 +12,7 @@ router.post('/register', function(req, res) {
       message: 'Please enter email, password and username.'
     });
   } else {
-    User.create({
-      email: req.body.email,
-      password: req.body.password,
-      username: req.body.username,
-      picture: req.body.picture,
-    }, (err) => {
+    User.create(req.body, (err) => {
       if (err) {
         return res.json({
           success: false,
@@ -38,8 +33,36 @@ router.get('/', function(req, res) {
   });
 });
 
-router.put('/user/:id', (req, res) => {
+router.put('/:id', (req, res) => {
+  User.updateUser(req.params.id, req.body, (err, user) => {
+    if (!user) {
+      res.send({
+        success: false,
+        message: 'Update error',
+      });
+    } else {
+      res.send({
+        success: true,
+        user,
+      });
+    }
+  })
+})
 
+router.delete('/:id', (req, res) => {
+  User.deleteUser(req.params.id, (err, res) => {
+    if (!res) {
+      res.send({
+        success: false,
+        message: 'Delete error',
+      });
+    } else {
+      res.send({
+        success: true,
+        res,
+      });
+    }
+  })
 })
 
 router.post('/auth', (req, res) => {
@@ -63,10 +86,7 @@ router.post('/auth', (req, res) => {
             success: true,
             message: 'Authentication successfull',
             token,
-            username: user.username,
-            picture: user.picture,
-            id: user._id,
-            friends: user.friends,
+            user: user,
           });
         } else {
           res.send({

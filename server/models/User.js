@@ -9,8 +9,14 @@ const UserSchema = new Schema({
     unique: true,
     required: true
   },
-  firstName: String,
-  lastName: String,
+  firstName: {
+    type: String,
+    default: '',
+  },
+  lastName: {
+    type: String,
+    default: '',
+  },
   password: {
     type: String,
     required: true
@@ -23,15 +29,26 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
-  telephone: {
+  phone: {
     type: String,
+    default: '',
   },
   birthday: {
     type: Date,
+    default: new Date(),
   },
-  gender: String,
-  language: String,
-  address: String,
+  gender: {
+    type: String,
+    default: '',
+  },
+  language: {
+    type: String,
+    default: '',
+  },
+  address: {
+    type: String,
+    default: '',
+  },
   friends: [String],
 });
 

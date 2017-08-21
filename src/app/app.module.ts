@@ -5,7 +5,13 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
+import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
+import { ChatPageModule } from './chat-page/chat-page.module';
+import { RegistrationModule } from './registration/registration.module';
+import { SharedModule } from './shared';
+
+import { UserService, ApiService } from './shared';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
 
@@ -18,8 +24,15 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     rootRouting,
     ChatModule,
     FormsModule,
+    SharedModule,
+    AuthModule,
+    ChatPageModule,
+    RegistrationModule,
   ],
-  providers: [],
+  providers: [
+    UserService,
+    ApiService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import { ApiService } from './api.service';
 
 @Injectable()
-export class ProjectsService {
+export class ChatService {
   constructor (
     private apiService: ApiService,
   ) {}
