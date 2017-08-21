@@ -8,14 +8,14 @@ import { UserService } from '../shared';
 })
 export class RegistrationComponent implements OnInit {
   image = '';
-  first = '';
-  last = '';
-  email: string;
-  password: string;
-  phone = '';
-  address = '';
-  language = '';
-  username: string;
+  first = '111111';
+  last = '222222';
+  email = 'test@gmail.com';
+  password = '111111';
+  phone = '12345';
+  address = '54321';
+  language = 'english';
+  username = 'test';
 
   constructor(
     private userService: UserService,
@@ -36,7 +36,7 @@ export class RegistrationComponent implements OnInit {
       language: this.language,
       username: this.username,
     }).subscribe(user => {
-
+      console.log(user);
     });
   }
 

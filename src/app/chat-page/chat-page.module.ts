@@ -5,6 +5,10 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared';
 import { ChatPageComponent } from './chat-page.component';
+import { RoomComponent } from './room/room.component';
+import { ChatComponent } from './chat/chat.component';
+import { InboxComponent } from './inbox/inbox.component';
+import { InfoComponent } from './info/info.component';
 
 const authRouting: ModuleWithProviders = RouterModule.forChild([
   {
@@ -22,6 +26,10 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
   ],
   declarations: [
     ChatPageComponent,
+    InfoComponent,
+    InboxComponent,
+    ChatComponent,
+    RoomComponent,
   ],
   exports: [
   ]
