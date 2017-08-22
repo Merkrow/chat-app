@@ -25,6 +25,10 @@ const deleteUser = (id, callback) => {
   User.deleteOne({ _id: id }, callback);
 }
 
+const findByUsername = (username, callback) => {
+  User.find({ username: { $regex: username, $options: "i" } }, callback);
+}
+
 module.exports = {
   create,
   find,
@@ -32,4 +36,5 @@ module.exports = {
   findById,
   updateUser,
   deleteUser,
+  findByUsername,
 }

@@ -27,6 +27,16 @@ router.post('/register', function(req, res) {
   }
 });
 
+router.get('/search/:username', (req, res) => {
+  User.findByUsername(req.params.username, (err, users) => {
+    if (!users) {
+
+    } else {
+      res.send(users);
+    }
+  })
+})
+
 router.get('/', function(req, res) {
   User.find({}, (err, users) => {
     res.json(users);
