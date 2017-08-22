@@ -42,6 +42,10 @@ export class UserService {
     }
   }
 
+  searchUsers(username: string) {
+    return this.apiService.get(`${userUrl}/search/${username}`);
+  }
+
   setAuth(user: User, token) {
     this.jwtService.saveToken(token);
     this.currentUserSubject.next(user);

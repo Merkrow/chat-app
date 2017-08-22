@@ -1,6 +1,7 @@
 <div class="container">
+  <app-popup *ngIf="popup" (triggerPopup)="triggerPopup($event)"></app-popup>
   <div class="chat-container">
-    <app-inbox></app-inbox>
+    <app-inbox (triggerPopup)="triggerPopup($event)"></app-inbox>
     <div *ngIf="rooms" class="chat-list">
       <app-room [rooms]="rooms"></app-room>
     </div>

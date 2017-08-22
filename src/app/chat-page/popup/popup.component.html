@@ -1,0 +1,12 @@
+<div class="search">
+  <div class="container">
+    <header>
+      <input type="text" (keyup.enter)="search($event)" placeholder="Search...">
+    </header>
+    <div *ngIf="users" class="results">
+      <div *ngFor="let user of users" class="user-container">
+        <span>{{ user.username }}</span><span>{{ user.email }}</span>
+      </div>
+    </div>
+  </div>
+</div>

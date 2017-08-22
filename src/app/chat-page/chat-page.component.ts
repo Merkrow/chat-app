@@ -11,6 +11,7 @@ export class ChatPageComponent implements OnInit {
   isAuthenticated = false;
   user: User;
   rooms: any;
+  popup = false;
   constructor(
     private userService: UserService,
     private roomService: RoomService,
@@ -33,6 +34,10 @@ export class ChatPageComponent implements OnInit {
         });
       }
     });
+  }
+
+  triggerPopup($event) {
+    this.popup = $event;
   }
 
 }
