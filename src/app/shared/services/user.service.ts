@@ -53,7 +53,7 @@ export class UserService {
   }
 
   getUserById(Id): Observable<User> {
-    return this.apiService.get(`${userUrl}/${Id}`);
+    return this.apiService.get(`${userUrl}/userId/${Id}`);
   }
 
   purgeAuth() {

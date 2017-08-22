@@ -27,7 +27,7 @@ router.post('/register', function(req, res) {
   }
 });
 
-router.get('/:id', (req, res) => {
+router.get('/userId/:id', (req, res) => {
   User.findById(req.params.id, (err, user) => {
     res.send(user);
   })
