@@ -3,13 +3,13 @@
     <input type="text" placeholder="Search">
   </div>
 
-  <div *ngFor="let room of rooms" class="chat-person">
+  <div *ngFor="let room of rooms" (click)="setChat(room)" class="chat-person">
     <div class="chat-image">
       <span class="online-status"></span>
       <img src="" alt="">
     </div>
     <div class="user-meta">
-      <div><span>Matt Thompson</span></div>
+      <div><span>{{ setChatTitle(room) }}</span></div>
       <span>Thanks again you have been...</span>
     </div>
     <div class="chat-settings">

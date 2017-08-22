@@ -12,6 +12,7 @@ export class ChatPageComponent implements OnInit {
   user: User;
   rooms: any;
   popup = false;
+  chosenUser: string;
   constructor(
     private userService: UserService,
     private roomService: RoomService,
@@ -38,6 +39,11 @@ export class ChatPageComponent implements OnInit {
 
   triggerPopup($event) {
     this.popup = $event;
+  }
+
+  chooseUser($event) {
+    console.log($event);
+    this.chosenUser = $event;
   }
 
 }

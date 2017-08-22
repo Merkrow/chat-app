@@ -3,7 +3,7 @@
   <div class="chat-container">
     <app-inbox (triggerPopup)="triggerPopup($event)"></app-inbox>
     <div *ngIf="rooms" class="chat-list">
-      <app-room [rooms]="rooms"></app-room>
+      <app-rooms [rooms]="rooms" [user]="user" (chooseUser)="chooseUser($event)"></app-rooms>
     </div>
     <div *ngIf="rooms" class="chat-block">
       <app-chat [room]="rooms[0]"></app-chat>
