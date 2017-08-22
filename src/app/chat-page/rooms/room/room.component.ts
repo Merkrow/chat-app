@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { User, SelectChatService } from '../../../shared';
+import { User, SelectChatService, SelectUserService } from '../../../shared';
 
 @Component({
   selector: 'app-room',
@@ -14,6 +14,7 @@ export class RoomComponent implements OnInit {
 
   constructor(
     private selectChat: SelectChatService,
+    private selectUser: SelectUserService,
   ) { }
 
   ngOnInit() {
@@ -32,6 +33,8 @@ export class RoomComponent implements OnInit {
   }
 
   setChat() {
+    const userId = this.room.users.filter(sm => sm.userId !== this.user._id)[0].userId;
+    this.selectUser.emitUserIdChangeEvent(userId);
     this.selectChat.emitChatIdChangeEvent(this.room._id);
   }
 

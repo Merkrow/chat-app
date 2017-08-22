@@ -27,6 +27,12 @@ router.post('/register', function(req, res) {
   }
 });
 
+router.get('/:id', (req, res) => {
+  User.findById(req.params.id, (err, user) => {
+    res.send(user);
+  })
+})
+
 router.get('/search/:username', (req, res) => {
   User.findByUsername(req.params.username, (err, users) => {
     if (!users) {

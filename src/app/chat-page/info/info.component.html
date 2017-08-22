@@ -8,21 +8,21 @@
     <span>{{ user.firstName + " " + user.lastName }}</span>
   </div>
 
-  <div class="user-info">
+  <div *ngIf="userInfo" class="user-info">
     <div class="svg-more">
       <svg viewBox="0 0 17.6 17.2">
         <use xlink:href="assets/sprite.svg#more"></use>
       </svg>
     </div>
-    <img src="" alt="">
-    <h3>Kirsten Mckellar</h3>
-    <div class="city-info"><span>Cape Town, RSA</span></div>
+    <img [src]="userInfo.picture" alt="">
+    <h3>{{ userInfo.firstName + " " + userInfo.lastName }}</h3>
+    <div class="city-info"><span>{{ userInfo.address }}</span></div>
     <ul class="user-data">
-      <li><span>Nickname:</span><span>Killa Kella</span></li>
-      <li><span>Tel:</span><span>072 143 9920</span></li>
-      <li><span>Date Of Birth:</span><span>July 12, 1988</span></li>
-      <li><span>Gender:</span><span>Female</span></li>
-      <li><span>Language:</span><span>English</span></li>
+      <li><span>Nickname:</span><span>{{ userInfo.username }}</span></li>
+      <li><span>Tel:</span><span>{{ userInfo.phone }}</span></li>
+      <li><span>Date Of Birth:</span><span>{{ moment(userInfo.birthday).format("MMM DD, YYYY") }}</span></li>
+      <li><span>Gender:</span><span>{{ userInfo.gender }}</span></li>
+      <li><span>Language:</span><span>{{ userInfo.language }}</span></li>
     </ul>
   </div>
 </div>
