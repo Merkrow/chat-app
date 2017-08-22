@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { UserService } from '../../shared';
 
 @Component({
   selector: 'app-room',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
+  @Input() rooms: any[];
   constructor(
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
+    console.log(this.rooms);
   }
 
 }

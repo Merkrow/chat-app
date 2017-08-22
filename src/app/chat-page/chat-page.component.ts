@@ -26,10 +26,12 @@ export class ChatPageComponent implements OnInit {
     });
     this.userService.currentUser.subscribe(user => {
       this.user = user;
-      this.roomService.getUserRooms(user._id)
-      .subscribe(rooms => {
-        this.rooms = rooms;
-      });
+      if (user._id) {
+        this.roomService.getUserRooms(user._id)
+        .subscribe(rooms => {
+          this.rooms = rooms;
+        });
+      }
     });
   }
 

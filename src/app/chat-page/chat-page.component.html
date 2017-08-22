@@ -1,13 +1,13 @@
 <div class="container">
   <div class="chat-container">
     <app-inbox></app-inbox>
-    <div class="chat-list">
-      <app-room></app-room>
+    <div *ngIf="rooms" class="chat-list">
+      <app-room [rooms]="rooms"></app-room>
     </div>
-    <div class="chat-block">
-      <app-chat></app-chat>
+    <div *ngIf="rooms" class="chat-block">
+      <app-chat [room]="rooms[0]"></app-chat>
     </div>
-    <app-info></app-info>
+    <app-info [user]="user"></app-info>
 
   </div>
 </div>

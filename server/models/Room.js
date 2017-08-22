@@ -6,7 +6,10 @@ const RoomSchema = new Schema({
   title: {
     type: String,
   },
-  users: [String],
+  users: [{
+    userId: String,
+    fullName: String,
+  }],
 });
 
 module.exports = mongoose.model('Room', RoomSchema);

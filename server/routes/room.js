@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { Room, } = require('../controllers');
+const { Room, User, } = require('../controllers');
 const config = require('../config');
 
 router.post('/', (req, res) => {
@@ -58,15 +58,13 @@ router.delete('/:id', (req, res) => {
 })
 
 router.get('/user/:id', (req, res) => {
-  Room.find({ users: req.params.id }, (err, data) => {
+  Room.find({ users: { $elemMatch: { userId: req.params.id } } }, (err, data) => {
     if (err) {
       return res.json({
         error: err,
       })
     }
-    return res.json({
-      title: data
-    });
+    return res.json(data);
   })
 })
 
