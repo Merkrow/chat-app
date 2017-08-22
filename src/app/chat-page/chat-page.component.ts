@@ -14,6 +14,8 @@ export class ChatPageComponent implements OnInit {
   rooms: any;
   popup = false;
   chosenChat: string;
+  chosenUser: string;
+
   constructor(
     private userService: UserService,
     private roomService: RoomService,

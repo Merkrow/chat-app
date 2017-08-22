@@ -10,12 +10,16 @@ import { User, SelectChatService } from '../../../shared';
 export class RoomComponent implements OnInit {
   @Input() room: any;
   @Input() user: User;
+  active = false;
 
   constructor(
     private selectChat: SelectChatService,
   ) { }
 
   ngOnInit() {
+    this.selectChat.getChatIdEmitter().subscribe(id => {
+      this.active = id === this.room._id;
+    });
   }
   setChatTitle(room) {
     let name;
