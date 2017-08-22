@@ -15,7 +15,8 @@ import {
   ApiService,
   JwtService,
   SocketService,
-  RoomService
+  RoomService,
+  SelectChatService,
 } from './shared';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
@@ -39,6 +40,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     JwtService,
     SocketService,
     RoomService,
+    SelectChatService,
   ],
   bootstrap: [AppComponent]
 })

@@ -10,6 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { InfoComponent } from './info/info.component';
 import { PopupComponent } from './popup/popup.component';
+import { RoomComponent } from './rooms/room/room.component';
 
 const authRouting: ModuleWithProviders = RouterModule.forChild([
   {
@@ -32,6 +33,7 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
     ChatComponent,
     RoomsComponent,
     PopupComponent,
+    RoomComponent,
   ],
   exports: [
   ]

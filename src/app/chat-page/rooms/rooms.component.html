@@ -3,22 +3,8 @@
     <input type="text" placeholder="Search">
   </div>
 
-  <div *ngFor="let room of rooms" (click)="setChat(room)" class="chat-person">
-    <div class="chat-image">
-      <span class="online-status"></span>
-      <img src="" alt="">
-    </div>
-    <div class="user-meta">
-      <div><span>{{ setChatTitle(room) }}</span></div>
-      <span>Thanks again you have been...</span>
-    </div>
-    <div class="chat-settings">
-      <svg viewBox="0 0 17.6 17.2">
-        <use xlink:href="assets/sprite.svg#more"></use>
-      </svg>
-      <span>5 min</span>
-    </div>
-  </div>
+  <app-room *ngFor="let room of rooms" [room]="room" [user]="user">
+  </app-room>
 
 
 

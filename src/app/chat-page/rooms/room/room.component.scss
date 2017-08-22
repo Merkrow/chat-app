@@ -1,0 +1,91 @@
+.chat-person:hover {
+  border-left: 3px solid #2b80ff;
+}
+
+.chat-person {
+  height: 100px;
+  position: relative;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  .online-status {
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    background-color: #2dc100;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: -10px;
+  }
+  .chat-image {
+    height: 100%;
+    padding: 0;
+    display: inline-block;
+    width: 50px;
+    border-bottom: 1px solid #3f454b;
+    margin-left: 22px;
+    position: relative;
+    img {
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+      border-radius: 50%;
+      background-color: red;
+      position: absolute;
+      top: 25px;
+    }
+  }
+
+  .user-meta {
+    display: inline-block;
+    position: absolute;
+    left: 72px;
+    top: 33px;
+    width: 230px;
+    box-sizing: border-box;
+    padding-left: 18px;
+    div {
+      margin-bottom: 1px;
+      span {
+        font-weight: 500;
+        font-size: 16px;
+        color: #ffffff;
+      }
+    }
+    span {
+      font-size: 14px;
+      font-weight: 300;
+      color: #94979b;
+    }
+  }
+
+  .chat-settings {
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    width: 35px;
+    top: 34px;
+    text-align: right;
+    span {
+      color: #4f5459;
+      font-size: 11px;
+      font-weight: 500;
+      position: absolute;
+      width: 45px;
+      bottom: -35px;
+      right: 0;
+    }
+    svg {
+      position: absolute;
+      right: -1px;
+      top: 4px;
+      display: block;
+      height: 20px;
+      width: 20px;
+      fill: #eaeaeb;
+    }
+    svg:hover {
+      fill: #fff;
+    }
+  }
+}
