@@ -30,6 +30,15 @@ export class ApiService {
     .map((res: Response) => res.json());
   }
 
+  getWithToken(path: string, token: String, params: URLSearchParams = new URLSearchParams()): Observable<any> {
+    return this.http.get(`${environment.api_url}${path}`, { headers: new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'JWT ' + token,
+    }), search: params })
+    .catch(this.formatErrors)
+    .map((res: Response) => res.json());
+  }
+
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
       `${environment.api_url}${path}`,

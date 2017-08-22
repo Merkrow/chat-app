@@ -100,10 +100,10 @@ router.post('/auth', (req, res) => {
 });
 
 
-router.get('/users', passport.authenticate('jwt', {
+router.get('/jwt_login', passport.authenticate('jwt', {
   session: false
 }), function(req, res) {
-  res.send('It worked! User id is: ' + req.user._id + '.');
+  res.send(req.user);
 });
 
 

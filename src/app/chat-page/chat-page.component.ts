@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, User } from '../shared';
+import { RoomService, UserService, User } from '../shared';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
 export class ChatPageComponent implements OnInit {
   isAuthenticated = false;
   user: User;
+  rooms: any;
   constructor(
     private userService: UserService,
+    private roomService: RoomService,
     private router: Router,
   ) { }
 
@@ -24,6 +26,10 @@ export class ChatPageComponent implements OnInit {
     });
     this.userService.currentUser.subscribe(user => {
       this.user = user;
+      this.roomService.getUserRooms(user._id)
+      .subscribe(rooms => {
+        this.rooms = rooms;
+      });
     });
   }
 
