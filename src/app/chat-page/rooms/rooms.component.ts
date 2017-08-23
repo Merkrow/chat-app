@@ -18,4 +18,8 @@ export class RoomsComponent implements OnInit {
   ngOnInit() {
   }
 
+  removeRoom(id) {
+    this.rooms = this.rooms.filter(room => room._id !== id);
+  }
+
 }

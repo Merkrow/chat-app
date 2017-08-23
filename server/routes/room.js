@@ -12,10 +12,7 @@ router.post('/', (req, res) => {
         error: err,
       })
     }
-    return res.json({
-      sucess: true,
-      title: data
-    });
+    return res.json(data);
   })
 })
 

@@ -34,5 +34,6 @@ module.exports = {
   find,
   findOne,
   findById,
+  deleteRoom,
   addMessage,
 }

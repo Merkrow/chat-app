@@ -3,7 +3,7 @@
     <input type="text" placeholder="Search">
   </div>
 
-  <app-room *ngFor="let room of rooms" [room]="room" [user]="user">
+  <app-room *ngFor="let room of rooms" [room]="room" [user]="user" (removeRoom)="removeRoom($event)">
   </app-room>
 
 

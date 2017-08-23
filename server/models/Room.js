@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const RoomSchema = new Schema({
   title: {
     type: String,
+    default: '',
   },
   users: [{
     userId: String,

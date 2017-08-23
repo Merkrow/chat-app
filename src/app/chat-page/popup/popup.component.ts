@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
-import { UserService, User, } from '../../shared';
+import { UserService, User, RoomService } from '../../shared';
 
 @Component({
   selector: 'app-popup',
@@ -7,13 +7,14 @@ import { UserService, User, } from '../../shared';
   styleUrls: ['./popup.component.scss'],
 })
 export class PopupComponent implements OnInit {
-  @Input() user: any;
+  @Input() user: User;
   @Output() triggerPopup = new EventEmitter<boolean>();
   users: User[];
   opened = false;
   constructor(
     private userService: UserService,
     private _eref: ElementRef,
+    private roomService: RoomService,
   ) { }
 
   @HostListener('document:click', ['$event.target'])
@@ -25,7 +26,20 @@ export class PopupComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
 
+  addFriend(user: User) {
+    this.roomService.postRoom({ users: [{
+        userId: this.user._id,
+        fullName: this.user.firstName + ' ' + this.user.lastName,
+      },
+      {
+        userId: user._id,
+        fullname: user.firstName + ' ' + user.lastName,
+      }]
+    }).subscribe(room => {
+      console.log(room);
+    });
   }
 
   search($event) {
