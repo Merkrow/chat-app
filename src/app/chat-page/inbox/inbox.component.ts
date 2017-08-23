@@ -8,6 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 export class InboxComponent implements OnInit {
   @Output() triggerPopup = new EventEmitter<boolean>();
+  @Output() toggleShowFriends = new EventEmitter<boolean>();
   popup = false;
   constructor(
   ) { }

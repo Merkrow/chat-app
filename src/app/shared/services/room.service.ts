@@ -31,4 +31,8 @@ export class RoomService {
     return this.apiService.delete(`/rooms/${id}`);
   }
 
+  getOrCreateRoom(users): Observable<any> {
+    return this.apiService.post('/rooms/search', { users });
+  }
+
 }

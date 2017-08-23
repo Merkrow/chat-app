@@ -22,6 +22,27 @@ router.get('/', (req, res) => {
   })
 })
 
+router.post('/search', (req, res) => {
+  const { users } = req.body;
+  Room.findTwoUsersRoom(users, (err, room) => {
+    if (!room) {
+      Room.create({ users: [{
+          userId: users[0]._id,
+          fullName: users[0].firstName + ' ' + users[0].lastName,
+        },
+        {
+          userId: users[1]._id,
+          fullname: users[1].firstName + ' ' + users[1].lastName,
+        }]
+      }, (err, newRoom) => {
+        return res.send(newRoom);
+      })
+    } else {
+      return res.send(room);
+    }
+  })
+})
+
 router.put('/:id', (req, res) => {
   Room.updateRoom(id, req.body, (err, room) => {
     if (!room) {

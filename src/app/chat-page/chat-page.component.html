@@ -1,12 +1,30 @@
 <div class="container">
   <app-popup *ngIf="popup" [user]="user" (triggerPopup)="triggerPopup($event)"></app-popup>
   <div class="chat-container">
-    <app-inbox (triggerPopup)="triggerPopup($event)"></app-inbox>
-    <div *ngIf="rooms && user" class="chat-list">
+    <app-inbox (triggerPopup)="triggerPopup($event)" (toggleShowFriends)="toggleShowFriends($event)"></app-inbox>
+    <div *ngIf="rooms && user && !showFriends" class="chat-list">
       <app-rooms [rooms]="rooms" [user]="user"></app-rooms>
     </div>
-    <div *ngIf="rooms" class="chat-block">
+    <div *ngIf="rooms && !showFriends" class="chat-block">
       <app-chat [room]="rooms[0]"></app-chat>
+    </div>
+    <div *ngIf="showFriends" class="friends">
+      <header class="header">
+        <div class="search-container">
+          <input type="text" placeholder="Search">
+        </div>
+      </header>
+      <div class="friend-list">
+        <div class="friends-container">
+          <div *ngFor="let friend of friends" class="friend" (click)="navigateToRoom(friend)">
+            <div class="online-status"></div>
+            <img [src]="friend.picture">
+            <div class="full-name">
+              <span>{{ friend.firstName + ' ' + friend.lastName }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <app-info [user]="user"></app-info>
 

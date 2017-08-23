@@ -13,7 +13,7 @@
   </ul>
 
   <ul class="nav second-nav">
-    <li><a href="#">Help</a></li>
-    <li><a href="#">Settings</a></li>
+    <li (click)="toggleShowFriends.emit(false)"><a href="#/chat">Chats</a></li>
+    <li (click)="toggleShowFriends.emit(true)"><a href="#/chat">Friends</a></li>
   </ul>
 </div>

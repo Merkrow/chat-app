@@ -29,6 +29,10 @@ const deleteRoom = (id, callback) => {
   Room.deleteOne({ _id: id }, callback);
 }
 
+const findTwoUsersRoom = (users, callback) => {
+  Room.findOne({ users: { $all: [users[0]._id, users[1]._id] } }, callback);
+}
+
 module.exports = {
   create,
   find,
@@ -36,4 +40,5 @@ module.exports = {
   findById,
   deleteRoom,
   addMessage,
+  findTwoUsersRoom,
 }
