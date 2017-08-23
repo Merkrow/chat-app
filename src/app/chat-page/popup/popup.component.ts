@@ -40,6 +40,8 @@ export class PopupComponent implements OnInit {
     }).subscribe(room => {
       console.log(room);
     });
+    this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(user._id) })
+    .subscribe(status => status);
   }
 
   search($event) {

@@ -18,7 +18,7 @@ const findById = (id, callback) => {
 }
 
 const updateUser = (id, data, callback) => {
-  User.update({ _id: id, }, { $set: data }, { upsert:true }, callback);
+  User.findByIdAndUpdate(id, { $set: data }, { upsert:true }, callback);
 }
 
 const deleteUser = (id, callback) => {

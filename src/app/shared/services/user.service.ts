@@ -86,7 +86,13 @@ export class UserService {
   }
 
   updateUser(id, data: any): Observable<any> {
-    return this.apiService.put(`${userUrl}/${id}`, data);
+    return this.apiService.put(`${userUrl}/${id}`, data)
+    .map(response => {
+      if (response.success) {
+        this.currentUserSubject.next(response.user);
+      }
+      return response;
+    });
   }
 
   postUser(user): Observable<any> {
