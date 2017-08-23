@@ -85,8 +85,8 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  updateUser(user: User): Observable<User> {
-    return this.apiService.put(userUrl, user);
+  updateUser(id, data: any): Observable<any> {
+    return this.apiService.put(`${userUrl}/${id}`, data);
   }
 
   postUser(user): Observable<any> {

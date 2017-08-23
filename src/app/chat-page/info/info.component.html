@@ -9,6 +9,7 @@
   </div>
 
   <div *ngIf="userInfo" class="user-info">
+    <button *ngIf="!isFriend" type="button" (click)="addFriend()"></button>
     <div class="svg-more">
       <svg viewBox="0 0 17.6 17.2">
         <use xlink:href="assets/sprite.svg#more"></use>

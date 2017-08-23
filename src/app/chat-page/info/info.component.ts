@@ -12,6 +12,7 @@ export class InfoComponent implements OnInit {
   @Input() user: User;
   userInfo: User;
   moment = moment;
+  isFriend = false;
 
   constructor(
     private selectUser: SelectUserService,
@@ -24,7 +25,19 @@ export class InfoComponent implements OnInit {
         this.userService.getUserById(userId)
         .subscribe(userInfo => {
           this.userInfo = userInfo;
+          if (this.user.friends.indexOf(userInfo._id) !== -1) {
+            this.isFriend = true;
+          }
         });
+      }
+    });
+  }
+
+  addFriend() {
+    this.userService.updateUser(this.user._id, { friends: [].concat(this.userInfo._id) })
+    .subscribe(status => {
+      if (status.success) {
+        this.isFriend = true;
       }
     });
   }

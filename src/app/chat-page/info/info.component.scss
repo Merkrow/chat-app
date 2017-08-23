@@ -32,6 +32,16 @@
   }
   .user-info {
     position: relative;
+    button {
+      border-radius: 50%;
+      border: 1px solid #666666;
+      background-color: #666;
+      position: absolute;left: 10px;
+      top: 19px;
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+    }
     .svg-more {
       width: 17px;
       height: 17px;
