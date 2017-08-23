@@ -56,6 +56,7 @@ export class ChatPageComponent implements OnInit {
   navigateToRoom(friend) {
     this.roomService.getOrCreateRoom([this.user, friend])
     .subscribe(room => {
+      console.log(room);
     });
   }
 

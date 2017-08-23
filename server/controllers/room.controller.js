@@ -17,10 +17,6 @@ const findById = (id, callback) => {
 	Room.findById(id, callback);
 }
 
-const addMessage = (id, message, callback) => {
-  Room.update({ _id: id, }, { $push: { messages: message } }, callback);
-}
-
 const updateRoom = (id, data, callback) => {
   Room.update({ _id: id, }, { $set: data }, { upsert:true }, callback);
 }
@@ -30,7 +26,7 @@ const deleteRoom = (id, callback) => {
 }
 
 const findTwoUsersRoom = (users, callback) => {
-  Room.findOne({ users: { $all: [users[0]._id, users[1]._id] } }, callback);
+  Room.findOne({ $and: [{ users: { $elemMatch: { userId: users[0]._id }}}, { users: { $elemMatch: { userId: users[1]._id }}}] }, callback);
 }
 
 module.exports = {
@@ -39,6 +35,5 @@ module.exports = {
   findOne,
   findById,
   deleteRoom,
-  addMessage,
   findTwoUsersRoom,
 }
