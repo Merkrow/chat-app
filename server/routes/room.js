@@ -28,11 +28,11 @@ router.post('/search', (req, res) => {
     if (!room) {
       Room.create({ users: [{
           userId: users[0]._id,
-          fullName: users[0].firstName + ' ' + users[0].lastName,
+          fullName: users[0].fullName,
         },
         {
           userId: users[1]._id,
-          fullname: users[1].firstName + ' ' + users[1].lastName,
+          fullname: users[1].fullName,
         }]
       }, (err, newRoom) => {
         return res.send(newRoom);

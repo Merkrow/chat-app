@@ -3,6 +3,7 @@ export class User {
   firstName: string;
   lastName: string;
   userName: string;
+  fullName: string;
   pictire: string;
   telephone: string;
   birthday: string;

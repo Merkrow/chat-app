@@ -32,6 +32,7 @@ export class RegistrationComponent implements OnInit {
       picture: this.image,
       firstName: this.first,
       lastName: this.last,
+      fullName: this.first + ' ' + this.last,
       email: this.email,
       password: this.password,
       phone: this.phone,

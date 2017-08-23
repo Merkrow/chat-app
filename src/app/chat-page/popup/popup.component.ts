@@ -31,11 +31,11 @@ export class PopupComponent implements OnInit {
   addFriend(user: User) {
     this.roomService.postRoom({ users: [{
         userId: this.user._id,
-        fullName: this.user.firstName + ' ' + this.user.lastName,
+        fullName: this.user.fullName,
       },
       {
         userId: user._id,
-        fullname: user.firstName + ' ' + user.lastName,
+        fullname: user.fullName,
       }]
     }).subscribe(room => {
       console.log(room);

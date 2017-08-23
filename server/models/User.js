@@ -17,6 +17,10 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
+  fullName: {
+    type: String,
+    default: this.firstName + " " + this.lastName,
+  },
   password: {
     type: String,
     required: true
