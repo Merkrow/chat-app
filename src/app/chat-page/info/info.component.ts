@@ -24,6 +24,7 @@ export class InfoComponent implements OnInit {
       if (userId) {
         this.userService.getUserById(userId)
         .subscribe(userInfo => {
+          this.isFriend = false;
           this.userInfo = userInfo;
           if (this.user.friends.indexOf(userInfo._id) !== -1) {
             this.isFriend = true;
@@ -34,7 +35,7 @@ export class InfoComponent implements OnInit {
   }
 
   addFriend() {
-    this.userService.updateUser(this.user._id, { friends: [].concat(this.userInfo._id) })
+    this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(this.userInfo._id) })
     .subscribe(status => {
       if (status.success) {
         this.isFriend = true;
