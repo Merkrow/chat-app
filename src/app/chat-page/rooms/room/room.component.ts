@@ -11,6 +11,7 @@ export class RoomComponent implements OnInit {
   @Input() room: any;
   @Input() user: User;
   active = false;
+  title = '';
 
   constructor(
     private selectChat: SelectChatService,
@@ -21,15 +22,12 @@ export class RoomComponent implements OnInit {
     this.selectChat.getChatIdEmitter().subscribe(id => {
       this.active = id === this.room._id;
     });
-  }
-  setChatTitle(room) {
-    let name;
-    if (room.title) {
-      name = room.title;
+
+    if (this.room.title) {
+      this.title = this.room.title;
     } else {
-      name = room.users.filter(sm => sm.userId !== this.user._id)[0].fullName;
+      this.title = this.room.users.filter(sm => sm.userId !== this.user._id)[0].fullName;
     }
-    return name;
   }
 
   setChat() {
