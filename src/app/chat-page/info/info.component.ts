@@ -26,8 +26,10 @@ export class InfoComponent implements OnInit {
         .subscribe(userInfo => {
           this.isFriend = false;
           this.userInfo = userInfo;
-          if (this.user.friends.indexOf(userInfo._id) !== -1) {
-            this.isFriend = true;
+          if (this.user.friends) {
+            if (this.user.friends.indexOf(userInfo._id) !== -1) {
+              this.isFriend = true;
+            }
           }
         });
       }

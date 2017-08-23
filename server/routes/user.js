@@ -95,7 +95,7 @@ router.post('/auth', (req, res) => {
     } else {
       user.comparePassword(req.body.password, function(err, isMatch) {
         if (isMatch && !err) {
-          var token = jwt.sign(user, config.auth.secret, {
+          var token = jwt.sign({ email: user.email, id: user._id, password: user.password }, config.auth.secret, {
             expiresIn: "2 days"
           });
           res.json({
