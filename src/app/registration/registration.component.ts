@@ -43,6 +43,7 @@ export class RegistrationComponent implements OnInit {
       language: this.language,
       username: this.username,
       gender: this.gender,
+      birthday: this.birthday,
     }).subscribe(res => {
       if (res.success) {
         this.userService.attemptAuth({ email: this.email, password: this.password })
