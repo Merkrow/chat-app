@@ -23,7 +23,7 @@ export class FriendsComponent implements OnInit {
   }
 
   filterFunc(arr) {
-    return arr.filter(item => item.fullName.indexOf(this.filterValue) !== -1);
+    return arr.filter(item => item.fullName.toLowerCase().indexOf(this.filterValue.toLowerCase()) !== -1);
   }
 
   navigateToRoom(friend: User) {
