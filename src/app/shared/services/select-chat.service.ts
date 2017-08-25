@@ -1,10 +1,10 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 export class SelectChatService {
-  changeChat = new BehaviorSubject<string>('');
+  changeChat = new ReplaySubject<any>();
   constructor() {}
-  emitChatIdChangeEvent(id: string) {
-    this.changeChat.next(id);
+  emitChatIdChangeEvent(room: any) {
+    this.changeChat.next(room);
   }
   getChatIdEmitter() {
     return this.changeChat;

@@ -30,7 +30,7 @@ export class FriendsComponent implements OnInit {
     this.roomService.getOrCreateRoom([this.user._id, friend._id])
     .subscribe(room => {
       this.toggleShowFriends.emit(false);
-      this.selectChatService.emitChatIdChangeEvent(room._id);
+      this.selectChatService.emitChatIdChangeEvent(room);
       this.selectUser.emitUserIdChangeEvent(friend);
     });
   }

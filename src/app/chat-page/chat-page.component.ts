@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService, SelectChatService, User } from '../shared';
+import { UserService, User } from '../shared';
 
 @Component({
   selector: 'app-chat-page',
@@ -12,22 +12,16 @@ export class ChatPageComponent implements OnInit {
   isAuthenticated = false;
   user: User;
   popup = false;
-  chosenChat: string;
   chosenUser: string;
   showFriends = false;
   friends: User[] = [];
 
   constructor(
     private userService: UserService,
-    private selectChat: SelectChatService,
     private router: Router,
   ) { }
 
   ngOnInit() {
-    this.selectChat.getChatIdEmitter().subscribe(id => {
-      this.chosenChat = id;
-    });
-
     this.userService.isAuthenticated.subscribe(isAuth => {
         this.isAuthenticated = isAuth;
         if (!isAuth) {

@@ -23,8 +23,8 @@ export class RoomComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectChat.getChatIdEmitter().subscribe(id => {
-      this.active = id === this.room._id;
+    this.selectChat.getChatIdEmitter().subscribe(room => {
+      this.active = room._id === this.room._id;
     });
     this.room.users
       .filter(userId => userId !== this.user._id)
@@ -53,7 +53,7 @@ export class RoomComponent implements OnInit {
     const userId = this.room.users.filter(friendId => friendId !== this.user._id)[0];
     const user = this.interlocutors.filter(interlocutor => interlocutor._id === userId)[0];
     this.selectUser.emitUserIdChangeEvent(user);
-    this.selectChat.emitChatIdChangeEvent(this.room._id);
+    this.selectChat.emitChatIdChangeEvent(this.room);
   }
 
 

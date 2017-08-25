@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { SocketService } from '../../shared';
+import { SocketService, User, SelectChatService } from '../../shared';
 
 @Component({
   selector: 'app-chat',
@@ -8,7 +8,8 @@ import { SocketService } from '../../shared';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  @Input() room: any;
+  @Input() user: User;
+  message: string;
 
   constructor(
     private socketService: SocketService,
