@@ -10,12 +10,17 @@ import { UserService, User } from '../../shared';
 export class RoomsComponent implements OnInit {
   @Input() rooms: any[];
   @Input() user: User;
+  filterValue: string;
 
   constructor(
     private userService: UserService,
   ) { }
 
   ngOnInit() {
+  }
+
+  filterFunc(rooms) {
+
   }
 
   removeRoom(id) {

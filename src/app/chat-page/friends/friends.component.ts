@@ -20,7 +20,6 @@ export class FriendsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
   }
 
   filterFunc(arr) {

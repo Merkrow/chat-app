@@ -19,7 +19,6 @@ const UserSchema = new Schema({
   },
   fullName: {
     type: String,
-    default: this.firstName + " " + this.lastName,
   },
   password: {
     type: String,
@@ -59,6 +58,7 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   const user = this;
+  this.fullName = this.firstName + " " + this.lastName;
   if (this.isModified('password') || this.isNew) {
     bcrypt.genSalt(10, function(err, salt) {
       if (err) {

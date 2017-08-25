@@ -1,6 +1,6 @@
 
   <div class="search-container">
-    <input type="text" placeholder="Search">
+    <input type="text" placeholder="Search" [(ngModel)]="filterValue">
   </div>
 
   <app-room *ngFor="let room of rooms" [room]="room" [user]="user" (removeRoom)="removeRoom($event)">

@@ -5,7 +5,7 @@
         <use xlink:href="assets/sprite.svg#bell"></use>
       </svg>
     </div>
-    <span>{{ user.firstName + " " + user.lastName }}</span>
+    <span>{{ user.fullName }}</span>
   </div>
 
   <div *ngIf="userInfo" class="user-info">
@@ -16,7 +16,7 @@
       </svg>
     </div>
     <img [src]="userInfo.picture" alt="">
-    <h3>{{ userInfo.firstName + " " + userInfo.lastName }}</h3>
+    <h3>{{ userInfo.fullName }}</h3>
     <div class="city-info"><span>{{ userInfo.address }}</span></div>
     <ul class="user-data">
       <li><span>Nickname:</span><span>{{ userInfo.username }}</span></li>
