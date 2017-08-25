@@ -20,18 +20,11 @@ export class InfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectUser.getUserIdEmitter().subscribe(userId => {
-      if (userId) {
-        this.userService.getUserById(userId)
-        .subscribe(userInfo => {
-          this.isFriend = false;
-          this.userInfo = userInfo;
-          if (this.user.friends) {
-            if (this.user.friends.indexOf(userInfo._id) !== -1) {
-              this.isFriend = true;
-            }
-          }
-        });
+    this.selectUser.getUserIdEmitter().subscribe(user => {
+      this.isFriend = false;
+      this.userInfo = user;
+      if (this.user.friends.indexOf(user._id) !== -1) {
+        this.isFriend = true;
       }
     });
   }

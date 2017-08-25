@@ -51,7 +51,8 @@ export class RoomComponent implements OnInit {
 
   setChat() {
     const userId = this.room.users.filter(friendId => friendId !== this.user._id)[0];
-    this.selectUser.emitUserIdChangeEvent(userId);
+    const user = this.interlocutors.filter(interlocutor => interlocutor._id === userId)[0];
+    this.selectUser.emitUserIdChangeEvent(user);
     this.selectChat.emitChatIdChangeEvent(this.room._id);
   }
 

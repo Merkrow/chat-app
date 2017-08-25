@@ -1,10 +1,11 @@
 import { EventEmitter } from '@angular/core';
+import { User } from '../models';
 
 export class SelectUserService {
-  changeUser: EventEmitter<string> = new EventEmitter();
+  changeUser: EventEmitter<User> = new EventEmitter();
   constructor() {}
-  emitUserIdChangeEvent(number) {
-    this.changeUser.emit(number);
+  emitUserIdChangeEvent(user: User) {
+    this.changeUser.emit(user);
   }
   getUserIdEmitter() {
     return this.changeUser;
