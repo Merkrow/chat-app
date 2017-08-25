@@ -1,15 +1,15 @@
 <header class="header">
   <div class="search-container">
-    <input type="text" placeholder="Search">
+    <input type="text" placeholder="Search" [(ngModel)]="filterValue">
   </div>
 </header>
 <div class="friend-list">
   <div class="friends-container">
-    <div *ngFor="let friend of friends" class="friend" (click)="navigateToRoom(friend)">
+    <div *ngFor="let friend of filterFunc(friends)" class="friend" (click)="navigateToRoom(friend)">
       <div class="online-status"></div>
       <img [src]="friend.picture">
       <div class="full-name">
-        <span>{{ friend.firstName + ' ' + friend.lastName }}</span>
+        <span>{{ friend.fullName }}</span>
       </div>
     </div>
   </div>

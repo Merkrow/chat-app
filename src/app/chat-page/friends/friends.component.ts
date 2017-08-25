@@ -11,6 +11,7 @@ export class FriendsComponent implements OnInit {
   @Input() user: User;
   @Input() friends: User[];
   @Output() toggleShowFriends = new EventEmitter<boolean>();
+  filterValue: string;
 
   constructor(
     private roomService: RoomService,
@@ -19,6 +20,10 @@ export class FriendsComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  filterFunc(arr) {
+    return arr.filter(item => item.fullName.indexOf(this.filterValue) !== -1);
   }
 
   navigateToRoom(friend: User) {
