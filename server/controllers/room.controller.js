@@ -25,8 +25,8 @@ const deleteRoom = (id, callback) => {
   Room.deleteOne({ _id: id }, callback);
 }
 
-const findTwoUsersRoom = (users, callback) => {
-  Room.findOne({ $and: [{ users: { $elemMatch: { userId: users[0]._id }}}, { users: { $elemMatch: { userId: users[1]._id }}}] }, callback);
+const findTwoUsersRoom = (ids, callback) => {
+  Room.findOne({ users: { $all: ids } }, callback);
 }
 
 module.exports = {
@@ -37,3 +37,5 @@ module.exports = {
   deleteRoom,
   findTwoUsersRoom,
 }
+
+// { $and: [{ users: { $elemMatch: { userId: users[0]._id }}}, { users: { $elemMatch: { userId: users[1]._id }}}]

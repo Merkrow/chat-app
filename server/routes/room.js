@@ -23,18 +23,9 @@ router.get('/', (req, res) => {
 })
 
 router.post('/search', (req, res) => {
-  const { users } = req.body;
-  Room.findTwoUsersRoom(users, (err, room) => {
+  Room.findTwoUsersRoom(req.body.users, (err, room) => {
     if (!room) {
-      Room.create({ users: [{
-          userId: users[0]._id,
-          fullName: users[0].fullName,
-        },
-        {
-          userId: users[1]._id,
-          fullname: users[1].fullName,
-        }]
-      }, (err, newRoom) => {
+      Room.create(req.body, (err, newRoom) => {
         return res.send(newRoom);
       })
     } else {
@@ -76,7 +67,7 @@ router.delete('/:id', (req, res) => {
 })
 
 router.get('/user/:id', (req, res) => {
-  Room.find({ users: { $elemMatch: { userId: req.params.id } } }, (err, data) => {
+  Room.find({ users: { $in: [req.params.id] } }, (err, data) => {
     if (err) {
       return res.json({
         error: err,

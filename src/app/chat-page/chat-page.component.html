@@ -9,22 +9,7 @@
       <app-chat [room]="rooms[0]"></app-chat>
     </div>
     <div *ngIf="showFriends" class="friends">
-      <header class="header">
-        <div class="search-container">
-          <input type="text" placeholder="Search">
-        </div>
-      </header>
-      <div class="friend-list">
-        <div class="friends-container">
-          <div *ngFor="let friend of friends" class="friend" (click)="navigateToRoom(friend)">
-            <div class="online-status"></div>
-            <img [src]="friend.picture">
-            <div class="full-name">
-              <span>{{ friend.firstName + ' ' + friend.lastName }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-friends [user]="user" [friends]="friends" (toggleShowFriends)="toggleShowFriends($event)"></app-friends>
     </div>
     <app-info [user]="user"></app-info>
 

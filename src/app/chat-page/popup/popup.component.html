@@ -5,7 +5,7 @@
     </header>
     <div *ngIf="users" class="results">
       <div *ngFor="let user of users" class="user-container">
-        <span>{{ user.username + "    "}}</span><span>{{ user.email }}</span><button type="button" (click)="addFriend(user)">Add friend</button>
+        <span>{{ user.username + " "}}</span><span>{{ user.email }}</span><button type="button" (click)="addFriend(user)">Add friend</button>
       </div>
     </div>
   </div>

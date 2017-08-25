@@ -11,6 +11,7 @@ import { InboxComponent } from './inbox/inbox.component';
 import { InfoComponent } from './info/info.component';
 import { PopupComponent } from './popup/popup.component';
 import { RoomComponent } from './rooms/room/room.component';
+import { FriendsComponent } from './friends/friends.component';
 
 const authRouting: ModuleWithProviders = RouterModule.forChild([
   {
@@ -34,6 +35,7 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
     RoomsComponent,
     PopupComponent,
     RoomComponent,
+    FriendsComponent,
   ],
   exports: [
   ]
