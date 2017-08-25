@@ -26,6 +26,11 @@
   <div class="">
     <span>Picture</span><input type="file" (change)="changeImage($event)">
   </div>
+  <dp-date-picker [(ngModel)]="birthday"></dp-date-picker>
+  <select class="" [(ngModel)]="gender">
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
   <button type="button" (click)="submit()">Submit</button>
 </div>
 

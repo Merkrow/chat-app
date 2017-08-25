@@ -42,12 +42,7 @@ export class PopupComponent implements OnInit {
       username = $event.srcElement.value;
       this.userService.searchUsers(username)
       .subscribe((users) => {
-        this.users = users.filter(user => this.user.friends.indexOf(user._id) === -1);
-      });
-    } else {
-      this.userService.getUsers()
-      .subscribe((users) => {
-        this.users = users.filter(user => this.user.friends.indexOf(user._id) === -1);
+        this.users = users.filter(user => this.user.friends.indexOf(user._id) === -1 && this.user._id !== user._id);
       });
     }
   }

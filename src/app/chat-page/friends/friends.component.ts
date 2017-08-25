@@ -11,7 +11,7 @@ export class FriendsComponent implements OnInit {
   @Input() user: User;
   @Input() friends: User[];
   @Output() toggleShowFriends = new EventEmitter<boolean>();
-  filterValue: string;
+  filterValue = '';
 
   constructor(
     private roomService: RoomService,

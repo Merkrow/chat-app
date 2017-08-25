@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 import { UserService } from '../shared';
 
@@ -18,6 +19,8 @@ export class RegistrationComponent implements OnInit {
   address = '54321';
   language = 'english';
   username = 'test';
+  gender = 'Male';
+  birthday = moment().format('DD-MM-YYYY');
 
   constructor(
     private userService: UserService,
@@ -39,6 +42,7 @@ export class RegistrationComponent implements OnInit {
       address: this.address,
       language: this.language,
       username: this.username,
+      gender: this.gender,
     }).subscribe(res => {
       if (res.success) {
         this.userService.attemptAuth({ email: this.email, password: this.password })
