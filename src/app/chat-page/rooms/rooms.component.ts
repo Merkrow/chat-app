@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { UserService, User } from '../../shared';
+import { UserService, User, RoomService } from '../../shared';
 
 @Component({
   selector: 'app-rooms',
@@ -14,9 +14,15 @@ export class RoomsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private roomService: RoomService,
   ) { }
 
   ngOnInit() {
+    this.roomService.getNewRoom().subscribe(room => {
+      if (!this.rooms.some(prev => prev._id === room._id)) {
+        this.rooms = this.rooms.concat(room);
+      }
+    });
   }
 
   filterFunc(rooms) {
