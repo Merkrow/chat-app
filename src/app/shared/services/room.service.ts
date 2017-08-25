@@ -12,6 +12,7 @@ import { ApiService } from './api.service';
 @Injectable()
 export class RoomService {
   newRoom = new ReplaySubject<any>();
+  removedRoom = new ReplaySubject<any>();
   constructor(
     private http: Http,
     private apiService: ApiService,
@@ -34,7 +35,11 @@ export class RoomService {
   }
 
   deleteRoom(id): Observable<any> {
-    return this.apiService.delete(`/rooms/${id}`);
+    return this.apiService.delete(`/rooms/${id}`)
+    .map(room => {
+      this.setRemovedRoom(room);
+      return room;
+    });
   }
 
   getOrCreateRoom(users): Observable<any> {
@@ -43,6 +48,14 @@ export class RoomService {
       this.setNewRoom(room);
       return room;
     });
+  }
+
+  setRemovedRoom(room: any) {
+    this.removedRoom.next(room);
+  }
+
+  getRemovedRoom() {
+    return this.removedRoom;
   }
 
   setNewRoom(room: any) {

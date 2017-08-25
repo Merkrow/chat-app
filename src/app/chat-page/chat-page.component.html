@@ -2,11 +2,11 @@
   <app-popup *ngIf="popup" [user]="user" (triggerPopup)="triggerPopup($event)"></app-popup>
   <div class="chat-container">
     <app-inbox (triggerPopup)="triggerPopup($event)" (toggleShowFriends)="toggleShowFriends($event)"></app-inbox>
-    <div *ngIf="rooms && user && !showFriends" class="chat-list">
-      <app-rooms [rooms]="rooms" [user]="user"></app-rooms>
+    <div *ngIf="user._id && !showFriends" class="chat-list">
+      <app-rooms [user]="user"></app-rooms>
     </div>
-    <div *ngIf="rooms && !showFriends" class="chat-block">
-      <app-chat [room]="rooms[0]"></app-chat>
+    <div *ngIf="!showFriends" class="chat-block">
+      <app-chat></app-chat>
     </div>
     <div *ngIf="showFriends" class="friends">
       <app-friends [user]="user" [friends]="friends" (toggleShowFriends)="toggleShowFriends($event)"></app-friends>

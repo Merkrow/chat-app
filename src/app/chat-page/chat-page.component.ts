@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { RoomService, UserService, SelectChatService, User } from '../shared';
+import { UserService, SelectChatService, User } from '../shared';
 
 @Component({
   selector: 'app-chat-page',
@@ -11,7 +11,6 @@ import { RoomService, UserService, SelectChatService, User } from '../shared';
 export class ChatPageComponent implements OnInit {
   isAuthenticated = false;
   user: User;
-  rooms: any;
   popup = false;
   chosenChat: string;
   chosenUser: string;
@@ -20,7 +19,6 @@ export class ChatPageComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private roomService: RoomService,
     private selectChat: SelectChatService,
     private router: Router,
   ) { }
@@ -45,18 +43,7 @@ export class ChatPageComponent implements OnInit {
             this.friends.push(friend);
           });
         });
-        this.roomService.getUserRooms(user._id)
-        .subscribe(rooms => {
-          this.rooms = rooms;
-        });
       }
-    });
-  }
-
-  navigateToRoom(friend) {
-    this.roomService.getOrCreateRoom([this.user, friend])
-    .subscribe(room => {
-      console.log(room);
     });
   }
 
