@@ -1,10 +1,10 @@
-import { EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export class SelectChatService {
-  changeChat: EventEmitter<string> = new EventEmitter();
+  changeChat = new BehaviorSubject<string>('');
   constructor() {}
-  emitChatIdChangeEvent(number) {
-    this.changeChat.emit(number);
+  emitChatIdChangeEvent(id: string) {
+    this.changeChat.next(id);
   }
   getChatIdEmitter() {
     return this.changeChat;

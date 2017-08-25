@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 
-import { RoomService, User, SelectChatService } from '../../shared';
+import { RoomService, User, SelectChatService, SelectUserService } from '../../shared';
 
 @Component({
   selector: 'app-friends',
@@ -16,6 +16,7 @@ export class FriendsComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private selectChatService: SelectChatService,
+    private selectUser: SelectUserService,
   ) { }
 
   ngOnInit() {
@@ -31,6 +32,7 @@ export class FriendsComponent implements OnInit {
     .subscribe(room => {
       this.toggleShowFriends.emit(false);
       this.selectChatService.emitChatIdChangeEvent(room._id);
+      this.selectUser.emitUserIdChangeEvent(friend);
     });
   }
 
