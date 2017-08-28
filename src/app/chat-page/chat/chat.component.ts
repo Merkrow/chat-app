@@ -12,6 +12,8 @@ export class ChatComponent implements OnInit {
   message: string;
   room: any;
   interlocutors: User[] = [];
+  private = false;
+  isFriends = true;
 
   constructor(
     private socketService: SocketService,
@@ -24,10 +26,18 @@ export class ChatComponent implements OnInit {
     .subscribe(room => {
       this.room = room;
       const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
+      if (interlocutorsId.length === 1) {
+        this.private = true;
+      }
       interlocutorsId.map(id => {
         this.userService.getUserById(id)
         .subscribe(interlocutor => {
           this.interlocutors = this.interlocutors.concat(interlocutor);
+          if (this.private) {
+            this.isFriends = interlocutor.friends.some(interlocutorId => interlocutorId === this.user._id);
+          } else {
+            this.isFriends = false;
+          }
         });
       });
     });
