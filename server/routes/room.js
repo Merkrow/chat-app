@@ -58,7 +58,7 @@ router.delete('/:id', (req, res) => {
         message: 'Delete error',
       });
     } else {
-      Messages.deleteByRoomId(req.params.id, (err, status) => {
+      Messages.deleteRoom(req.params.id, (err, status) => {
         res.send({
           success: true,
           status,

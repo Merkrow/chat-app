@@ -16,6 +16,8 @@ const { Message } = require('./controllers');
 const users = require('./routes/user');
 const rooms = require('./routes/room');
 
+let onlineUsers = new Set();
+
 mongoose.Promise = Promise;
 mongoose.connect(config.database.local, {
   useMongoClient: true,
@@ -35,6 +37,18 @@ app.use('/users', users);
 app.use('/rooms', rooms);
 
 io.on('connection', (socket) => {
+  onlineUsers.add(socket.handshake.query.id);
+  io.emit('online users', onlineUsers);
+  socket.on('online users', (friends) => {
+    const res = friends.reduce((acc, friendId) => {
+      if (onlineUsers.has(friendId)) {
+        return acc.concat(friendId);
+      };
+      return acc;
+    }, []);
+    io.emit('online users', res);
+  })
+
   socket.on('chat message', (chatMessage) => {
     Message.create({ sender: chatMessage.userId, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.chatId }, (err, message) => {
       if (err) {
@@ -53,7 +67,13 @@ io.on('connection', (socket) => {
       socket.emit(`last message ${id}`, message);
     })
   })
+
+  socket.on('disconnect', () => {
+    onlineUsers.delete(socket.handshake.query.id);
+    io.emit('online users', onlineUsers);
+  })
 });
+
 
 app.use(function(req, res, next) {
   const err = new Error('Not Found');

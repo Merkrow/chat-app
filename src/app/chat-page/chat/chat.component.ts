@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, Input, ViewChild, ElementRef, } from '@angular/core';
 import * as moment from 'moment';
 
 import { SocketService, User, SelectChatService, UserService, } from '../../shared';
@@ -8,7 +8,8 @@ import { SocketService, User, SelectChatService, UserService, } from '../../shar
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
+  @ViewChild('chat') private myScrollContainer: ElementRef;
   @Input() user: User;
   messages: any[];
   message = '';
@@ -24,8 +25,20 @@ export class ChatComponent implements OnInit {
     private userService: UserService,
   ) { }
 
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) {
+
+    }
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
   ngOnInit() {
-    this.socketService.connect();
+    this.socketService.connect(this.user._id);
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;
@@ -59,7 +72,6 @@ export class ChatComponent implements OnInit {
 
     this.socketService.on('messages response')
     .subscribe(messages => {
-      console.log(messages);
       this.messages = messages;
     });
 

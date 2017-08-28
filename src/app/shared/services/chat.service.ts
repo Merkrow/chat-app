@@ -8,14 +8,14 @@ export class SocketService {
   private host = 'http://localhost:3000';
   private socket: any;
   constructor() {
-    this.socket = io(this.host);
+  }
+  connect (id) {
+    this.socket = io(this.host, { query: `id=${id}` });
     this.socket.on('connect', () => this.connected());
     this.socket.on('disconnect', () => this.disconnected());
     this.socket.on('error', (error: string) => {
         console.log(`ERROR: '${error}' (${this.host})`);
     });
-  }
-  connect () {
     this.socket.connect();
   }
   disconnect () {
