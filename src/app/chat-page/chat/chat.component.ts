@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import * as moment from 'moment';
 
 import { SocketService, User, SelectChatService, UserService, } from '../../shared';
 
@@ -9,6 +10,7 @@ import { SocketService, User, SelectChatService, UserService, } from '../../shar
 })
 export class ChatComponent implements OnInit {
   @Input() user: User;
+  messages: any[];
   message: string;
   room: any;
   interlocutors: User[] = [];
@@ -52,6 +54,13 @@ export class ChatComponent implements OnInit {
       if (status.success) {
         this.isFriends = true;
       }
+    });
+  }
+
+  sendMessage() {
+    this.socketService.emit('chat message', { userId: this.user._id, date: moment(), chatId: this.room._id, text: this.message })
+    .subscribe(response => {
+      console.log(response);
     });
   }
 

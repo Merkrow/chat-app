@@ -37,7 +37,7 @@ app.use('/rooms', rooms);
 io.on('connection', (socket) => {
   socket.on('chat message', (chatMessage) => {
     console.log(chatMessage);
-    // Message.create({ sender: chatMessage.email, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.id }, (err, text) => {
+    // Message.create({ sender: chatMessage.userId, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.chatId }, (err, text) => {
     //   if (err) {
     //     return;
     //   }
