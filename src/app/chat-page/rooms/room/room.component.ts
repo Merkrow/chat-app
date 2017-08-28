@@ -17,7 +17,7 @@ export class RoomComponent implements OnInit {
   title = '';
   picture = '';
   lastMessage: any = {};
-  lastMessageTime: string;
+  lastMessageTime: any;
 
   constructor(
     private selectChat: SelectChatService,
@@ -52,7 +52,7 @@ export class RoomComponent implements OnInit {
   setTime() {
     const msgMs = moment(this.lastMessage.date).valueOf();
     const ms = moment().valueOf();
-    this.lastMessageTime = moment(ms - msgMs).format('mm');
+    this.lastMessageTime = ms - msgMs >= 3600000 ? null : moment(ms - msgMs).format('mm');
   }
 
   deleteChat(room) {
