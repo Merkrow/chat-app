@@ -46,6 +46,10 @@ export class ChatComponent implements OnInit {
     });
 
     this.socketService.connect();
+    this.socketService.on('message response')
+    .subscribe(message => {
+      console.log(message);
+    });
   }
 
   acceptFriend() {
@@ -58,7 +62,12 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
-    this.socketService.emit('chat message', { userId: this.user._id, date: moment(), chatId: this.room._id, text: this.message })
+    this.socketService.emit('chat message', {
+      userId: this.user._id,
+      date: moment().format('YYYY-MM-DD'),
+      chatId: this.room._id,
+      text: this.message
+    })
     .subscribe(response => {
       console.log(response);
     });

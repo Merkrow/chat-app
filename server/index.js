@@ -37,12 +37,12 @@ app.use('/rooms', rooms);
 io.on('connection', (socket) => {
   socket.on('chat message', (chatMessage) => {
     console.log(chatMessage);
-    // Message.create({ sender: chatMessage.userId, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.chatId }, (err, text) => {
-    //   if (err) {
-    //     return;
-    //   }
-    //   socket.emit('message_response', text);
-    // });
+    Message.create({ sender: chatMessage.userId, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.chatId }, (err, message) => {
+      if (err) {
+        return;
+      }
+      socket.emit('message response', message);
+    });
   });
 });
 
