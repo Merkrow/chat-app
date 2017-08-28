@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { Room, User, } = require('../controllers');
+const { Room, User, Messages, } = require('../controllers');
 const config = require('../config');
 
 router.post('/', (req, res) => {
@@ -58,10 +58,12 @@ router.delete('/:id', (req, res) => {
         message: 'Delete error',
       });
     } else {
-      res.send({
-        success: true,
-        status,
-      });
+      Messages.deleteByRoomId(req.params.id, (err, status) => {
+        res.send({
+          success: true,
+          status,
+        });
+      })
     }
   })
 })

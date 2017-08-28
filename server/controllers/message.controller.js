@@ -29,10 +29,15 @@ const updateMessage = (id, data, callback) => {
   Message.update({ _id: id, }, data, callback);
 }
 
+const deleteByRoomId = (id, callback) => {
+  Message.find({ chatId: id }).remove(callback);
+}
+
 module.exports = {
   create,
   find,
   findOne,
+  findLast,
   findById,
   updateMessage,
 }
