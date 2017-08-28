@@ -36,7 +36,6 @@ app.use('/rooms', rooms);
 
 io.on('connection', (socket) => {
   socket.on('chat message', (chatMessage) => {
-    console.log(chatMessage);
     Message.create({ sender: chatMessage.userId, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.chatId }, (err, message) => {
       if (err) {
         return;
@@ -47,6 +46,11 @@ io.on('connection', (socket) => {
   socket.on('get messages', (id) => {
     Message.find({ chatId: id }, (err, messages) => {
       socket.emit('messages response', messages);
+    })
+  })
+  socket.on('get last message', (id) => {
+    Message.findLast(id, (err, message) => {
+      socket.emit(`last message ${id}`, message);
     })
   })
 });

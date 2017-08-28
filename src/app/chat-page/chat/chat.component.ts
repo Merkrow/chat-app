@@ -66,11 +66,12 @@ export class ChatComponent implements OnInit {
   }
 
   getImage(msg) {
-    return this.interlocutors.length && this.interlocutors.find(interlocutor => interlocutor._id === msg.sender).picture || '';
+    const usr = this.interlocutors.find(interlocutor => interlocutor._id === msg.sender);
+    return usr && usr.picture || '';
   }
 
   sortMsgs(messages) {
-    return messages && messages.sort((msg1, msg2) => moment(msg1.date).get('millisecond') - moment(msg2.date).get('millisecond'));
+    return messages && messages.sort((msg1, msg2) => moment(msg1.date).valueOf() - moment(msg2.date).valueOf());
   }
 
   acceptFriend() {

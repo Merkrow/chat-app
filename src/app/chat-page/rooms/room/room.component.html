@@ -5,12 +5,12 @@
   </div>
   <div class="user-meta">
     <div><span>{{ title }}</span></div>
-    <span>Thanks again you have been...</span>
+    <span>{{ lastMessage.text }}</span>
   </div>
   <div class="chat-settings">
     <svg (click)="deleteChat(room)" viewBox="0 0 17.6 17.2">
       <use xlink:href="assets/sprite.svg#more"></use>
     </svg>
-    <span>5 min</span>
+    <span>{{ setTime() }} min</span>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import * as moment from 'moment';
 
-import { User, SelectChatService, SelectUserService, RoomService, UserService } from '../../../shared';
+import { User, SelectChatService, SelectUserService, RoomService, UserService, SocketService, } from '../../../shared';
 
 @Component({
   selector: 'app-room',
@@ -15,12 +16,14 @@ export class RoomComponent implements OnInit {
   active = false;
   title = '';
   picture = '';
+  lastMessage: any = {};
 
   constructor(
     private selectChat: SelectChatService,
     private selectUser: SelectUserService,
     private roomService: RoomService,
     private userService: UserService,
+    private socketService: SocketService,
   ) { }
 
   ngOnInit() {
@@ -36,6 +39,17 @@ export class RoomComponent implements OnInit {
           this.picture = this.room.picture || user.picture;
         });
       });
+      this.socketService.emit('get last message', this.room._id)
+      .subscribe(data => data);
+      this.socketService.on(`last message ${this.room._id}`).subscribe(message => {
+        this.lastMessage = message;
+      });
+  }
+
+  setTime() {
+    const msgMs = moment(this.lastMessage.date).valueOf();
+    const ms = moment().valueOf();
+    return moment(ms - msgMs).format('mm');
   }
 
   deleteChat(room) {

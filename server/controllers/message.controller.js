@@ -17,8 +17,8 @@ const findByUser = (userId, callback) => {
   Message.find({ sender: userId }, callback);
 }
 
-const findLast = (callback) => {
-  Message.findOne({}, {}, { sort: { 'created_at': -1 } }, callback);
+const findLast = (id, callback) => {
+  Message.findOne({ chatId: id }).sort('-date').exec(callback);
 }
 
 const findById = (id, callback) => {
@@ -30,7 +30,7 @@ const updateMessage = (id, data, callback) => {
 }
 
 const deleteByRoomId = (id, callback) => {
-  Message.find({ chatId: id }).remove(callback);
+  Message.remove({ chatId: id }, callback);
 }
 
 module.exports = {
