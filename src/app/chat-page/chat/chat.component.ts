@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit {
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;
+      this.interlocutors = [];
       const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
       if (interlocutorsId.length === 1) {
         this.private = true;
@@ -34,7 +35,7 @@ export class ChatComponent implements OnInit {
         .subscribe(interlocutor => {
           this.interlocutors = this.interlocutors.concat(interlocutor);
           if (this.private) {
-            this.isFriends = interlocutor.friends.some(interlocutorId => interlocutorId === this.user._id);
+            this.isFriends = this.user.friends.some(friendId => friendId === interlocutor._id);
           } else {
             this.isFriends = false;
           }
@@ -43,6 +44,15 @@ export class ChatComponent implements OnInit {
     });
 
     this.socketService.connect();
+  }
+
+  acceptFriend() {
+    this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(this.interlocutors[0]._id) })
+    .subscribe(status => {
+      if (status.success) {
+        this.isFriends = true;
+      }
+    });
   }
 
 }

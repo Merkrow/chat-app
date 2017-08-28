@@ -48,6 +48,16 @@
       </div>
     </div>
 
+    <div *ngIf="interlocutors.length && !isFriends" class="add-friend">
+      <div class="add-message">
+        {{ interlocutors[0].fullName }} wants to add you to contact list
+      </div>
+      <div class="add-buttons">
+        <button type="button" (click)="acceptFriend()">Accept</button>
+        <button type="button">Decline</button>
+      </div>
+    </div>
+
   </div>
 
   <div class="chat-input">
