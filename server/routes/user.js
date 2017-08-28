@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../controllers');
 const config = require('../config');
 
-router.post('/register', function(req, res) {
+router.post('/register', (req, res) => {
   if (!req.body.email || !req.body.password || !req.body.username) {
     res.json({
       success: false,
@@ -43,7 +43,7 @@ router.get('/search/:username', (req, res) => {
   })
 })
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
   User.find({}, (err, users) => {
     res.json(users);
   });
