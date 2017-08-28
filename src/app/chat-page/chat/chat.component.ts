@@ -11,7 +11,7 @@ import { SocketService, User, SelectChatService, UserService, } from '../../shar
 export class ChatComponent implements OnInit {
   @Input() user: User;
   messages: any[];
-  message: string;
+  message = '';
   room: any;
   interlocutors: User[] = [];
   private = false;
@@ -24,14 +24,19 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.socketService.connect();
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;
+      this.socketService.emit('get messages', room._id)
+      .subscribe(data => data);
+
       this.interlocutors = [];
       const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
       if (interlocutorsId.length === 1) {
         this.private = true;
       }
+
       interlocutorsId.map(id => {
         this.userService.getUserById(id)
         .subscribe(interlocutor => {
@@ -45,11 +50,18 @@ export class ChatComponent implements OnInit {
       });
     });
 
-    this.socketService.connect();
+
     this.socketService.on('message response')
     .subscribe(message => {
       console.log(message);
     });
+
+    this.socketService.on('messages response')
+    .subscribe(messages => {
+      console.log(messages);
+      this.messages = messages;
+    });
+
   }
 
   acceptFriend() {
@@ -62,6 +74,9 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
+    if (!this.message.length) {
+      return;
+    }
     this.socketService.emit('chat message', {
       userId: this.user._id,
       date: moment().format('YYYY-MM-DD'),
@@ -71,6 +86,7 @@ export class ChatComponent implements OnInit {
     .subscribe(response => {
       console.log(response);
     });
+    this.message = '';
   }
 
 }

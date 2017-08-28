@@ -44,6 +44,11 @@ io.on('connection', (socket) => {
       socket.emit('message response', message);
     });
   });
+  socket.on('get messages', (id) => {
+    Message.find({ chatId: id }, (err, messages) => {
+      socket.emit('messages response', messages);
+    })
+  })
 });
 
 app.use(function(req, res, next) {
