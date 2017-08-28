@@ -32,6 +32,11 @@ export class ChatComponent implements OnInit {
       this.socketService.emit('get messages', room._id)
       .subscribe(data => data);
 
+      this.socketService.on(`message response ${room._id}`)
+      .subscribe(message => {
+        this.messages = this.messages.concat(message);
+      });
+
       this.interlocutors = [];
       const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
       if (interlocutorsId.length === 1) {
@@ -51,11 +56,6 @@ export class ChatComponent implements OnInit {
       });
     });
 
-
-    this.socketService.on('message response')
-    .subscribe(message => {
-      console.log(message);
-    });
 
     this.socketService.on('messages response')
     .subscribe(messages => {

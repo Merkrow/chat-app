@@ -5,7 +5,7 @@
   </div>
   <div class="user-meta">
     <div><span>{{ title }}</span></div>
-    <span>{{ lastMessage.text }}</span>
+    <span *ngIf="lastMessage">{{ lastMessage.text }}</span>
   </div>
   <div class="chat-settings">
     <svg (click)="deleteChat(room)" viewBox="0 0 17.6 17.2">

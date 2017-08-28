@@ -50,6 +50,9 @@ export class RoomComponent implements OnInit {
   }
 
   setTime() {
+    if (!this.lastMessage) {
+      return;
+    }
     const msgMs = moment(this.lastMessage.date).valueOf();
     const ms = moment().valueOf();
     this.lastMessageTime = ms - msgMs >= 3600000 ? null : moment(ms - msgMs).format('mm');

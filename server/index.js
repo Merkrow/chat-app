@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
       if (err) {
         return;
       }
-      socket.emit('message response', message);
+      io.emit(`message response ${chatMessage.chatId}`, message);
     });
   });
   socket.on('get messages', (id) => {
