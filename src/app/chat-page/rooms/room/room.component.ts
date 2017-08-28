@@ -14,6 +14,7 @@ export class RoomComponent implements OnInit {
   interlocutors: User[] = [];
   active = false;
   title = '';
+  picture = '';
 
   constructor(
     private selectChat: SelectChatService,
@@ -31,11 +32,8 @@ export class RoomComponent implements OnInit {
       .map(userId => {
         this.userService.getUserById(userId).subscribe(user => {
           this.interlocutors = this.interlocutors.concat(user);
-          if (this.room.title) {
-            this.title = this.room.title;
-          } else {
-            this.title = user.fullName;
-          }
+          this.title = this.room.title || user.fullName;
+          this.picture = this.room.picture || user.picture;
         });
       });
   }

@@ -1,7 +1,7 @@
 <div (click)="setChat()" class="chat-person" [ngClass]="{ 'active': active }">
   <div class="chat-image">
     <span class="online-status"></span>
-    <img src="" alt="">
+    <img [src]="picture" alt="">
   </div>
   <div class="user-meta">
     <div><span>{{ title }}</span></div>
