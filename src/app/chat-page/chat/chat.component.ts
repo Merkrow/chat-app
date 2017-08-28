@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit {
   interlocutors: User[] = [];
   private = false;
   isFriends = true;
+  moment = moment;
 
   constructor(
     private socketService: SocketService,
@@ -64,6 +65,14 @@ export class ChatComponent implements OnInit {
 
   }
 
+  getImage(msg) {
+    return this.interlocutors.length && this.interlocutors.find(interlocutor => interlocutor._id === msg.sender).picture || '';
+  }
+
+  sortMsgs(messages) {
+    return messages && messages.sort((msg1, msg2) => moment(msg1.date).get('millisecond') - moment(msg2.date).get('millisecond'));
+  }
+
   acceptFriend() {
     this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(this.interlocutors[0]._id) })
     .subscribe(status => {
@@ -79,7 +88,7 @@ export class ChatComponent implements OnInit {
     }
     this.socketService.emit('chat message', {
       userId: this.user._id,
-      date: moment().format('YYYY-MM-DD'),
+      date: moment().format(),
       chatId: this.room._id,
       text: this.message
     })

@@ -12,7 +12,7 @@ const MessageSchema = new Schema({
     required: true,
   },
   date: {
-    type: String,
+    type: Object,
     required: true,
   },
   chatId: {
