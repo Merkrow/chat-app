@@ -17,6 +17,7 @@ export class RoomComponent implements OnInit {
   title = '';
   picture = '';
   lastMessage: any = {};
+  lastMessageTime: string;
 
   constructor(
     private selectChat: SelectChatService,
@@ -43,13 +44,15 @@ export class RoomComponent implements OnInit {
       .subscribe(data => data);
       this.socketService.on(`last message ${this.room._id}`).subscribe(message => {
         this.lastMessage = message;
+        this.setTime();
+        window.setInterval(this.setTime.bind(this), 5000);
       });
   }
 
   setTime() {
     const msgMs = moment(this.lastMessage.date).valueOf();
     const ms = moment().valueOf();
-    return moment(ms - msgMs).format('mm');
+    this.lastMessageTime = moment(ms - msgMs).format('mm');
   }
 
   deleteChat(room) {
