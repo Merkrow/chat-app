@@ -29,11 +29,11 @@ export class InfoComponent implements OnInit {
     });
   }
 
-  addFriend() {
-    this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(this.userInfo._id) })
+  unfriendUser() {
+    this.userService.updateUser(this.user._id, { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id) })
     .subscribe(status => {
       if (status.success) {
-        this.isFriend = true;
+        this.isFriend = false;
       }
     });
   }

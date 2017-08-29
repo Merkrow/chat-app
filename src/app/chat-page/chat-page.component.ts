@@ -30,6 +30,7 @@ export class ChatPageComponent implements OnInit {
     });
     this.userService.currentUser.subscribe(user => {
       this.user = user;
+      this.friends = [];
       if (user._id) {
         user.friends.map(friendId => {
           this.userService.getUserById(friendId)

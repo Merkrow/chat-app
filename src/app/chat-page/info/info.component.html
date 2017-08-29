@@ -1,19 +1,21 @@
 <div class="user-info-container">
   <div class="user-header">
     <div>
-      <svg viewBox="0 50 512 512">
-        <use xlink:href="assets/sprite.svg#bell"></use>
-      </svg>
     </div>
     <span>{{ user.fullName }}</span>
   </div>
 
   <div *ngIf="userInfo" class="user-info">
-    <button *ngIf="!isFriend" type="button" (click)="addFriend()"></button>
     <div class="svg-more">
       <svg viewBox="0 0 17.6 17.2">
         <use xlink:href="assets/sprite.svg#more"></use>
       </svg>
+      <div class="dropdown">
+        <ul class="dropdown-menu">
+          <li (click)="unfriendUser()">Unfriend</li>
+          <li>Second</li>
+        </ul>
+      </div>
     </div>
     <img [src]="userInfo.picture" alt="">
     <h3>{{ userInfo.fullName }}</h3>

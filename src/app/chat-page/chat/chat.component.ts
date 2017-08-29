@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, Input, ViewChild, ElementRef, } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewChecked, Input, ViewChild, ElementRef, } from '@angular/core';
 import * as moment from 'moment';
 
 import { SocketService, User, SelectChatService, UserService, } from '../../shared';
@@ -27,7 +27,7 @@ function debounce(func, wait, immediate) {
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
   @ViewChild('chat') private myScrollContainer: ElementRef;
   @Input() user: User;
   messages: any[];
@@ -67,49 +67,54 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     return Array.from(this.typingNames).filter(name => name !== this.user.fullName).join(', ');
   }
 
-  ngOnInit() {
-    this.socketService.connect(this.user._id);
-    this.selectChat.getChatIdEmitter()
-    .subscribe(room => {
-      this.room = room;
-      if (this.isFriends) {
-        this.socketService.emit('get messages', room._id)
-        .subscribe(data => data);
-      }
+  ngOnChanges(changes) {
+    if (changes.user) {
+      this.selectChat.getChatIdEmitter()
+      .subscribe(room => {
+        this.room = room;
+        this.messages = [];
+        this.socketService.on(`message response ${room._id}`)
+        .subscribe(message => {
+          this.messages = this.messages.concat(message);
+          this.socketService.emit('get last message', room._id)
+          .subscribe(data => data);
+        });
+        this.socketService.on(`typing emit to ${room._id}`)
+        .subscribe(name => {
+          this.typingNames.add(name);
+          setTimeout(() => {
+            this.typingNames.delete(name);
+          }, 3000);
+        });
 
-      this.socketService.on(`message response ${room._id}`)
-      .subscribe(message => {
-        this.messages = this.messages.concat(message);
-        this.socketService.emit('get last message', room._id)
-        .subscribe(data => data);
-      });
-      this.socketService.on(`typing emit to ${room._id}`)
-      .subscribe(name => {
-        this.typingNames.add(name);
-        setTimeout(() => {
-          this.typingNames.delete(name);
-        }, 3000);
-      });
+        this.interlocutors = [];
+        const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
+        if (interlocutorsId.length === 1) {
+          this.private = true;
+        }
 
-      this.interlocutors = [];
-      const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
-      if (interlocutorsId.length === 1) {
-        this.private = true;
-      }
-
-      interlocutorsId.map(id => {
-        this.userService.getUserById(id)
-        .subscribe(interlocutor => {
-          this.interlocutors = this.interlocutors.concat(interlocutor);
-          if (this.private) {
-            this.isFriends = this.user.friends.some(friendId => friendId === interlocutor._id);
-          } else {
-            this.isFriends = false;
-          }
+        interlocutorsId.map(id => {
+          this.userService.getUserById(id)
+          .subscribe(interlocutor => {
+            this.interlocutors = this.interlocutors.concat(interlocutor);
+            if (this.private) {
+              this.isFriends = this.user.friends.some(friendId => friendId === interlocutor._id);
+            } else {
+              this.isFriends = false;
+            }
+            if (this.isFriends) {
+              this.socketService.emit('get messages', room._id)
+              .subscribe(data => data);
+            }
+          });
         });
       });
-    });
 
+    }
+  }
+
+  ngOnInit() {
+    this.socketService.connect(this.user._id);
 
     this.socketService.on('messages response')
     .subscribe(messages => {

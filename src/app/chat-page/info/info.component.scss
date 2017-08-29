@@ -51,6 +51,35 @@
       right: 23px;
       fill: #666666;
       cursor: pointer;
+      .dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 10px;
+        border-radius: 20px;
+        .dropdown-menu {
+          border-radius: 5px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          background-color: #262c34;
+          overflow: hidden;
+          li {
+            text-align: center;
+            width: 80px;
+            height: 25px;
+            font-size: 12px;
+            line-height: 25px;
+            color: #9a9da0;
+          }
+          li:hover {
+            background-color: #3d4249;
+          }
+        }
+      }
+    }
+    .svg-more:hover .dropdown {
+      display: inline-block;
     }
     .svg-more:hover {
       fill: #000;
