@@ -8,9 +8,15 @@
     <span *ngIf="lastMessage">{{ lastMessage.text }}</span>
   </div>
   <div class="chat-settings">
-    <svg (click)="deleteChat(room)" viewBox="0 0 17.6 17.2">
+    <svg viewBox="0 0 17.6 17.2">
       <use xlink:href="assets/sprite.svg#more"></use>
     </svg>
+    <div class="dropdown">
+      <ul class="dropdown-menu">
+        <li (click)="deleteChat(room)">Delete chat</li>
+        <li>Second</li>
+      </ul>
+    </div>
     <span *ngIf="lastMessageTime !== null">{{ lastMessageTime }} min</span>
   </div>
 </div>

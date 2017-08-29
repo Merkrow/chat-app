@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
   });
   socket.on('get messages', (id) => {
     Message.find({ chatId: id }, (err, messages) => {
-      socket.emit('messages response', messages);
+      socket.emit(`messages response ${id}`, messages);
     })
   })
   socket.on('get last message', (id) => {

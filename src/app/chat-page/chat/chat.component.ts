@@ -68,17 +68,21 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   ngOnChanges(changes) {
+
     if (changes.user) {
       this.selectChat.getChatIdEmitter()
       .subscribe(room => {
         this.room = room;
         this.messages = [];
+
         this.socketService.on(`message response ${room._id}`)
         .subscribe(message => {
           this.messages = this.messages.concat(message);
+
           this.socketService.emit('get last message', room._id)
           .subscribe(data => data);
         });
+
         this.socketService.on(`typing emit to ${room._id}`)
         .subscribe(name => {
           this.typingNames.add(name);
@@ -94,6 +98,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
         }
 
         interlocutorsId.map(id => {
+
           this.userService.getUserById(id)
           .subscribe(interlocutor => {
             this.interlocutors = this.interlocutors.concat(interlocutor);
@@ -103,10 +108,11 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
               this.isFriends = false;
             }
             if (this.isFriends) {
-              this.socketService.emit('get messages', room._id)
+              this.socketService.emit('get messages', this.room._id)
               .subscribe(data => data);
             }
           });
+
         });
       });
 
@@ -115,12 +121,40 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
 
   ngOnInit() {
     this.socketService.connect(this.user._id);
+    this.selectChat.getChatIdEmitter()
+    .subscribe(room => {
+      this.room = room;
+      this.messages = [];
 
-    this.socketService.on('messages response')
-    .subscribe(messages => {
-      this.messages = messages;
+      this.socketService.on(`messages response ${this.room._id}`)
+      .subscribe(messages => {
+        this.messages = messages;
+      });
+
+      this.interlocutors = [];
+      const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
+      if (interlocutorsId.length === 1) {
+        this.private = true;
+      }
+
+      interlocutorsId.map(id => {
+
+        this.userService.getUserById(id)
+        .subscribe(interlocutor => {
+          this.interlocutors = this.interlocutors.concat(interlocutor);
+          if (this.private) {
+            this.isFriends = this.user.friends.some(friendId => friendId === interlocutor._id);
+          } else {
+            this.isFriends = false;
+          }
+          if (this.isFriends) {
+            this.socketService.emit('get messages', this.room._id)
+            .subscribe(data => data);
+          }
+        });
+
+      });
     });
-
   }
 
   getImage(msg) {
