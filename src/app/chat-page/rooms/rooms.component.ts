@@ -21,7 +21,13 @@ export class RoomsComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-
+    this.roomService.getNewRoom().subscribe(room => {
+      if (!this.rooms.some(prev => {
+        return prev._id === room._id;
+      })) {
+        this.rooms = this.rooms.concat(room);
+      }
+    });
   }
 
   ngOnChanges(changes) {
@@ -42,13 +48,6 @@ export class RoomsComponent implements OnInit, OnChanges {
         .subscribe(online => {
           this.onlineUsers = online;
         });
-      });
-      this.roomService.getNewRoom().subscribe(room => {
-        if (!this.rooms.some(prev => {
-          return prev._id === room._id;
-        })) {
-          this.rooms = this.rooms.concat(room);
-        }
       });
       this.roomService.getRemovedRoom().subscribe(room => {
         if (this.rooms.length && room) {
