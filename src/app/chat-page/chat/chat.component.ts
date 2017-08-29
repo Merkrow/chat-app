@@ -3,6 +3,25 @@ import * as moment from 'moment';
 
 import { SocketService, User, SelectChatService, UserService, } from '../../shared';
 
+function debounce(func, wait, immediate) {
+  let timeout;
+  return function() {
+    const context = this, args = arguments;
+    const later = function() {
+      timeout = null;
+      if (!immediate) {
+        func.apply(context, args);
+      }
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) {
+      func.apply(context, args);
+    }
+  };
+}
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -18,6 +37,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   private = false;
   isFriends = true;
   moment = moment;
+  typingNames: any = new Set();
+  debounce = debounce;
 
   constructor(
     private socketService: SocketService,
@@ -33,8 +54,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  startTyping() {
+    this.socketService.emit('user typing', { userName: this.user.fullName, roomId: this.room._id })
+    .subscribe(res => res);
+  }
+
   ngAfterViewChecked() {
     this.scrollToBottom();
+  }
+
+  renderNames() {
+    return Array.from(this.typingNames).filter(name => name !== this.user.fullName).join(', ');
   }
 
   ngOnInit() {
@@ -42,12 +72,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;
-      this.socketService.emit('get messages', room._id)
-      .subscribe(data => data);
+      if (this.isFriends) {
+        this.socketService.emit('get messages', room._id)
+        .subscribe(data => data);
+      }
 
       this.socketService.on(`message response ${room._id}`)
       .subscribe(message => {
         this.messages = this.messages.concat(message);
+        this.socketService.emit('get last message', room._id)
+        .subscribe(data => data);
+      });
+      this.socketService.on(`typing emit to ${room._id}`)
+      .subscribe(name => {
+        this.typingNames.add(name);
+        setTimeout(() => {
+          this.typingNames.delete(name);
+        }, 3000);
       });
 
       this.interlocutors = [];

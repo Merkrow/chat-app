@@ -68,6 +68,10 @@ io.on('connection', (socket) => {
     })
   })
 
+  socket.on('user typing', ({ roomId, userName }) => {
+    io.emit(`typing emit to ${roomId}`, userName);
+  })
+
   socket.on('disconnect', () => {
     onlineUsers.delete(socket.handshake.query.id);
     io.emit('online users', Array.from(onlineUsers));

@@ -2,7 +2,7 @@
   <div class="chat">
     <div class="chat-header">
       <div class="chat-nav">
-        <div class="person-typing"><span><strong>Kirsten Mckellar</strong> is typing...</span></div>
+        <div class="person-typing" *ngIf="typingNames.size > 0 && renderNames()"><span><strong>{{ renderNames() }}</strong> is typing...</span></div>
         <div class="star">
           <svg viewBox="0 0 100 100">
             <use xlink:href="assets/sprite.svg#phone"></use>
@@ -61,7 +61,7 @@
       <use xlink:href="assets/sprite.svg#attach"></use>
     </svg>
     <div class="input-container">
-      <input type="text" placeholder="Type your message..." [(ngModel)]="message" [disabled]="!isFriends" (keyup.enter)="sendMessage()">
+      <input type="text" placeholder="Type your message..." [(ngModel)]="message" [disabled]="!isFriends" (keyup.enter)="sendMessage()" (keypress)="startTyping()">
     </div>
     <svg viewBox="0 0 32 32" class="smile-button">
       <use xlink:href="assets/sprite.svg#emoji"></use>
