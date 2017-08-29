@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { UserService, User, RoomService } from '../../shared';
+import { UserService, User, RoomService, SocketService } from '../../shared';
 
 @Component({
   selector: 'app-rooms',
@@ -11,16 +11,31 @@ export class RoomsComponent implements OnInit {
   @Input() user: User;
   filterValue: string;
   rooms: any[] = [];
+  onlineUsers: string[] = [];
 
   constructor(
     private userService: UserService,
     private roomService: RoomService,
+    private socketService: SocketService,
   ) { }
 
   ngOnInit() {
     this.roomService.getUserRooms(this.user._id)
     .subscribe(rooms => {
       this.rooms = rooms;
+      this.socketService.emit('online users', {
+        friends: this.user.friends,
+        id: `${this.user._id}`
+      })
+      .subscribe(online => online);
+      this.socketService.on(`online users ${this.user._id}`)
+      .subscribe(online => {
+        this.onlineUsers = online;
+      });
+      this.socketService.on(`online users`)
+      .subscribe(online => {
+        this.onlineUsers = online;
+      });
     });
     this.roomService.getNewRoom().subscribe(room => {
       if (!this.rooms.some(prev => {

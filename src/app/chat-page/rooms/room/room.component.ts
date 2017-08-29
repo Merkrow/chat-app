@@ -11,6 +11,7 @@ import { User, SelectChatService, SelectUserService, RoomService, UserService, S
 export class RoomComponent implements OnInit {
   @Input() room: any;
   @Input() user: User;
+  @Input() onlineUsers: string[];
   @Output() removeRoom = new EventEmitter<string>();
   interlocutors: User[] = [];
   active = false;

@@ -12,7 +12,7 @@ export class FriendsComponent implements OnInit {
   @Input() friends: User[];
   @Output() toggleShowFriends = new EventEmitter<boolean>();
   filterValue = '';
-  onlineUsers: any;
+  onlineUsers: any = [];
 
   constructor(
     private roomService: RoomService,
@@ -22,9 +22,13 @@ export class FriendsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.socketService.emit('online users', this.user.friends)
+    this.socketService.emit('online users', { friends: this.user.friends, id: this.user._id })
     .subscribe(online => online);
-    this.socketService.on('online users')
+    this.socketService.on(`online users ${this.user._id}`)
+    .subscribe(online => {
+      this.onlineUsers = online;
+    });
+    this.socketService.on(`online users`)
     .subscribe(online => {
       this.onlineUsers = online;
     });

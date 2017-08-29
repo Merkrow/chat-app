@@ -38,15 +38,15 @@ app.use('/rooms', rooms);
 
 io.on('connection', (socket) => {
   onlineUsers.add(socket.handshake.query.id);
-  io.emit('online users', onlineUsers);
-  socket.on('online users', (friends) => {
+  io.emit('online users', Array.from(onlineUsers));
+  socket.on('online users', ({ friends, id }) => {
     const res = friends.reduce((acc, friendId) => {
       if (onlineUsers.has(friendId)) {
         return acc.concat(friendId);
       };
       return acc;
     }, []);
-    io.emit('online users', res);
+    io.emit(`online users ${id}`, res);
   })
 
   socket.on('chat message', (chatMessage) => {
@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     onlineUsers.delete(socket.handshake.query.id);
-    io.emit('online users', onlineUsers);
+    io.emit('online users', Array.from(onlineUsers));
   })
 });
 
