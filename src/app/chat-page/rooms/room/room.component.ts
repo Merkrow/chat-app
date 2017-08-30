@@ -19,6 +19,7 @@ export class RoomComponent implements OnInit {
   picture = '';
   lastMessage: any = {};
   lastMessageTime: any;
+  unreadLength = 0;
 
   constructor(
     private selectChat: SelectChatService,
@@ -31,6 +32,10 @@ export class RoomComponent implements OnInit {
   ngOnInit() {
     this.selectChat.getChatIdEmitter().subscribe(room => {
       this.active = room._id === this.room._id;
+      if (this.active) {
+        this.socketService.emit('read messages', { roomId: this.room._id, userId: this.user._id })
+        .subscribe(data => data);
+      }
     });
     this.room.users
       .filter(userId => userId !== this.user._id)
@@ -43,6 +48,14 @@ export class RoomComponent implements OnInit {
       });
       this.socketService.emit('get last message', this.room._id)
       .subscribe(data => data);
+      this.socketService.emit('get unread', { roomId: this.room._id, userId: this.user._id })
+      .subscribe(data => data);
+
+      this.socketService.on(`unread messages ${this.room._id}`).subscribe(unreadLength => {
+        this.unreadLength = unreadLength;
+        console.log(unreadLength);
+      });
+
       this.socketService.on(`last message ${this.room._id}`).subscribe(message => {
         this.lastMessage = message;
         this.setTime();

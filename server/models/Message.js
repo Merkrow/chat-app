@@ -18,6 +18,9 @@ const MessageSchema = new Schema({
     type: String,
     required: true,
   },
+  usersViewed: {
+    type: [String]
+  },
 });
 
 module.exports = mongoose.model('Message', MessageSchema);

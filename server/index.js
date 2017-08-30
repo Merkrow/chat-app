@@ -49,14 +49,32 @@ io.on('connection', (socket) => {
     io.emit(`online users ${id}`, res);
   })
 
+  socket.on('get unread', ({ roomId, userId }) => {
+    Message.getUnreadMessages(userId, roomId, (err, messages) => {
+      socket.emit(`unread messages ${roomId}`, messages.length);
+    })
+  })
+
   socket.on('chat message', (chatMessage) => {
-    Message.create({ sender: chatMessage.userId, text: chatMessage.text, date: chatMessage.date, chatId: chatMessage.chatId }, (err, message) => {
+    Message.create({
+      sender: chatMessage.userId,
+      text: chatMessage.text,
+      date: chatMessage.date,
+      chatId: chatMessage.chatId,
+      usersViewed: chatMessage.usersViewed
+    }, (err, message) => {
       if (err) {
         return;
       }
       io.emit(`message response ${chatMessage.chatId}`, message);
     });
   });
+
+  socket.on('read messages', ({ roomId, userId}) => {
+    Message.findAndUpdate(userId, roomId, (err, messages) => {
+    })
+  })
+
   socket.on('get messages', (id) => {
     Message.find({ chatId: id }, (err, messages) => {
       socket.emit(`messages response ${id}`, messages);

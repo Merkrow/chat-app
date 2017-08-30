@@ -33,6 +33,14 @@ const deleteByRoomId = (id, callback) => {
   Message.remove({ chatId: id }, callback);
 }
 
+const getUnreadMessages = (userId, roomId, callback) => {
+  Message.find({ chatId: roomId, usersViewed: { $nin: [userId] } }, callback);
+}
+
+const findAndUpdate = (userId, roomId, callback) => {
+  Message.update({ chatId: roomId, usersViewed: { $nin: [userId] } }, { $push: { usersViewed: userId } }, { multi: true, new: true }, callback);
+}
+
 module.exports = {
   create,
   find,
@@ -40,4 +48,6 @@ module.exports = {
   findLast,
   findById,
   updateMessage,
+  getUnreadMessages,
+  findAndUpdate,
 }

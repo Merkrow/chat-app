@@ -18,7 +18,7 @@ const findById = (id, callback) => {
 }
 
 const updateRoom = (id, data, callback) => {
-  Room.update({ _id: id, }, { $set: data }, { upsert:true }, callback);
+  Room.update({ _id: id, }, { $set: data }, { upsert: true }, callback);
 }
 
 const deleteRoom = (id, callback) => {

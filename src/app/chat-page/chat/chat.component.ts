@@ -183,7 +183,8 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
       userId: this.user._id,
       date: moment().format(),
       chatId: this.room._id,
-      text: this.message
+      text: this.message,
+      usersViewed: [this.user._id],
     })
     .subscribe(response => {
       console.log(response);
