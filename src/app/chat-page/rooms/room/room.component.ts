@@ -35,6 +35,7 @@ export class RoomComponent implements OnInit {
       if (this.active) {
         this.socketService.emit('read messages', { roomId: this.room._id, userId: this.user._id })
         .subscribe(data => data);
+        this.unreadLength = 0;
       }
     });
     this.room.users
@@ -53,7 +54,6 @@ export class RoomComponent implements OnInit {
 
       this.socketService.on(`unread messages ${this.room._id}`).subscribe(unreadLength => {
         this.unreadLength = unreadLength;
-        console.log(unreadLength);
       });
 
       this.socketService.on(`last message ${this.room._id}`).subscribe(message => {
