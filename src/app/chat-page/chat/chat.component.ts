@@ -78,8 +78,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
         this.socketService.on(`message response ${room._id}`)
         .subscribe(message => {
           this.messages = this.messages.concat(message);
-
-          this.socketService.emit('get last message', room._id)
+          this.socketService.emit('read messages', { roomId: this.room._id, userId: this.user._id })
           .subscribe(data => data);
         });
 

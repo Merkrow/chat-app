@@ -47,20 +47,28 @@ export class RoomComponent implements OnInit {
           this.picture = this.room.picture || user.picture;
         });
       });
-      this.socketService.emit('get last message', this.room._id)
-      .subscribe(data => data);
-      this.socketService.emit('get unread', { roomId: this.room._id, userId: this.user._id })
-      .subscribe(data => data);
+    this.socketService.emit('get last message', this.room._id)
+    .subscribe(data => {
+      return data;
+    });
+    this.socketService.emit('get unread', { roomId: this.room._id, userId: this.user._id })
+    .subscribe(data => data);
 
-      this.socketService.on(`unread messages ${this.room._id}`).subscribe(unreadLength => {
-        this.unreadLength = unreadLength;
-      });
+    this.socketService.on(`unread messages ${this.room._id}`).subscribe(unreadLength => {
+      this.unreadLength = unreadLength;
+    });
 
-      this.socketService.on(`last message ${this.room._id}`).subscribe(message => {
-        this.lastMessage = message;
-        this.setTime();
-        window.setInterval(this.setTime.bind(this), 5000);
-      });
+    this.socketService.on(`last message ${this.room._id} new`).subscribe(message => {
+      if (!this.active) {
+        this.unreadLength += 1;
+      }
+    });
+
+    this.socketService.on(`last message ${this.room._id}`).subscribe(message => {
+      this.lastMessage = message;
+      this.setTime();
+      window.setInterval(this.setTime.bind(this), 5000);
+    });
   }
 
   setTime() {

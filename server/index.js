@@ -67,6 +67,7 @@ io.on('connection', (socket) => {
         return;
       }
       io.emit(`message response ${chatMessage.chatId}`, message);
+      io.emit(`last message ${chatMessage.chatId} new`, message);
     });
   });
 
@@ -82,7 +83,7 @@ io.on('connection', (socket) => {
   })
   socket.on('get last message', (id) => {
     Message.findLast(id, (err, message) => {
-      socket.emit(`last message ${id}`, message);
+      io.emit(`last message ${id}`, message);
     })
   })
 
