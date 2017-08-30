@@ -62,6 +62,7 @@ export class RoomComponent implements OnInit {
       if (!this.active) {
         this.unreadLength += 1;
       }
+      this.lastMessage = message;
     });
 
     this.socketService.on(`last message ${this.room._id}`).subscribe(message => {
