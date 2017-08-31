@@ -9,7 +9,7 @@
       <app-chat [user]="user"></app-chat>
     </div>
     <div *ngIf="showFriends" class="friends">
-      <app-friends [user]="user" [friends]="friends" (toggleShowFriends)="toggleShowFriends($event)"></app-friends>
+      <app-friends [user]="user" (toggleShowFriends)="toggleShowFriends($event)"></app-friends>
     </div>
     <app-info [user]="user"></app-info>
 

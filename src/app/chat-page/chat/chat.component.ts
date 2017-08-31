@@ -70,6 +70,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
   ngOnChanges(changes) {
 
     if (changes.user) {
+
       this.selectChat.getChatIdEmitter()
       .subscribe(room => {
         this.room = room;
@@ -115,11 +116,17 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
         });
       });
 
+      this.user.friends.map(friendId => {
+        this.socketService.on(`update user ${this.user._id} ${friendId}`)
+        .subscribe(newUser => {
+            this.userService.changeUser(newUser);
+        });
+      });
+
     }
   }
 
   ngOnInit() {
-    this.socketService.connect(this.user._id);
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;
@@ -166,12 +173,19 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   acceptFriend() {
-    this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(this.interlocutors[0]._id) })
-    .subscribe(status => {
-      if (status.success) {
-        this.isFriends = true;
-      }
-    });
+    this.socketService.emit('update user', {
+      userId: this.user._id,
+      friendId: this.interlocutors[0]._id,
+      update: { friends: this.user.friends.concat(this.interlocutors[0]._id) }
+    })
+    .subscribe(data => data);
+
+    // this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(this.interlocutors[0]._id) })
+    // .subscribe(status => {
+    //   if (status.success) {
+    //     this.isFriends = true;
+    //   }
+    // });
   }
 
   sendMessage() {

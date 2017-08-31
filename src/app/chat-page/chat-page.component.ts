@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService, User } from '../shared';
+import { UserService, User, SocketService } from '../shared';
 
 @Component({
   selector: 'app-chat-page',
@@ -14,11 +14,11 @@ export class ChatPageComponent implements OnInit {
   popup = false;
   chosenUser: string;
   showFriends = false;
-  friends: User[] = [];
 
   constructor(
     private userService: UserService,
     private router: Router,
+    private socketService: SocketService,
   ) { }
 
   ngOnInit() {
@@ -29,16 +29,10 @@ export class ChatPageComponent implements OnInit {
         }
     });
     this.userService.currentUser.subscribe(user => {
-      this.user = user;
-      this.friends = [];
-      if (user._id) {
-        user.friends.map(friendId => {
-          this.userService.getUserById(friendId)
-          .subscribe(friend => {
-            this.friends.push(friend);
-          });
-        });
+      if (!this.user && user) {
+        this.socketService.connect(user._id);
       }
+      this.user = user;
     });
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 
-import { RoomService, User, SelectChatService, SelectUserService, SocketService } from '../../shared';
+import { RoomService, User, SelectChatService, SelectUserService, SocketService, UserService } from '../../shared';
 
 @Component({
   selector: 'app-friends',
@@ -9,19 +9,26 @@ import { RoomService, User, SelectChatService, SelectUserService, SocketService 
 })
 export class FriendsComponent implements OnInit {
   @Input() user: User;
-  @Input() friends: User[];
   @Output() toggleShowFriends = new EventEmitter<boolean>();
   filterValue = '';
   onlineUsers: any = [];
+  friends: User[] = [];
 
   constructor(
     private roomService: RoomService,
     private selectChatService: SelectChatService,
     private selectUser: SelectUserService,
     private socketService: SocketService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
+    this.user.friends.map(friendId => {
+      this.userService.getUserById(friendId)
+      .subscribe(friend => {
+        this.friends.push(friend);
+      });
+    });
     this.socketService.emit('online users', { friends: this.user.friends, id: this.user._id })
     .subscribe(online => online);
     this.socketService.on(`online users ${this.user._id}`)

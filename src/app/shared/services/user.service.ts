@@ -27,6 +27,10 @@ export class UserService {
     private jwtService: JwtService,
   ) {}
 
+  changeUser(user: User) {
+    this.currentUserSubject.next(user);
+  }
+
   populate() {
     const token = this.jwtService.getToken();
     if (token) {

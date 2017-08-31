@@ -10,7 +10,7 @@ const cors = require('cors');
 
 const config = require('./config');
 
-const { Message } = require('./controllers');
+const { Message, User } = require('./controllers');
 
 // const routes = require('./routes/index');
 const users = require('./routes/user');
@@ -94,6 +94,12 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     onlineUsers.delete(socket.handshake.query.id);
     io.emit('online users', Array.from(onlineUsers));
+  })
+
+  socket.on('update user', ({ userId, friendId, update }) => {
+    User.updateUser(userId, update, (err, user) => {
+      io.emit(`update user ${userId} ${friendId}`, user);
+    })
   })
 });
 
