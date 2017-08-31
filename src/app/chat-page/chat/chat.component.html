@@ -18,7 +18,7 @@
 
     <div #chat class="messages-container">
 
-      <div *ngIf="interlocutors.length && !isFriends" class="add-friend">
+      <div *ngIf="interlocutors.length && !isFriends && !pending" class="add-friend">
         <div class="add-message">
           {{ interlocutors[0].fullName }} wants to add you to contact list
         </div>
@@ -26,6 +26,10 @@
           <button type="button" (click)="acceptFriend()">Accept</button>
           <button type="button">Decline</button>
         </div>
+      </div>
+
+      <div *ngIf="interlocutors.length && pending && !isFriends" class="add-friend">
+        {{ interlocutors[0].fullName }} still didn't add you to his contact list!
       </div>
 
       <div *ngFor="let msg of sortMsgs(messages)" class="message-wrap">

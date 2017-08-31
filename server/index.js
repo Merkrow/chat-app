@@ -98,7 +98,8 @@ io.on('connection', (socket) => {
 
   socket.on('update user', ({ userId, friendId, update }) => {
     User.updateUser(userId, update, (err, user) => {
-      io.emit(`update user ${userId} ${friendId}`, user);
+      io.emit(`update user ${userId}`, user);
+      io.emit(`update user ${friendId} ${userId}`, user);
     })
   })
 });
