@@ -29,8 +29,10 @@ export class ChatPageComponent implements OnInit {
         }
     });
     this.userService.currentUser.subscribe(user => {
-      if (!this.user && user) {
+      if (!this.user && user._id || this.user && this.user._id !== user._id) {
         this.socketService.connect(user._id);
+        this.socketService.emit('online users', { friends: user.friends, id: user._id })
+        .subscribe(online => online);
       }
       this.user = user;
     });
