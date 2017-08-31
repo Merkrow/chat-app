@@ -70,7 +70,6 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
   ngOnChanges(changes) {
 
     if (changes.user) {
-
       this.selectChat.getChatIdEmitter()
       .subscribe(room => {
         this.room = room;
@@ -103,19 +102,21 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
           .subscribe(interlocutor => {
             this.interlocutors = this.interlocutors.concat(interlocutor);
             if (this.private) {
-              const pending = this.user.friends.some(friendId => friendId === interlocutor._id);
+              const pending = changes.user.currentValue.friends.some(friendId => friendId === interlocutor._id);
               const accepted = this.interlocutors[0].friends.some(friendId => friendId === this.user._id);
+              console.log(pending, accepted);
               if (pending && accepted) {
                 this.isFriends = true;
+                this.socketService.emit('get messages', this.room._id)
+                .subscribe(data => data);
               } else if (pending) {
                 this.pending = true;
                 this.isFriends = false;
+              } else {
+                this.isFriends = false;
               }
             }
-            if (this.isFriends) {
-              this.socketService.emit('get messages', this.room._id)
-              .subscribe(data => data);
-            }
+
           });
 
         });
@@ -128,11 +129,14 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
       this.user.friends.map(friendId => {
         this.socketService.on(`update user ${this.user._id} ${friendId}`)
         .subscribe(newFriend => {
-          if (newFriend._id) {
+          if (newFriend.friends.some(this.user._id)) {
             this.pending = false;
             this.isFriends = true;
             this.socketService.emit('get messages', this.room._id)
             .subscribe(data => data);
+          } else {
+            this.pending = true;
+            this.isFriends = false;
           }
         });
       });
@@ -167,14 +171,12 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
             const accepted = this.interlocutors[0].friends.some(friendId => friendId === this.user._id);
             if (pending && accepted) {
               this.isFriends = true;
+              this.socketService.emit('get messages', this.room._id)
+              .subscribe(data => data);
             } else if (pending) {
               this.pending = true;
               this.isFriends = false;
             }
-          }
-          if (this.isFriends) {
-            this.socketService.emit('get messages', this.room._id)
-            .subscribe(data => data);
           }
         });
 

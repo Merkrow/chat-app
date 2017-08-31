@@ -18,7 +18,7 @@
 
     <div #chat class="messages-container">
 
-      <div *ngIf="interlocutors.length && !isFriends && !pending" class="add-friend">
+      <div *ngIf="interlocutors.length && !isFriends" class="add-friend">
         <div class="add-message">
           {{ interlocutors[0].fullName }} wants to add you to contact list
         </div>

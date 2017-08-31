@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
-import { SelectUserService, User, UserService, } from '../../shared';
+import { SelectUserService, User, UserService, SocketService, } from '../../shared';
 
 @Component({
   selector: 'app-info',
@@ -17,6 +17,7 @@ export class InfoComponent implements OnInit {
   constructor(
     private selectUser: SelectUserService,
     private userService: UserService,
+    private socketService: SocketService,
   ) { }
 
   ngOnInit() {
@@ -30,12 +31,18 @@ export class InfoComponent implements OnInit {
   }
 
   unfriendUser() {
-    this.userService.updateUser(this.user._id, { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id) })
-    .subscribe(status => {
-      if (status.success) {
-        this.isFriend = false;
-      }
-    });
+    this.socketService.emit(`update user`, {
+      userId: this.user._id,
+      friendId: this.userInfo._id,
+      update: { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id) }
+    }).subscribe(data => data);
+
+    // this.userService.updateUser(this.user._id, { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id) })
+    // .subscribe(status => {
+    //   if (status.success) {
+    //     this.isFriend = false;
+    //   }
+    // });
   }
 
 }
