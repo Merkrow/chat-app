@@ -104,7 +104,6 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
             if (this.private) {
               const pending = changes.user.currentValue.friends.some(friendId => friendId === interlocutor._id);
               const accepted = this.interlocutors[0].friends.some(friendId => friendId === this.user._id);
-              console.log(pending, accepted);
               if (pending && accepted) {
                 this.isFriends = true;
                 this.socketService.emit('get messages', this.room._id)
@@ -121,6 +120,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
 
         });
       });
+
       this.socketService.on(`update user ${this.user._id}`)
       .subscribe(newUser => {
         this.userService.changeUser(newUser);
@@ -129,7 +129,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
       this.user.friends.map(friendId => {
         this.socketService.on(`update user ${this.user._id} ${friendId}`)
         .subscribe(newFriend => {
-          if (newFriend.friends.some(this.user._id)) {
+          if (newFriend.friends.some(frId => frId === this.user._id)) {
             this.pending = false;
             this.isFriends = true;
             this.socketService.emit('get messages', this.room._id)
@@ -137,6 +137,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
           } else {
             this.pending = true;
             this.isFriends = false;
+            this.messages = [];
           }
         });
       });
@@ -175,6 +176,8 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
               .subscribe(data => data);
             } else if (pending) {
               this.pending = true;
+              this.isFriends = false;
+            } else {
               this.isFriends = false;
             }
           }
