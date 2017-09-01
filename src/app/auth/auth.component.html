@@ -1,3 +1,20 @@
-<input type="text" [(ngModel)]="email" placeholder="Email" />
-<input type="text" [(ngModel)]="password" placeholder="Password" />
-<button type="button" (click)="submitForm()">Submit Form</button>
+<div class="auth-form">
+  <div class="form">
+    <h2>= Chat App =</h2>
+    <div class="auth-select">
+      <ul>
+        <li class="border-right">Sign in</li>
+        <li>Sign up</li>
+      </ul>
+    </div>
+    <div class="form-input form-elem">
+      <input type="text" [(ngModel)]="email" placeholder="Email" />
+    </div>
+    <div class="form-input form-elem">
+      <input type="text" [(ngModel)]="password" placeholder="Password" />
+    </div>
+    <div class="form-button form-elem">
+      <button type="button" (click)="submitForm()">Submit Form</button>
+    </div>
+  </div>
+</div>

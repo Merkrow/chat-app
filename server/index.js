@@ -90,6 +90,7 @@ io.on('connection', (socket) => {
       socket.emit(`messages response ${id}`, messages);
     })
   })
+
   socket.on('get last message', (id) => {
     Message.findLast(id, (err, message) => {
       io.emit(`last message ${id}`, message);
