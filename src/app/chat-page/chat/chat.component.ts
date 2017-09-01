@@ -223,9 +223,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
       text: this.message,
       usersViewed: [this.user._id],
     })
-    .subscribe(response => {
-      console.log(response);
-    });
+    .subscribe(response => response);
     this.message = '';
   }
 

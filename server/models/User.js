@@ -52,7 +52,7 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
-  friends: [String],
+  friends: [{ type: String, unique: true }],
 });
 
 UserSchema.pre('save', function(next) {
