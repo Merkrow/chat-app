@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewChecked, Input, ViewChild, ElementRef, } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild, ElementRef, } from '@angular/core';
 import * as moment from 'moment';
 
 import { SocketService, User, SelectChatService, UserService, } from '../../shared';
@@ -27,7 +27,7 @@ function debounce(func, wait, immediate) {
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
+export class ChatComponent implements OnInit, OnChanges {
   @ViewChild('chat') private myScrollContainer: ElementRef;
   @Input() user: User;
   messages: any[];
@@ -46,21 +46,9 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
     private userService: UserService,
   ) { }
 
-  scrollToBottom(): void {
-    try {
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) {
-
-    }
-  }
-
   startTyping() {
     this.socketService.emit('user typing', { userName: this.user.fullName, roomId: this.room._id })
     .subscribe(res => res);
-  }
-
-  ngAfterViewChecked() {
-    this.scrollToBottom();
   }
 
   renderNames() {
@@ -154,6 +142,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
       this.socketService.on(`messages response ${this.room._id}`)
       .subscribe(messages => {
         this.messages = messages;
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
       });
 
       this.interlocutors = [];
@@ -203,13 +192,6 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnChanges {
       update: { friends: this.user.friends.concat(this.interlocutors[0]._id) }
     })
     .subscribe(data => data);
-
-    // this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(this.interlocutors[0]._id) })
-    // .subscribe(status => {
-    //   if (status.success) {
-    //     this.isFriends = true;
-    //   }
-    // });
   }
 
   sendMessage() {

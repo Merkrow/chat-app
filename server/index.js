@@ -10,7 +10,7 @@ const cors = require('cors');
 
 const config = require('./config');
 
-const { Message, User } = require('./controllers');
+const { Message, User, Room } = require('./controllers');
 
 // const routes = require('./routes/index');
 const users = require('./routes/user');
@@ -52,6 +52,15 @@ io.on('connection', (socket) => {
   socket.on('get unread', ({ roomId, userId }) => {
     Message.getUnreadMessages(userId, roomId, (err, messages) => {
       socket.emit(`unread messages ${roomId}`, messages.length);
+    })
+  })
+
+  socket.on('create room', ({ room, creatorId }) => {
+    Room.create(room, (err, newRoom) => {
+      room.users
+      .map(userId => {
+        io.emit(`new room ${userId}`, newRoom)
+      })
     })
   })
 

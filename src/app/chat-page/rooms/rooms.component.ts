@@ -40,13 +40,20 @@ export class RoomsComponent implements OnInit, OnChanges {
           id: `${changes.user.currentValue._id}`
         })
         .subscribe(online => online);
+
         this.socketService.on(`online users ${changes.user.currentValue._id}`)
         .subscribe(online => {
           this.onlineUsers = online;
         });
+
         this.socketService.on(`online users`)
         .subscribe(online => {
           this.onlineUsers = online;
+        });
+
+        this.socketService.on(`new room ${this.user._id}`)
+        .subscribe(newRoom => {
+          this.rooms = this.rooms.concat(newRoom);
         });
       });
       this.roomService.getRemovedRoom().subscribe(room => {

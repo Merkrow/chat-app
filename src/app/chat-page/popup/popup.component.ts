@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
-import { UserService, User, RoomService } from '../../shared';
+import { UserService, User, RoomService, SocketService } from '../../shared';
 
 @Component({
   selector: 'app-popup',
@@ -15,6 +15,7 @@ export class PopupComponent implements OnInit {
     private userService: UserService,
     private _eref: ElementRef,
     private roomService: RoomService,
+    private socketService: SocketService,
   ) { }
 
   @HostListener('document:click', ['$event.target'])
@@ -29,9 +30,8 @@ export class PopupComponent implements OnInit {
   }
 
   addFriend(user: User) {
-    this.roomService.postRoom({ users: [this.user._id, user._id] }).subscribe(room => {
-      console.log(room);
-    });
+    this.socketService.emit('create room', { room: { users: [this.user._id, user._id] }, creatorId: this.user._id })
+    .subscribe(room => room);
     this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(user._id) })
     .subscribe(status => status);
   }

@@ -50,4 +50,5 @@ module.exports = {
   updateMessage,
   getUnreadMessages,
   findAndUpdate,
+  deleteByRoomId,
 }
