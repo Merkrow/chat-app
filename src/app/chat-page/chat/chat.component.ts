@@ -101,6 +101,7 @@ export class ChatComponent implements OnInit, OnChanges {
                 this.isFriends = false;
               } else {
                 this.isFriends = false;
+                this.pending = false;
               }
             }
 
@@ -168,6 +169,7 @@ export class ChatComponent implements OnInit, OnChanges {
               this.isFriends = false;
             } else {
               this.isFriends = false;
+              this.pending = false;
             }
           }
         });
