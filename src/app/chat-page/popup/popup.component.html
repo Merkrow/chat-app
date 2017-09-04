@@ -4,8 +4,13 @@
       <input type="text" (keyup.enter)="search($event)" placeholder="Search...">
     </header>
     <div *ngIf="users" class="results">
-      <div *ngFor="let user of users" class="user-container">
-        <span>{{ user.username + " "}}</span><span>{{ user.email }}</span><button type="button" (click)="addFriend(user)">Add friend</button>
+      <div class="chat-person" *ngFor="let user of users">
+        <div><span>{{ user.username }}</span></div>
+        <div class="svg-wrap" (click)="addFriend(user)">
+          <svg viewBox="0 0 612 792">
+            <use xlink:href="assets/sprite.svg#user"></use>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
