@@ -42,7 +42,7 @@
         .svg-wrap {
           position: absolute;
           right: 10px;
-          top: 10px;
+          top: 5px;
           display: inline-block;
           border: 1px solid #ccc;
           border-radius: 50%;
@@ -54,6 +54,9 @@
             fill: #fff;
           }
         }
+      }
+      .chat-person:hover {
+        background-color: #ccc;
       }
     }
   }
