@@ -28,6 +28,20 @@ body {
   margin: 0;
 }
 
+.dp-picker-input {
+  height: 40px;
+  width: 310px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  border: none;
+  margin-bottom: 30px;
+  background-color: #363d45;
+  color: #868b8e;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 /**
  * Add the correct display in IE 9-.
  */

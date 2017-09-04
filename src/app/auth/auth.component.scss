@@ -18,6 +18,9 @@
           padding: 0 12px;
           cursor: pointer;
         }
+        .selected {
+          color: #fff;
+        }
         .border-right {
           border-right: 1px solid #bebebe;
         }
@@ -61,6 +64,21 @@
     }
 
     .form-elem button:focus {
+      outline: none;
+    }
+
+    .form-select {
+      height: 40px;
+      width: 310px;
+      box-sizing: border-box;
+      border-radius: 18px;
+      border: none;
+      background-color: #363d45;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    .form-select:focus {
       outline: none;
     }
   }
