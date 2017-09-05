@@ -1,25 +1,11 @@
 .user-info-container {
   width: 277px;
+  position: relative;
+  height: 100%;
   .user-header {
     height: 79px;
     border-bottom: 1px solid #dbe0e0;
     position: relative;
-    div {
-      display: inline-block;
-      position: absolute;
-      width: 24px;
-      height: 28px;
-      top: 31px;
-      left: 26px;
-      cursor: pointer;
-      svg {
-        margin-bottom: 30px;
-        fill: #81868b;
-      }
-    }
-    div:hover svg {
-      fill: #000;
-    }
     span {
       position: absolute;
       font-size: 14px;
@@ -30,7 +16,13 @@
     }
   }
   .user-info {
-    position: relative;
+    position: absolute;
+    overflow-y: scroll;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 80px;
+    z-index: 9999999;
     button {
       border-radius: 50%;
       border: 1px solid #666666;
