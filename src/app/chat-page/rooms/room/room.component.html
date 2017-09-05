@@ -19,6 +19,6 @@
         <li (click)="deleteChat(room)">Delete chat</li>
       </ul>
     </div>
-    <span *ngIf="lastMessageTime !== null">{{ lastMessageTime }} min</span>
+    <span *ngIf="lastMessageTime !== null && lastMessage">{{ lastMessageTime }} min</span>
   </div>
 </div>

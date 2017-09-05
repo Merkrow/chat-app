@@ -66,6 +66,7 @@ export class ChatComponent implements OnInit, OnChanges {
         this.socketService.on(`message response ${room._id}`)
         .subscribe(message => {
           this.messages = this.messages.concat(message);
+          this.scroll();
           this.socketService.emit('read messages', { roomId: this.room._id, userId: this.user._id })
           .subscribe(data => data);
         });
@@ -134,6 +135,10 @@ export class ChatComponent implements OnInit, OnChanges {
     }
   }
 
+  scroll() {
+    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+  }
+
   ngOnInit() {
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
@@ -143,7 +148,7 @@ export class ChatComponent implements OnInit, OnChanges {
       this.socketService.on(`messages response ${this.room._id}`)
       .subscribe(messages => {
         this.messages = messages;
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        this.scroll();
       });
 
       this.interlocutors = [];
