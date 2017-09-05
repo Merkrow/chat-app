@@ -60,15 +60,32 @@
         display: none;
         position: absolute;
         right: 0;
-        top: 10px;
+        top: 14px;
         border-radius: 20px;
+        .arrow_box {
+          position: relative;
+          background: #262c34;
+        }
+        .arrow_box:after {
+          bottom: 100%;
+          left: 90%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          border-color: rgba(38, 44, 52, 0);
+          border-bottom-color: #262c34;
+          border-width: 5px;
+          margin-left: -5px;
+        }
         .dropdown-menu {
           border-radius: 5px;
           margin: 0;
           padding: 0;
           list-style: none;
           background-color: #262c34;
-          overflow: hidden;
           li {
             text-align: center;
             width: 80px;

@@ -37,17 +37,15 @@ export class InfoComponent implements OnInit {
 
   unfriendUser() {
     this.socketService.emit(`update user`, {
+      userId: this.userInfo._id,
+      friendId: this.user._id,
+      update: { friends: this.userInfo.friends.filter(friendId => friendId !== this.user._id )}
+    }).subscribe(data => data);
+    this.socketService.emit(`update user`, {
       userId: this.user._id,
       friendId: this.userInfo._id,
       update: { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id) }
     }).subscribe(data => data);
-
-    // this.userService.updateUser(this.user._id, { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id) })
-    // .subscribe(status => {
-    //   if (status.success) {
-    //     this.isFriend = false;
-    //   }
-    // });
   }
 
 }

@@ -44,6 +44,8 @@ export class PopupComponent implements OnInit {
       .subscribe((users) => {
         this.users = users.filter(user => this.user.friends.indexOf(user._id) === -1 && this.user._id !== user._id);
       });
+    } else {
+      this.users = [];
     }
   }
 
