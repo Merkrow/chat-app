@@ -4,9 +4,11 @@
   justify-content: center;
   height: 100%;
   background-color: #1d232a;
+  overflow-y: scroll;
   .form {
     display: inline-block;
     align-self: center;
+    margin: auto;
     .auth-select {
       text-align: center;
       ul {
@@ -61,6 +63,7 @@
       border: none;
       background-color: #0084ff;
       color: #fff;
+      line-height: 40px;
     }
 
     .form-elem button:focus {
