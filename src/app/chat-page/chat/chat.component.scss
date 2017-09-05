@@ -83,6 +83,34 @@
   box-sizing: border-box;
   background: linear-gradient(135deg, #f7fcfc 0%,#ebedf1 100%);
 
+  .add-friend {
+    text-align: center;
+    margin-top: 50px;
+    .add-buttons {
+      margin-top: 30px;
+      button {
+        border: none;
+        border-radius: 4px;
+        text-align: center;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 400;
+        width: 142px;
+        height: 36px;
+        line-height: 32px;
+        cursor: pointer;
+      }
+      .accept-button {
+        background-color: #0084ff;
+        margin-right: 18px;
+
+      }
+      .reject-button {
+        background-color: #898d91;
+      }
+    }
+  }
+
   .meta span, .my-meta span {
     font-size: 11px;
     font-weight: 500;
