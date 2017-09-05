@@ -14,7 +14,7 @@
         </ul>
       </div>
     </div>
-    <img [src]="userInfo.picture" alt="">
+    <img [src]="userInfo.picture || './assets/images/noavatar.png'" alt="">
     <h3>{{ userInfo.fullName }}</h3>
     <div class="city-info"><span>{{ userInfo.address }}</span></div>
     <ul class="user-data">

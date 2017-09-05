@@ -7,7 +7,7 @@
   <div *ngIf="friends.length" class="friends-container">
     <div *ngFor="let friend of filterFunc(friends)" class="friend" (click)="navigateToRoom(friend)">
       <div class="online-status" *ngIf="onlineUsers && onlineUsers.indexOf(friend._id) !== -1"></div>
-      <img [src]="friend.picture">
+      <img [src]="friend.picture || './assets/images/noavatar.png'">
       <div class="full-name">
         <span>{{ friend.fullName }}</span>
       </div>

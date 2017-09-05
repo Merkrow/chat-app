@@ -1,7 +1,7 @@
 <div (click)="setChat()" class="chat-person" [ngClass]="{ 'active': active }">
   <div class="chat-image">
     <span class="online-status" *ngIf="interlocutors.length && onlineUsers.indexOf(interlocutors[0]._id) !== -1"></span>
-    <img [src]="picture" alt="">
+    <img [src]="picture || './assets/images/noavatar.png'" alt="">
   </div>
   <div class="user-meta">
     <div><span>{{ title }}</span></div>
