@@ -30,6 +30,11 @@ export class InfoComponent implements OnInit {
     });
   }
 
+  logout() {
+    this.socketService.disconnect();
+    this.userService.purgeAuth();
+  }
+
   unfriendUser() {
     this.socketService.emit(`update user`, {
       userId: this.user._id,

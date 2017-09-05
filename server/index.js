@@ -39,6 +39,9 @@ io.on('connection', (socket) => {
   onlineUsers.add(socket.handshake.query.id);
   io.emit('online users', Array.from(onlineUsers));
   socket.on('online users', ({ friends, id }) => {
+    if (!friends) {
+      return;
+    }
     const res = friends.reduce((acc, friendId) => {
       if (onlineUsers.has(friendId)) {
         return acc.concat(friendId);
