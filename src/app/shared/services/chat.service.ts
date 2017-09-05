@@ -3,10 +3,11 @@ import {Observable} from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 import P2P from 'socket.io-p2p';
 
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class SocketService {
-  private host = 'http://localhost:8080';
+  private host = environment.api_url;
   private socket: any;
   private p2p: any;
   constructor() {

@@ -115,7 +115,7 @@ io.on('connection', (socket) => {
   })
 });
 
-app.use('/', require('express').static(path.join(__dirname, '/public')));
+// app.use('/', require('express').static(path.join(__dirname, '/public')));
 
 
 app.use(function(req, res, next) {

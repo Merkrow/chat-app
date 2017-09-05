@@ -19,7 +19,7 @@ import {
   SelectUserService,
 } from './shared';
 
-const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
+const rootRouting: ModuleWithProviders = RouterModule.forRoot([]);
 
 @NgModule({
   declarations: [
