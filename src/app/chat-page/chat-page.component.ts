@@ -14,6 +14,7 @@ export class ChatPageComponent implements OnInit {
   popup = false;
   chosenUser: string;
   showFriends = false;
+  calling = false;
 
   constructor(
     private userService: UserService,

@@ -1,6 +1,48 @@
 .container {
   width: 100%;
   height: 100%;
+  .call-answer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .call-info {
+      align-self: center;
+      display: inline-block;
+      position: relative;
+      .type {
+        background-color: #0084ff;
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        border: 4px solid #40a3ff;
+      }
+      .answer-buttons {
+        position: absolute;
+        display: inline-block;
+        left: 50%;
+        transform: translate(-50%, 0);
+        div {
+          height: 60px;
+          width: 60px;
+          border-radius: 50%;
+          display: inline-block;
+        }
+        .accept {
+          background-color: #2dc100;
+        }
+        .reject {
+          background-color: #e23d39;
+        }
+      }
+    }
+  }
   .chat-container {
     display: flex;
     height: 100%;

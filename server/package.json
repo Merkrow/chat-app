@@ -18,6 +18,8 @@
     "mongoose": "^4.11.6",
     "passport": "^0.4.0",
     "passport-jwt": "^2.2.1",
-    "socket.io": "^2.0.3"
+    "peer": "^0.2.8",
+    "socket.io": "^2.0.3",
+    "socket.io-p2p-server": "^1.2.0"
   }
 }

@@ -1,16 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import * as io from 'socket.io-client';
+import P2P from 'socket.io-p2p';
 
 
 @Injectable()
 export class SocketService {
-  private host = 'http://localhost:3000';
+  private host = 'http://localhost:8080';
   private socket: any;
+  private p2p: any;
   constructor() {
   }
   connect (id) {
     this.socket = io(this.host, { query: `id=${id}` });
+    this.p2p = new P2P(this.socket);
     this.socket.on('connect', () => this.connected());
     this.socket.on('disconnect', () => this.disconnected());
     this.socket.on('error', (error: string) => {

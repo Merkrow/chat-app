@@ -35,7 +35,6 @@ require('./config/passport')(passport);
 
 app.use('/users', users);
 app.use('/rooms', rooms);
-
 io.on('connection', (socket) => {
   onlineUsers.add(socket.handshake.query.id);
   io.emit('online users', Array.from(onlineUsers));
@@ -116,6 +115,8 @@ io.on('connection', (socket) => {
   })
 });
 
+app.use('/', require('express').static(path.join(__dirname, '/public')));
+
 
 app.use(function(req, res, next) {
   const err = new Error('Not Found');
@@ -124,4 +125,4 @@ app.use(function(req, res, next) {
 });
 
 
-server.listen(3000);
+server.listen(process.env.PORT || '8080');
