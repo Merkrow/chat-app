@@ -17,9 +17,10 @@
     cursor: pointer;
     svg {
       height: 22px;
-      width: 26px;
+      width: 33px;
       margin-top: 5px;
       fill: #fff;
+      transform: scaleX(-1);
     }
   }
   h3 {
