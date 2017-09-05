@@ -29,18 +29,23 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.dp-picker-input {
-  height: 40px;
-  width: 310px;
-  box-sizing: border-box;
-  border-radius: 18px;
-  border: none;
-  margin-bottom: 30px;
-  background-color: #363d45;
-  color: #868b8e;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 400;
+.dp-input-container {
+  .dp-picker-input {
+    height: 40px !important;
+    width: 310px !important;
+    box-sizing: border-box !important;
+    border-radius: 18px;
+    border: none;
+    margin-bottom: 30px;
+    background-color: #363d45;
+    color: #868b8e;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .dp-current-location-btn {
+    display: none !important;
+  }
 }
 
 /**
