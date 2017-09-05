@@ -100,12 +100,19 @@
       background-color: #363d45;
       color: #fff;
       margin-bottom: 30px;
+      position: relative;
       input {
         display: block;
         width: 310px;
         height: 40px;
         opacity: 0;
         overflow: hidden;
+      }
+      span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
     }
   }
