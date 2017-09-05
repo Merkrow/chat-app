@@ -53,14 +53,12 @@
     .chat-list {
       height: 100%;
       background: linear-gradient(135deg, #2c333a 0%,#242a31 100%);
-      font-family: 'Roboto', sans-serif;
       flex: 1 1 auto;
       overflow: scroll;
     }
 
     .chat-block {
       position: relative;
-      font-family: 'Roboto', sans-serif;
       flex: 10 1 auto;
     }
 
