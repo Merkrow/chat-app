@@ -70,6 +70,12 @@
       outline: none;
     }
 
+    .form-sel {
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
     .form-select {
       height: 40px;
       width: 310px;
@@ -78,11 +84,29 @@
       border: none;
       background-color: #363d45;
       color: #fff;
-      margin-bottom: 30px;
     }
 
     .form-select:focus {
       outline: none;
+    }
+    .form-file {
+      overflow: hidden;
+      display: inline-block;
+      height: 40px;
+      width: 310px;
+      box-sizing: border-box;
+      border-radius: 18px;
+      border: none;
+      background-color: #363d45;
+      color: #fff;
+      margin-bottom: 30px;
+      input {
+        display: block !important;
+        width: 310px !important;
+        height: 40px !important;
+        opacity: 0 !important;
+        overflow: hidden !important;
+      }
     }
   }
 }

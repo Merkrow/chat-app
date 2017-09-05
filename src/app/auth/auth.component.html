@@ -49,16 +49,18 @@
     <div class="form-input form-elem">
       <input type="text" [(ngModel)]="address" placeholder="Address">
     </div>
-    <div class="form-input form-elem">
-      <input type="file" (change)="changeImage($event)" placeholder="Image">
+    <div class="form-input form-elem form-file">
+      <input type="file" (change)="changeImage($event)" placeholder="Choose file">
     </div>
     <div class="form-input form-elem">
       <dp-date-picker [(ngModel)]="birthday"></dp-date-picker>
     </div>
-    <select class="form-select form-elem" [(ngModel)]="gender">
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select>
+    <div class="form-elem form-sel">
+      <select class="form-select form-elem" [(ngModel)]="gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </div>
     <div class="form-button form-elem">
       <button type="button" (click)="submit()">Submit</button>
     </div>
