@@ -59,10 +59,6 @@ export class RoomsComponent implements OnInit, OnChanges {
           this.onlineUsers = online;
         });
 
-        this.socketService.on(`new room ${this.user._id}`)
-        .subscribe(newRoom => {
-          this.rooms = this.rooms.concat(newRoom);
-        });
       });
       this.roomService.getRemovedRoom().subscribe(room => {
         if (this.rooms.length && room) {

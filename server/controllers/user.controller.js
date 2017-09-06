@@ -29,6 +29,10 @@ const findByUsername = (username, callback) => {
   User.find({ username: { $regex: username, $options: "i" } }, callback);
 }
 
+const addFriend = (userId, friendId, callback) => {
+  User.findByIdAndUpdate(userId, { $push: { friends: friendId } }, { upsert: true, new: true }, callback);
+}
+
 module.exports = {
   create,
   find,
@@ -37,4 +41,5 @@ module.exports = {
   updateUser,
   deleteUser,
   findByUsername,
+  addFriend,
 }

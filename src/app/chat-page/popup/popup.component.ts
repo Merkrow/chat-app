@@ -30,10 +30,11 @@ export class PopupComponent implements OnInit {
   }
 
   addFriend(user: User) {
-    this.socketService.emit('create room', { room: { users: [this.user._id, user._id] }, creatorId: this.user._id })
+    this.socketService.emit('get or create room', [this.user._id, user._id])
     .subscribe(room => room);
-    this.userService.updateUser(this.user._id, { friends: this.user.friends.concat(user._id) })
-    .subscribe(status => status);
+    this.socketService.emit('add friend', [this.user._id, user._id])
+    .subscribe(data => data);
+    this.triggerPopup.emit(false);
   }
 
   search($event) {

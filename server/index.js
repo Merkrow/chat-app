@@ -70,12 +70,18 @@ io.on('connection', (socket) => {
     Room.findTwoUsersRoom(ids, (err, room) => {
       if (!room) {
         Room.create(req.body, (err, newRoom) => {
-          io.emit(`new room ${ids[0]}`, newRoom);
+          socket.emit(`new room ${ids[0]}`, newRoom);
           io.emit(`new room ${ids[1]}`, newRoom);
         })
       } else {
-        io.emit(`select room ${ids[0]}`, room);
+        socket.emit(`select room ${ids[0]}`, room);
       }
+    })
+  })
+
+  socket.on('add friend', ids => {
+    User.addFriend(ids[0], ids[1], (err, newUser) => {
+      socket.emit('user update', newUser);
     })
   })
 

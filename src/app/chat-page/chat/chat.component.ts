@@ -19,8 +19,8 @@ export class ChatComponent implements OnInit, OnChanges {
   isFriends = false;
   moment = moment;
   typingNames: any = new Set();
-  pending = false;
-  accepted = false;
+  pending = true;
+  accepted = true;
 
   constructor(
     private socketService: SocketService,
@@ -122,6 +122,9 @@ export class ChatComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.isFriends = true;
+    this.accepted = true;
+    this.pending = true;
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;

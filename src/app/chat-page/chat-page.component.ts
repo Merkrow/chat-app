@@ -34,6 +34,9 @@ export class ChatPageComponent implements OnInit {
         this.socketService.connect(user._id);
         this.socketService.emit('online users', { friends: user.friends, id: user._id })
         .subscribe(online => online);
+        this.socketService.on('user update').subscribe(newUser => {
+          this.userService.changeUser(newUser);
+        });
       }
       this.user = user;
     });
