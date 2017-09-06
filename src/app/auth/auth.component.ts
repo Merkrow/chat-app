@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -10,23 +11,29 @@ import { UserService, User } from '../shared';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-  email = 'user@gmail.com';
-  password = '111111';
+
   image = '';
-  first = '111111';
-  last = '222222';
-  phone = '12345';
-  address = '54321';
-  language = 'english';
-  username = 'test';
-  gender = 'Male';
   register = false;
   birthday = moment().format('DD-MM-YYYY');
+  authForm: FormGroup;
 
   constructor(
     private userService: UserService,
     private router: Router,
-  ) { }
+    private fb: FormBuilder,
+  ) {
+    this.authForm = this.fb.group({
+      'email': ['roger.federer@dataart.com', Validators.required],
+      'password': ['111111', Validators.required],
+      'first': [''],
+      'last': [''],
+      'phone': [''],
+      'gender': [''],
+      'username': ['', Validators.required],
+      'address': [''],
+      'language': [''],
+    });
+  }
 
   ngOnInit() {
   }
@@ -40,22 +47,13 @@ export class AuthComponent implements OnInit {
   }
 
   submit() {
-    this.userService.postUser({
+    const creds = this.authForm.value;
+    this.userService.postUser(Object.assign(creds, {
       picture: this.image,
-      firstName: this.first,
-      lastName: this.last,
-      fullName: this.first + ' ' + this.last,
-      email: this.email,
-      password: this.password,
-      phone: this.phone,
-      address: this.address,
-      language: this.language,
-      username: this.username,
-      gender: this.gender,
       birthday: this.birthday,
-    }).subscribe(res => {
+    })).subscribe(res => {
       if (res.success) {
-        this.userService.attemptAuth({ email: this.email, password: this.password })
+        this.userService.attemptAuth(creds)
         .subscribe(data => this.router.navigateByUrl('/chat'));
       }
     });
@@ -76,7 +74,8 @@ export class AuthComponent implements OnInit {
   }
 
   submitForm() {
-    this.userService.attemptAuth({ email: this.email, password: this.password })
+    const creds = this.authForm.value;
+    this.userService.attemptAuth(creds)
     .subscribe(data => this.router.navigateByUrl('/chat'));
   }
 
