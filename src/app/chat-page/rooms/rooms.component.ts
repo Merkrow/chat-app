@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-import { UserService, User, RoomService, SocketService, SelectChatService } from '../../shared';
+import { UserService, User, RoomService, SocketService, SelectChatService } from 'app/shared';
 
 @Component({
   selector: 'app-rooms',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 
-import { RoomService, User, SelectChatService, SelectUserService, SocketService, UserService } from '../../shared';
+import { RoomService, User, SelectChatService, SelectUserService, SocketService, UserService } from 'app/shared';
 
 @Component({
   selector: 'app-friends',

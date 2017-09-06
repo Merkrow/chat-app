@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule } from '../shared';
+import { SharedModule } from 'app/shared';
 import { ChatPageComponent } from './chat-page.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { ChatComponent } from './chat/chat.component';

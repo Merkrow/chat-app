@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 
-import { User, SelectChatService, SelectUserService, RoomService, UserService, SocketService, } from '../../../shared';
+import { User, SelectChatService, SelectUserService, RoomService, UserService, SocketService, } from 'app/shared';
 
 @Component({
   selector: 'app-room',

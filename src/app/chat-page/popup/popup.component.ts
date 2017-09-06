@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
-import { UserService, User, RoomService, SocketService } from '../../shared';
+import { UserService, User, RoomService, SocketService } from 'app/shared';
 
 @Component({
   selector: 'app-popup',

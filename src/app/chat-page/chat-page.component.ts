@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService, User, SocketService } from '../shared';
+import { UserService, User, SocketService } from 'app/shared';
 
 @Component({
   selector: 'app-chat-page',

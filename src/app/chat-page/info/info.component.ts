@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
-import { SelectUserService, User, UserService, SocketService, SelectChatService, } from '../../shared';
+import { SelectUserService, User, UserService, SocketService, SelectChatService, } from 'app/shared';
 
 @Component({
   selector: 'app-info',

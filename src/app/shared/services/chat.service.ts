@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 import P2P from 'socket.io-p2p';
 
-import { environment } from '../../../environments/environment';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class SocketService {

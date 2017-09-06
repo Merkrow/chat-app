@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input, ViewChild, ElementRef, } from '@angular/core';
 import * as moment from 'moment';
 
-import { SocketService, User, SelectChatService, UserService, } from '../../shared';
+import { SocketService, User, SelectChatService, UserService, } from 'app/shared';
 
 @Component({
   selector: 'app-chat',
