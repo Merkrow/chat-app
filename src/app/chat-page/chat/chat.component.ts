@@ -44,6 +44,9 @@ export class ChatComponent implements OnInit, OnChanges {
       .subscribe(room => {
         this.room = room;
         this.messages = [];
+        if (room === null) {
+          return;
+        }
 
         this.socketService.on(`message response ${room._id}`)
         .subscribe(message => {
@@ -102,12 +105,14 @@ export class ChatComponent implements OnInit, OnChanges {
         this.socketService.on(`update user ${this.user._id} ${friendId}`)
         .subscribe(newFriend => {
           if (newFriend.friends.some(frId => frId === this.user._id)) {
-            this.pending = false;
+            this.pending = true;
+            this.accepted = true;
             this.isFriends = true;
             this.socketService.emit('get messages', this.room._id)
             .subscribe(data => data);
           } else {
-            this.pending = true;
+            this.pending = false;
+            this.accepted = true;
             this.isFriends = false;
             this.messages = [];
           }
@@ -122,12 +127,15 @@ export class ChatComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.isFriends = true;
-    this.accepted = true;
-    this.pending = true;
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;
+      this.isFriends = true;
+      this.accepted = true;
+      this.pending = true;
+      if (room === null) {
+        return;
+      }
       this.messages = [];
 
       this.socketService.on(`messages response ${this.room._id}`)

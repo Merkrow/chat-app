@@ -20,7 +20,7 @@ export class PopupComponent implements OnInit {
 
   @HostListener('document:click', ['$event.target'])
   docClicked(target): void {
-    if (!this._eref.nativeElement.contains(event.target) && this.opened) {
+    if (!this._eref.nativeElement.contains(target) && this.opened) {
       this.triggerPopup.emit(false);
     }
     this.opened = true;
@@ -39,8 +39,8 @@ export class PopupComponent implements OnInit {
 
   search($event) {
     let username = '';
-    if ($event.srcElement.value) {
-      username = $event.srcElement.value;
+    if ($event.target.value) {
+      username = $event.target.value;
       this.userService.searchUsers(username)
       .subscribe((users) => {
         this.users = users.filter(user => this.user.friends.indexOf(user._id) === -1 && this.user._id !== user._id);

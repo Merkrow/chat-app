@@ -69,7 +69,7 @@ io.on('connection', (socket) => {
   socket.on('get or create room', (ids) => {
     Room.findTwoUsersRoom(ids, (err, room) => {
       if (!room) {
-        Room.create(req.body, (err, newRoom) => {
+        Room.create({ users: ids }, (err, newRoom) => {
           socket.emit(`new room ${ids[0]}`, newRoom);
           io.emit(`new room ${ids[1]}`, newRoom);
         })

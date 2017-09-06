@@ -31,6 +31,9 @@ export class RoomComponent implements OnInit {
 
   ngOnInit() {
     this.selectChat.getChatIdEmitter().subscribe(room => {
+      if (room === null) {
+        return;
+      }
       this.active = room._id === this.room._id;
       if (this.active) {
         this.socketService.emit('read messages', { roomId: this.room._id, userId: this.user._id })

@@ -75,6 +75,7 @@ export class RoomsComponent implements OnInit, OnChanges {
   removeRoom(id) {
     this.rooms = this.rooms.filter(room => room._id !== id);
     this.roomService.setRemovedRoom(this.rooms.find(room => room._id === id));
+    this.selectChat.emitChatIdChangeEvent(null);
   }
 
 }
