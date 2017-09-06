@@ -19,11 +19,11 @@ export class RoomService {
   ) {}
 
   getUserRooms(id): Observable<any> {
-    return this.apiService.get(`/rooms/user/${id}`);
+    return this.apiService.get(`rooms/user/${id}`);
   }
 
   postRoom(params): Observable<any> {
-    return this.apiService.post('/rooms', params)
+    return this.apiService.post('rooms', params)
     .map(room => {
       this.setNewRoom(room);
       return room;
@@ -31,11 +31,11 @@ export class RoomService {
   }
 
   updateRoom(id): Observable<any> {
-    return this.apiService.put(`/rooms/${id}`);
+    return this.apiService.put(`rooms/${id}`);
   }
 
   deleteRoom(id): Observable<any> {
-    return this.apiService.delete(`/rooms/${id}`)
+    return this.apiService.delete(`rooms/${id}`)
     .map(room => {
       this.setRemovedRoom(room);
       return room;
@@ -43,7 +43,7 @@ export class RoomService {
   }
 
   getOrCreateRoom(users): Observable<any> {
-    return this.apiService.post('/rooms/search', { users })
+    return this.apiService.post('rooms/search', { users })
     .map(room => {
       this.setNewRoom(room);
       return room;

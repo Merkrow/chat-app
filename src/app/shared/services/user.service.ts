@@ -10,7 +10,7 @@ import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User } from '../models';
 
-const userUrl = '/users';
+const userUrl = 'users';
 
 
 @Injectable()

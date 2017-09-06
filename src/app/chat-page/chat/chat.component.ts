@@ -178,7 +178,7 @@ export class ChatComponent implements OnInit, OnChanges {
 
   getImage(msg) {
     const usr = this.interlocutors.find(interlocutor => interlocutor._id === msg.sender);
-    return usr && usr.picture || '';
+    return usr && usr.picture || './assets/images/noavatar.png';
   }
 
   sortMsgs(messages) {

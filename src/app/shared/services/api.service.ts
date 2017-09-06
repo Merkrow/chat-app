@@ -25,13 +25,13 @@ export class ApiService {
   }
 
   get(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
-    return this.http.get(`${environment.api_url}${path}`, { headers: this.setHeaders(), search: params })
+    return this.http.get(`${environment.api_url}/${path}`, { headers: this.setHeaders(), search: params })
     .catch(this.formatErrors)
     .map((res: Response) => res.json());
   }
 
   getWithToken(path: string, token: String, params: URLSearchParams = new URLSearchParams()): Observable<any> {
-    return this.http.get(`${environment.api_url}${path}`, { headers: new Headers({
+    return this.http.get(`${environment.api_url}/${path}`, { headers: new Headers({
       'Content-Type': 'application/json',
       'Authorization': 'JWT ' + token,
     }), search: params })
@@ -41,7 +41,7 @@ export class ApiService {
 
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
-      `${environment.api_url}${path}`,
+      `${environment.api_url}/${path}`,
       JSON.stringify(body),
       { headers: this.setHeaders() }
     )
@@ -51,7 +51,7 @@ export class ApiService {
 
   post(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
-      `${environment.api_url}${path}`,
+      `${environment.api_url}/${path}`,
       JSON.stringify(body),
       { headers: this.setHeaders() }
     )
@@ -61,7 +61,7 @@ export class ApiService {
 
   delete(path): Observable<any> {
     return this.http.delete(
-      `${environment.api_url}${path}`,
+      `${environment.api_url}/${path}`,
       { headers: this.setHeaders() }
     )
     .catch(this.formatErrors)

@@ -37,5 +37,3 @@ module.exports = {
   deleteRoom,
   findTwoUsersRoom,
 }
-
-// { $and: [{ users: { $elemMatch: { userId: users[0]._id }}}, { users: { $elemMatch: { userId: users[1]._id }}}]

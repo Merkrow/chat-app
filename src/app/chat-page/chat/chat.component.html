@@ -39,7 +39,7 @@
             <p>{{ msg.text }}</p>
           </div>
           <div class="my-meta">
-            <img [src]="user.picture" alt="">
+            <img [src]="user.picture || './assets/images/noavatar.png'" alt="">
             <span>{{ moment(msg.date).format('HH:mm') }}</span>
           </div>
         </div>
