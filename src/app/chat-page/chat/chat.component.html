@@ -16,9 +16,9 @@
       </div>
     </div>
 
-    <div #chat class="messages-container">
+    <div #chat class="messages-container" [ngClass]="{ 'not-friends': !pending && !accepted }">
 
-      <div *ngIf="interlocutors.length && !isFriends && !pending" class="add-friend">
+      <div *ngIf="interlocutors.length && accepted && !pending" class="add-friend">
         <div class="add-message">
           {{ interlocutors[0].fullName }} wants to add you to contact list
         </div>
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div *ngIf="interlocutors.length && pending && !isFriends" class="add-friend">
+      <div *ngIf="interlocutors.length && pending && !accepted" class="add-friend">
         {{ interlocutors[0].fullName }} still didn't add you to his contact list!
       </div>
 
@@ -65,7 +65,7 @@
       <use xlink:href="assets/sprite.svg#attach"></use>
     </svg>
     <div class="input-container">
-      <input type="text" placeholder="Type your message..." [(ngModel)]="message" [disabled]="!isFriends || !room" (keyup.enter)="sendMessage()" (keypress)="startTyping()">
+      <input type="text" [placeholder]="!pending && !accepted ? 'Add user to start chatting' : 'Type your message...'" [(ngModel)]="message" [disabled]="!isFriends || !room" (keyup.enter)="sendMessage()" (keypress)="startTyping()">
     </div>
     <button type="button" class="submit-button">
       <svg viewBox="0 0 48 48">

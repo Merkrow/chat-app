@@ -46,12 +46,8 @@ export class FriendsComponent implements OnInit {
   }
 
   navigateToRoom(friend: User) {
-    this.roomService.getOrCreateRoom([this.user._id, friend._id])
-    .subscribe(room => {
-      this.toggleShowFriends.emit(false);
-      this.selectChatService.emitChatIdChangeEvent(room);
-      this.selectUser.emitUserIdChangeEvent(friend);
-    });
+    this.toggleShowFriends.emit(false);
+    this.socketService.emit('get or create room', [this.user._id, friend._id]).subscribe(data => data);
   }
 
 }

@@ -11,7 +11,8 @@
       </svg>
       <div class="dropdown">
         <ul class="dropdown-menu arrow_box">
-          <li (click)="unfriendUser()">Unfriend</li>
+          <li (click)="unfriendUser()" *ngIf="isFriend">Unfriend</li>
+          <li *ngIf="!isFriend" (click)="addFriend()">Add friend</li>
         </ul>
       </div>
     </div>

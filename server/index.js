@@ -66,6 +66,19 @@ io.on('connection', (socket) => {
     })
   })
 
+  socket.on('get or create room', (ids) => {
+    Room.findTwoUsersRoom(ids, (err, room) => {
+      if (!room) {
+        Room.create(req.body, (err, newRoom) => {
+          io.emit(`new room ${ids[0]}`, newRoom);
+          io.emit(`new room ${ids[1]}`, newRoom);
+        })
+      } else {
+        io.emit(`select room ${ids[0]}`, room);
+      }
+    })
+  })
+
   socket.on('chat message', (chatMessage) => {
     Message.create({
       sender: chatMessage.userId,

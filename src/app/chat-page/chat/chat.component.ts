@@ -3,25 +3,6 @@ import * as moment from 'moment';
 
 import { SocketService, User, SelectChatService, UserService, } from '../../shared';
 
-function debounce(func, wait, immediate) {
-  let timeout;
-  return function() {
-    const context = this, args = arguments;
-    const later = function() {
-      timeout = null;
-      if (!immediate) {
-        func.apply(context, args);
-      }
-    };
-    const callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) {
-      func.apply(context, args);
-    }
-  };
-}
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -39,6 +20,7 @@ export class ChatComponent implements OnInit, OnChanges {
   moment = moment;
   typingNames: any = new Set();
   pending = false;
+  accepted = false;
 
   constructor(
     private socketService: SocketService,
@@ -91,18 +73,18 @@ export class ChatComponent implements OnInit, OnChanges {
           .subscribe(interlocutor => {
             this.interlocutors = this.interlocutors.concat(interlocutor);
             if (this.private) {
-              const pending = changes.user.currentValue.friends.some(friendId => friendId === interlocutor._id);
-              const accepted = this.interlocutors[0].friends.some(friendId => friendId === this.user._id);
-              if (pending && accepted) {
+              this.pending = changes.user.currentValue.friends.some(friendId => friendId === interlocutor._id);
+              this.accepted = this.interlocutors[0].friends.some(friendId => friendId === this.user._id);
+              if (this.pending && this.accepted) {
                 this.isFriends = true;
                 this.socketService.emit('get messages', this.room._id)
                 .subscribe(data => data);
-              } else if (pending) {
-                this.pending = true;
+              } else if (this.pending) {
                 this.isFriends = false;
               } else {
                 this.isFriends = false;
-                this.pending = false;
+                this.socketService.emit('get messages', this.room._id)
+                .subscribe(data => data);
               }
             }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
-import { SelectUserService, User, UserService, SocketService, } from '../../shared';
+import { SelectUserService, User, UserService, SocketService, SelectChatService, } from '../../shared';
 
 @Component({
   selector: 'app-info',
@@ -13,11 +13,13 @@ export class InfoComponent implements OnInit {
   userInfo: User;
   moment = moment;
   isFriend = false;
+  chat: any;
 
   constructor(
     private selectUser: SelectUserService,
     private userService: UserService,
     private socketService: SocketService,
+    private selectChatService: SelectChatService,
   ) { }
 
   ngOnInit() {
@@ -28,11 +30,18 @@ export class InfoComponent implements OnInit {
         this.isFriend = true;
       }
     });
+    this.selectChatService.getChatIdEmitter().subscribe(chat => {
+      this.chat = chat;
+    });
   }
 
   logout() {
     this.socketService.disconnect();
     this.userService.purgeAuth();
+  }
+
+  addFriend() {
+    console.log(this.chat);
   }
 
   unfriendUser() {

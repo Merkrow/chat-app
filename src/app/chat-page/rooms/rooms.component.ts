@@ -32,6 +32,14 @@ export class RoomsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes) {
     if (changes.user) {
+      this.socketService.on(`new room ${changes.user.currentValue._id}`)
+      .subscribe(room => {
+        this.rooms = this.rooms.concat(room);
+      });
+      this.socketService.on(`select room ${changes.user.currentValue._id}`)
+      .subscribe(room => {
+        this.selectChat.emitChatIdChangeEvent(room);
+      });
       this.roomService.getUserRooms(changes.user.currentValue._id)
       .subscribe(rooms => {
         this.rooms = rooms;
