@@ -23,13 +23,13 @@ export class AuthComponent implements OnInit {
     private fb: FormBuilder,
   ) {
     this.authForm = this.fb.group({
-      'email': ['roger.federer@dataart.com', Validators.required],
+      'email': ['user@gmail.com', Validators.required],
       'password': ['111111', Validators.required],
       'first': [''],
       'last': [''],
       'phone': [''],
       'gender': [''],
-      'username': ['', Validators.required],
+      'username': [''],
       'address': [''],
       'language': [''],
     });

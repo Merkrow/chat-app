@@ -7,12 +7,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
+const p2p = require('socket.io-p2p-server').Server;
 
 const config = require('./config');
 
 const { Message, User, Room } = require('./controllers');
 
-// const routes = require('./routes/index');
+process.setMaxListeners(200);
 const users = require('./routes/user');
 const rooms = require('./routes/room');
 
@@ -35,6 +36,8 @@ require('./config/passport')(passport);
 
 app.use('/users', users);
 app.use('/rooms', rooms);
+
+io.use(p2p);
 io.on('connection', (socket) => {
   onlineUsers.add(socket.handshake.query.id);
   io.emit('online users', Array.from(onlineUsers));
@@ -49,6 +52,16 @@ io.on('connection', (socket) => {
       return acc;
     }, []);
     io.emit(`online users ${id}`, res);
+  })
+
+
+  socket.on('call description', ({ description, ringer, receiver }) => {
+    if (description.type === 'offer') {
+      io.emit(`return description ${receiver._id}`, { description, ringer, receiver });
+    }
+    if (description.type === 'answer') {
+      io.emit(`return description ${ringer._id}`, { description, ringer, receiver });
+    }
   })
 
   socket.on('get unread', ({ roomId, userId }) => {

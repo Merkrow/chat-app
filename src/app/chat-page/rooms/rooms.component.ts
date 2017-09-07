@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-import { UserService, User, RoomService, SocketService, SelectChatService } from 'app/shared';
+import { UserService, User, RoomService, SocketService, SelectChatService, SelectUserService } from 'app/shared';
 
 @Component({
   selector: 'app-rooms',
@@ -18,6 +18,7 @@ export class RoomsComponent implements OnInit, OnChanges {
     private roomService: RoomService,
     private socketService: SocketService,
     private selectChat: SelectChatService,
+    private selectUser: SelectUserService,
   ) { }
 
   ngOnInit() {
@@ -35,10 +36,21 @@ export class RoomsComponent implements OnInit, OnChanges {
       this.socketService.on(`new room ${changes.user.currentValue._id}`)
       .subscribe(room => {
         this.rooms = this.rooms.concat(room);
+        this.selectChat.emitChatIdChangeEvent(room);
+        const friendId = room.users.filter(id => id !== changes.user.currentValue._id)[0];
+        this.userService.getUserById(friendId)
+        .subscribe(user => {
+          this.selectUser.emitUserIdChangeEvent(user);
+        });
       });
       this.socketService.on(`select room ${changes.user.currentValue._id}`)
       .subscribe(room => {
         this.selectChat.emitChatIdChangeEvent(room);
+        const friendId = room.users.filter(id => id !== changes.user.currentValue._id)[0];
+        this.userService.getUserById(friendId)
+        .subscribe(user => {
+          this.selectUser.emitUserIdChangeEvent(user);
+        });
       });
       this.roomService.getUserRooms(changes.user.currentValue._id)
       .subscribe(rooms => {

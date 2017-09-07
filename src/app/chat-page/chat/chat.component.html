@@ -3,7 +3,7 @@
     <div class="chat-header">
       <div class="chat-nav">
         <div class="person-typing" *ngIf="typingNames.size > 0 && renderNames()"><span><strong>{{ renderNames() }}</strong> is typing...</span></div>
-        <div class="star">
+        <div (click)="callUser()" class="star">
           <svg viewBox="0 0 100 100">
             <use xlink:href="assets/sprite.svg#phone"></use>
           </svg>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ViewChild, ElementRef, } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild, ElementRef, EventEmitter, Output, } from '@angular/core';
 import * as moment from 'moment';
 
 import { SocketService, User, SelectChatService, UserService, } from 'app/shared';
@@ -11,6 +11,7 @@ import { SocketService, User, SelectChatService, UserService, } from 'app/shared
 export class ChatComponent implements OnInit, OnChanges {
   @ViewChild('chat') private myScrollContainer: ElementRef;
   @Input() user: User;
+  @Output() initCall = new EventEmitter<any>();
   messages: any[];
   message = '';
   room: any;
@@ -43,7 +44,11 @@ export class ChatComponent implements OnInit, OnChanges {
       this.selectChat.getChatIdEmitter()
       .subscribe(room => {
         this.room = room;
+        this.isFriends = true;
+        this.accepted = true;
+        this.pending = true;
         this.messages = [];
+        this.interlocutors = [];
         if (room === null) {
           return;
         }
@@ -64,7 +69,6 @@ export class ChatComponent implements OnInit, OnChanges {
           }, 3000);
         });
 
-        this.interlocutors = [];
         const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
         if (interlocutorsId.length === 1) {
           this.private = true;
@@ -130,9 +134,11 @@ export class ChatComponent implements OnInit, OnChanges {
     this.selectChat.getChatIdEmitter()
     .subscribe(room => {
       this.room = room;
+      this.message = '';
       this.isFriends = true;
       this.accepted = true;
       this.pending = true;
+      this.interlocutors = [];
       if (room === null) {
         return;
       }
@@ -144,11 +150,11 @@ export class ChatComponent implements OnInit, OnChanges {
         this.scroll();
       });
 
-      this.interlocutors = [];
       const interlocutorsId = room.users.filter(userId => userId !== this.user._id);
       if (interlocutorsId.length === 1) {
         this.private = true;
       }
+
 
       interlocutorsId.map(id => {
 
@@ -183,6 +189,13 @@ export class ChatComponent implements OnInit, OnChanges {
 
   sortMsgs(messages) {
     return messages && messages.sort((msg1, msg2) => moment(msg1.date).valueOf() - moment(msg2.date).valueOf());
+  }
+
+  callUser() {
+    if (!this.isFriends || !this.interlocutors.length) {
+      return;
+    }
+    this.initCall.emit({ ringer: this.user, receiver: this.interlocutors[0] });
   }
 
   acceptFriend() {

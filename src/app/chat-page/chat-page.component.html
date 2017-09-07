@@ -6,7 +6,7 @@
       <app-rooms [user]="user"></app-rooms>
     </div>
     <div *ngIf="!showFriends && user._id" class="chat-block">
-      <app-chat [user]="user"></app-chat>
+      <app-chat (initCall)="initCall($event)" [user]="user"></app-chat>
     </div>
     <div *ngIf="showFriends" class="friends">
       <app-friends [user]="user" (toggleShowFriends)="toggleShowFriends($event)"></app-friends>
@@ -20,10 +20,11 @@
 
       </div>
       <div class="answer-buttons">
-        <div class="accept">
-          
+        <video #video width="640" height="480" autoplay></video>
+        <div class="accept" (click)="acceptCall()">
+
         </div>
-        <div class="reject">
+        <div class="reject" (click)="rejectCall()">
 
         </div>
       </div>

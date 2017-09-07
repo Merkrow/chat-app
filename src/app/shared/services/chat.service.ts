@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import * as io from 'socket.io-client';
-import P2P from 'socket.io-p2p';
 
 import { environment } from 'environments/environment';
 
@@ -9,12 +8,10 @@ import { environment } from 'environments/environment';
 export class SocketService {
   private host = environment.api_url;
   private socket: any;
-  private p2p: any;
   constructor() {
   }
   connect (id) {
     this.socket = io(this.host, { query: `id=${id}` });
-    this.p2p = new P2P(this.socket);
     this.socket.on('connect', () => this.connected());
     this.socket.on('disconnect', () => this.disconnected());
     this.socket.on('error', (error: string) => {
