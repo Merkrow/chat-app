@@ -19,6 +19,7 @@ export class ChatPageComponent implements OnInit {
   ringer: User;
   receiver: User;
   pc: any;
+  callSettings: any;
 
   constructor(
     private userService: UserService,
@@ -42,7 +43,7 @@ export class ChatPageComponent implements OnInit {
           this.userService.changeUser(newUser);
         });
         this.socketService.on(`return description ${user._id}`)
-        .subscribe(({ description, ringer, receiver }) => {
+        .subscribe(({ description, ringer, receiver, callSettings }) => {
           if (!this.pc) {
             this.prepareCall();
           }
@@ -50,6 +51,7 @@ export class ChatPageComponent implements OnInit {
             this.calling = true;
             this.ringer = ringer;
             this.receiver = this.user;
+            this.callSettings = callSettings;
             this.pc.setRemoteDescription(new RTCSessionDescription(description));
             return;
           }
@@ -80,7 +82,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   acceptCall() {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
+    navigator.mediaDevices.getUserMedia(this.callSettings).then((stream) => {
       this.pc.addStream(stream);
       this.createAndSendAnswer();
     }, (error) => console.log(error));
@@ -122,9 +124,10 @@ export class ChatPageComponent implements OnInit {
       _video.play();
   }
 
-  initCall({ ringer, receiver }) {
+  initCall({ ringer, receiver, callSettings }) {
     this.prepareCall();
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
+    this.callSettings = callSettings;
+    navigator.mediaDevices.getUserMedia(callSettings).then((stream) => {
       this.pc.addStream(stream);
       this.createAndSendOffer();
     }, function(error) { console.log(error); });
@@ -139,7 +142,12 @@ export class ChatPageComponent implements OnInit {
         const off = new RTCSessionDescription(offer);
         this.pc.setLocalDescription(new RTCSessionDescription(off),
           () => {
-            this.socketService.emit('call description', { description: off, ringer: this.ringer, receiver: this.receiver })
+            this.socketService.emit('call description', {
+              description: off,
+              ringer: this.ringer,
+              receiver: this.receiver,
+              callSettings: this.callSettings
+            })
             .subscribe(data => data);
           },
           (error) => console.log(error)

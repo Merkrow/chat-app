@@ -55,9 +55,9 @@ io.on('connection', (socket) => {
   })
 
 
-  socket.on('call description', ({ description, ringer, receiver }) => {
+  socket.on('call description', ({ description, ringer, receiver, callSettings }) => {
     if (description.type === 'offer') {
-      io.emit(`return description ${receiver._id}`, { description, ringer, receiver });
+      io.emit(`return description ${receiver._id}`, { description, ringer, receiver, callSettings });
     }
     if (description.type === 'answer') {
       io.emit(`return description ${ringer._id}`, { description, ringer, receiver });

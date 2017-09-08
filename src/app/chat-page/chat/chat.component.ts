@@ -195,7 +195,14 @@ export class ChatComponent implements OnInit, OnChanges {
     if (!this.isFriends || !this.interlocutors.length) {
       return;
     }
-    this.initCall.emit({ ringer: this.user, receiver: this.interlocutors[0] });
+    this.initCall.emit({ ringer: this.user, receiver: this.interlocutors[0], callSettings: { audio: true } });
+  }
+
+  videoCallUser() {
+    if (!this.isFriends || !this.interlocutors.length) {
+      return;
+    }
+    this.initCall.emit({ ringer: this.user, receiver: this.interlocutors[0], callSettings: { audio: true, video: true } });
   }
 
   acceptFriend() {
