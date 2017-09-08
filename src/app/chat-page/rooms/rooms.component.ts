@@ -9,7 +9,7 @@ import { UserService, User, RoomService, SocketService, SelectChatService, Selec
 })
 export class RoomsComponent implements OnInit, OnChanges {
   @Input() user: User;
-  filterValue: string;
+  filterValue = '';
   rooms: any[] = [];
   onlineUsers: string[] = [];
 

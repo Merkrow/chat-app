@@ -7,18 +7,18 @@
     border-bottom: 1px solid #dbe0e0;
     position: relative;
     button {
-      border: none;
-      height: 30px;
-      width: 80px;
-      background-color: #0084ff;
+      background-color: #ffffff;
       border-radius: 6px;
-      color: #fff;
+      color: #81868b;
       font-size: 13px;
       line-height: 16px;
       position: absolute;
-      right: 15px;
-      top: 28px;
+      right: 34px;
+      top: 23px;
       cursor: pointer;
+      padding: 8px 13px;
+      border: 1px solid #81868b;
+
     }
     span {
       position: absolute;

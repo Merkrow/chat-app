@@ -1,4 +1,4 @@
-<div (click)="setChat()" class="chat-person" [ngClass]="{ 'active': active }">
+<div (click)="setChat()" *ngIf="title && title.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1" class="chat-person" [ngClass]="{ 'active': active }">
   <div class="chat-image">
     <span class="online-status" *ngIf="interlocutors.length && onlineUsers.indexOf(interlocutors[0]._id) !== -1"></span>
     <img [src]="picture || './assets/images/noavatar.png'" alt="">

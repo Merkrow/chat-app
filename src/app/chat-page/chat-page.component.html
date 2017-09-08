@@ -16,7 +16,9 @@
   </div>
   <div *ngIf="calling" class="call-answer">
     <div class="call-info">
-      <video #video width="300" height="300" autoplay class="type"></video>
+      <div class="type">
+        <video #video height="100%" autoplay></video>
+      </div>
       <div class="answer-buttons">
         <div class="accept" *ngIf="user._id !== ringer._id" (click)="acceptCall()">
 

@@ -3,7 +3,7 @@
     <input type="text" placeholder="Search" [(ngModel)]="filterValue">
   </div>
 
-  <app-room *ngFor="let room of rooms" [room]="room" [user]="user" [onlineUsers]="onlineUsers" (removeRoom)="removeRoom($event)">
+  <app-room *ngFor="let room of rooms" [filterValue]="filterValue" [room]="room" [user]="user" [onlineUsers]="onlineUsers" (removeRoom)="removeRoom($event)">
   </app-room>
 
 

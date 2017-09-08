@@ -39,7 +39,6 @@ export class ChatComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-
     if (changes.user) {
       this.selectChat.getChatIdEmitter()
       .subscribe(room => {
@@ -56,7 +55,6 @@ export class ChatComponent implements OnInit, OnChanges {
         this.socketService.on(`message response ${room._id}`)
         .subscribe(message => {
           this.messages = this.messages.concat(message);
-          this.scroll();
           this.socketService.emit('read messages', { roomId: this.room._id, userId: this.user._id })
           .subscribe(data => data);
         });

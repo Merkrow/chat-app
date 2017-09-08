@@ -12,6 +12,7 @@ export class RoomComponent implements OnInit {
   @Input() room: any;
   @Input() user: User;
   @Input() onlineUsers: string[];
+  @Input() filterValue: string;
   @Output() removeRoom = new EventEmitter<string>();
   interlocutors: User[] = [];
   active = false;
