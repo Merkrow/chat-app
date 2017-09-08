@@ -183,7 +183,7 @@
     margin-left: 95px;
     position: relative;
     .my-meta {
-      width: 90px;
+      width: 88px;
       height: 68px;
       img {
         height: 35px;
@@ -225,12 +225,12 @@
       box-sizing: border-box;
       height: fit-content;
       max-width: 90%;
-      position: absolute;
-      right: 90px;
       padding: 16px 24px 16px 20px;
       border-radius: 3px;
       color: #fff;
       word-wrap: break-word;
+      float: right;
+      margin-right: 90px;
       p {
         margin: 0;
         line-height: 22px;
