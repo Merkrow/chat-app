@@ -43,6 +43,10 @@
     width: 230px;
     box-sizing: border-box;
     padding-left: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #94979b;
     div {
       margin-bottom: 1px;
       span {
