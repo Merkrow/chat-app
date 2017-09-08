@@ -3,14 +3,9 @@
     <header>
       <input type="text" (keyup)="search($event)" placeholder="Search...">
     </header>
-    <div *ngIf="users" class="results">
-      <div class="chat-person" *ngFor="let user of users">
-        <div><span>{{ user.username }}</span></div>
-        <div class="svg-wrap" (click)="addFriend(user)">
-          <svg viewBox="0 0 612 792">
-            <use xlink:href="assets/sprite.svg#user"></use>
-          </svg>
-        </div>
+    <div class="results">
+      <div class="chat-person" *ngFor="let user of users" (click)="addFriend(user)">
+        <img [src]="user.picture || './assets/images/noavatar.png'" alt=""><span>{{ user.username }}</span>
       </div>
     </div>
   </div>
