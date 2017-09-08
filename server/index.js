@@ -62,6 +62,14 @@ io.on('connection', (socket) => {
     if (description.type === 'answer') {
       io.emit(`return description ${ringer._id}`, { description, ringer, receiver });
     }
+    if (description.candidate && receiver) {
+      io.emit(`return description ${receiver._id}`, { description, ringer });
+      io.emit(`return description ${ringer._id}`, { description });
+    }
+    if (description.closeConnection) {
+      io.emit(`return description ${receiver._id}`, { description });
+      io.emit(`return description ${ringer._id}`, { description });
+    }
   })
 
   socket.on('get unread', ({ roomId, userId }) => {

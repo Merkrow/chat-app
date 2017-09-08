@@ -19,7 +19,6 @@ export class ChatPageComponent implements OnInit {
   ringer: User;
   receiver: User;
   pc: any;
-  sd: any;
 
   constructor(
     private userService: UserService,
@@ -28,7 +27,6 @@ export class ChatPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(this.gotStream.bind(this), this.streamError);
     this.userService.isAuthenticated.subscribe(isAuth => {
         this.isAuthenticated = isAuth;
         if (!isAuth) {
@@ -45,13 +43,31 @@ export class ChatPageComponent implements OnInit {
         });
         this.socketService.on(`return description ${user._id}`)
         .subscribe(({ description, ringer, receiver }) => {
+          if (!this.pc) {
+            this.prepareCall();
+          }
           if (description.type === 'offer') {
             this.calling = true;
             this.ringer = ringer;
+            this.receiver = this.user;
             this.pc.setRemoteDescription(new RTCSessionDescription(description));
+            return;
           }
           if (description.type === 'answer') {
+            this.receiver = receiver;
             this.pc.setRemoteDescription(new RTCSessionDescription(description));
+            return;
+          }
+          if (description.candidate) {
+            this.pc.addIceCandidate(new RTCIceCandidate(description));
+          }
+          if (description.closeConnection) {
+            this.pc.close();
+            this.pc = null;
+            this.calling = false;
+            this.ringer = null;
+            this.receiver = null;
+            this.video.nativeElement.src = '';
           }
         });
       }
@@ -64,70 +80,78 @@ export class ChatPageComponent implements OnInit {
   }
 
   acceptCall() {
-    this.createAnswer();
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
+      this.pc.addStream(stream);
+      this.createAndSendAnswer();
+    }, (error) => console.log(error));
   }
 
-  gotStream(stream) {
+  createAndSendAnswer() {
+    this.pc.createAnswer(
+      (answer) => {
+        const ans = new RTCSessionDescription(answer);
+        this.pc.setLocalDescription(ans, () => {
+            this.socketService.emit('call description', { description: ans, ringer: this.ringer, receiver: this.user })
+            .subscribe(data => data);
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
+    );
+  }
+
+
+  prepareCall() {
     this.pc = new RTCPeerConnection([]);
-    this.pc.addStream(stream);
-    this.pc.onicecandidate = this.gotIceCandidate.bind(this);
+    this.pc.onicecandidate = this.onIceCandidateHandler.bind(this);
     this.pc.onaddstream = this.gotRemoteStream.bind(this);
+  }
+
+  onIceCandidateHandler(event) {
+    if (!event || !event.candidate) {
+      return;
+    }
+    this.socketService.emit('call description', { description: event.candidate, ringer: this.ringer, receiver: this.receiver })
+    .subscribe(data => data);
   }
 
   gotRemoteStream(event) {
     const _video = this.video.nativeElement;
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        _video.src = window.URL.createObjectURL(stream);
-        _video.play();
-      });
-    }
-  }
-
-  gotLocalDescription(description) {
-    this.pc.setLocalDescription(new RTCSessionDescription(description));
-    this.socketService.emit('call description', { description, ringer: this.ringer, receiver: this.receiver })
-    .subscribe(data => data);
+      _video.src = URL.createObjectURL(event.stream);
+      _video.play();
   }
 
   initCall({ ringer, receiver }) {
+    this.prepareCall();
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
+      this.pc.addStream(stream);
+      this.createAndSendOffer();
+    }, function(error) { console.log(error); });
     this.ringer = ringer;
     this.receiver = receiver;
-    this.createOffer();
   }
 
-  createOffer() {
+  createAndSendOffer() {
+    this.calling = true;
     this.pc.createOffer(
-      this.gotLocalDescription.bind(this),
-      function (error) { console.log(error); },
-      { 'mandatory': { 'OfferToReceiveAudio': true, 'OfferToReceiveVideo': true } }
+      (offer) => {
+        const off = new RTCSessionDescription(offer);
+        this.pc.setLocalDescription(new RTCSessionDescription(off),
+          () => {
+            this.socketService.emit('call description', { description: off, ringer: this.ringer, receiver: this.receiver })
+            .subscribe(data => data);
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
     );
   }
-
-  createAnswer() {
-    this.pc.createAnswer(
-      this.gotLocalDescription.bind(this),
-      function(error) { console.log(error); },
-      { 'mandatory': { 'OfferToReceiveAudio': true, 'OfferToReceiveVideo': true } }
-    );
-  }
-
-  gotIceCandidate(event) {
-    if (event.candidate) {
-      this.socketService.emit('call description',
-      { description: {
-        type: 'candidate',
-        label: event.candidate.sdpMLineIndex,
-        id: event.candidate.sdpMid,
-        candidate: event.candidate.candidate
-      }}).subscribe(data => data);
-    }
-}
 
   rejectCall() {
-    this.socketService.emit('reject call', { ringer: this.ringer._id, receiver: this.user._id }).subscribe(data => data);
-    this.calling = false;
+    this.socketService.emit('call description', { description: { closeConnection: true }, receiver: this.receiver, ringer: this.ringer })
+    .subscribe(data => data);
   }
 
   toggleShowFriends(status: boolean) {
