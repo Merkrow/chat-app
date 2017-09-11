@@ -10,6 +10,7 @@ export class InboxComponent implements OnInit {
   @Output() triggerPopup = new EventEmitter<boolean>();
   @Output() toggleShowFriends = new EventEmitter<boolean>();
   @Input() showFriends: boolean;
+  @Input() isPopup: boolean;
   popup = false;
   constructor(
   ) { }
