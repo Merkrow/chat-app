@@ -1,4 +1,4 @@
 # ChatApp
 
 npm run build
-go to http://localhost:8080/login
+go to http://localhost:8080/#/login
