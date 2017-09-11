@@ -31,15 +31,15 @@
         <span *ngIf="ringer && !callStatus">{{ ringer.fullName + ' is calling'}}</span>
         <span *ngIf="callStatus === 'ringer'">{{ 'Calling ' + receiver.fullName }}</span>
       </div>
-      <div class="timer" *ngIf="counter">{{ round(this.counter.asMinutes()) + ':' + round(this.counter.asSeconds()) }}</div>
+      <div class="timer" *ngIf="counter">{{ moment(this.counter.asMilliseconds()).format('mm:ss') }}</div>
       <div class="answer-buttons">
         <div class="accept" *ngIf="!callStatus" (click)="acceptCall()">
-          <svg viewBox="0 0 100 100">
+          <svg viewBox="0 0 80 80">
             <use xlink:href="assets/sprite.svg#phone"></use>
           </svg>
         </div>
         <div class="reject" (click)="rejectCall()">
-          <svg viewBox="0 0 100 100">
+          <svg viewBox="0 0 80 80">
             <use xlink:href="assets/sprite.svg#phone"></use>
           </svg>
         </div>
@@ -47,4 +47,3 @@
     </div>
   </div>
 </div>
-<!-- *ngIf="user._id !== ringer._id" -->

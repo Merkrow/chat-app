@@ -84,26 +84,28 @@
         .accept {
           background-color: #2dc100;
           text-align: center;
-          padding-top: 10px;
           box-sizing: border-box;
           margin-right: 30px;
+          position: relative;
           svg {
             transform: rotate(90deg);
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             fill: #fff;
+            margin-top: 13px;
           }
         }
         .reject {
           background-color: #e23d39;
           text-align: center;
-          padding-top: 10px;
           box-sizing: border-box;
+          position: relative;
           svg {
             transform: rotate(-135deg);
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             fill: #fff;
+            margin-top: 13px;
           }
         }
       }

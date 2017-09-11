@@ -24,7 +24,6 @@ export class ChatPageComponent implements OnInit {
   callStatus: string;
   counter: any;
   moment = moment;
-  round = Math.round;
   timer: any;
 
   constructor(
