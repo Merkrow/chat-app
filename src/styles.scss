@@ -11,6 +11,16 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
+.room-container {
+  app-room:last-child {
+    .chat-person {
+      .chat-image {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
 html {
   line-height: 1.15; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
