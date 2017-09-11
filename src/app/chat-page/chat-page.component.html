@@ -1,8 +1,8 @@
 <div class="container">
   <div class="chat-container">
     <app-inbox (triggerPopup)="triggerPopup($event)" (toggleShowFriends)="toggleShowFriends($event)"></app-inbox>
-    <div class="popup">
-      <app-popup *ngIf="popup" [user]="user" (triggerPopup)="triggerPopup($event)"></app-popup>
+    <div *ngIf="popup" class="popup">
+      <app-popup [user]="user" (triggerPopup)="triggerPopup($event)"></app-popup>
     </div>
     <div *ngIf="user._id && !showFriends" class="chat-list">
       <app-rooms [user]="user"></app-rooms>
