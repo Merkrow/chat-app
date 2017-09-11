@@ -43,12 +43,6 @@ router.get('/search/:username', (req, res) => {
   })
 })
 
-router.get('/', (req, res) => {
-  User.find({}, (err, users) => {
-    res.json(users);
-  });
-});
-
 router.put('/:id', (req, res) => {
   User.updateUser(req.params.id, req.body, (err, user) => {
     if (!user) {
@@ -115,11 +109,16 @@ router.post('/auth', (req, res) => {
   });
 });
 
-
 router.get('/jwt_login', passport.authenticate('jwt', {
   session: false
 }), function(req, res) {
   res.send(req.user);
+});
+
+router.get('/', (req, res) => {
+  User.find({}, (err, users) => {
+    res.json(users);
+  });
 });
 
 

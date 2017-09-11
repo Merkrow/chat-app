@@ -115,6 +115,16 @@
     margin: 0 auto;
     flex-direction: row;
     flex-wrap: wrap;
+    position: relative;
+
+    .popup {
+      position: absolute;
+      left: 230px;
+      right: 277px;
+      top: 0;
+      bottom: 0;
+      z-index: 888888888888;
+    }
 
     .chat-list {
       height: 100%;

@@ -1,8 +1,10 @@
 <div class="search">
   <div class="container">
     <header>
+      <svg viewBox="0 0 973.1 1024">
+        <use xlink:href="assets/sprite.svg#zoom"></use>
+      </svg>
       <input type="text" (keyup)="search($event)" placeholder="Search...">
-      <button type="button" (click)="triggerPopup.emit(false)">close</button>
     </header>
     <div class="results">
       <div class="chat-person" *ngFor="let user of users" (click)="addFriend(user)">

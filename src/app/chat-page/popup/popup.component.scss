@@ -1,27 +1,28 @@
 .search {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10000;
+  height: 100%;
+  width: 100%;
   border-radius: 5px;
   .container {
     position: relative;
     height: 100%;
     header {
-      height: 80px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      border-bottom: 2px solid #000;
+      height: 79px;
+      border-bottom: 1px solid #3f454b;
+      line-height: 79px;
+      padding: 0 25px;
+      position: relative;
       background-color: #262c33;
+      svg {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        fill: #fff;
+        top: 33px;
+        left: 43px;
+      }
       input {
-        width: 100%;
         height: 40px;
         box-sizing: border-box;
-        text-align: center;
         width: 310px;
         border-radius: 30px;
         border: none;
@@ -30,19 +31,8 @@
         color: #868b8e;
         font-size: 14px;
         font-weight: 500;
-        margin-left: 40px;
       }
-      button {
-        position: absolute;
-        right: 10px;
-        height: 40px;
-        background-color: #363d45;
-        width: 150px;
-        border: none;
-        border-radius: 30px;
-        color: #fff;
-      }
-      input:focus, button:focus {
+      input:focus {
         outline: none;
       }
     }
@@ -51,7 +41,7 @@
       background-color: #fff;
       padding: 10px 5px;
       position: absolute;
-      top: 40px;
+      top: 80px;
       left: 0;
       bottom: 0;
       right: 0;
