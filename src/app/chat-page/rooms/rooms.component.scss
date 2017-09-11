@@ -6,6 +6,15 @@
   line-height: 79px;
   text-align: center;
   padding: 0 25px;
+  position: relative;
+  svg {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    fill: #fff;
+    top: 33px;
+    left: 43px;
+  }
   input {
     height: 40px;
     box-sizing: border-box;

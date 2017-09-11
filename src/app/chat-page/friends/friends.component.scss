@@ -10,6 +10,15 @@
     border-bottom: 1px solid #3f454b;
     line-height: 79px;
     padding: 0 25px;
+    position: relative;
+    svg {
+      position: absolute;
+      height: 15px;
+      width: 15px;
+      fill: #fff;
+      top: 33px;
+      left: 43px;
+    }
     input {
       height: 40px;
       box-sizing: border-box;
@@ -63,6 +72,9 @@
       .full-name {
         text-align: center;
       }
+    }
+    .friend:hover {
+      background-color: #c7c7c7;
     }
   }
 }

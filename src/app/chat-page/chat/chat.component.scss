@@ -1,3 +1,12 @@
+.wrap {
+  background-color: rgba(122, 122, 122, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 50000;
+}
 
 .chat-header {
   box-sizing: border-box;
@@ -8,7 +17,7 @@
   right: 0;
   top: 0;
   background: linear-gradient(135deg, #f7fcfc 0%,#ebedf1 100%);
-
+  z-index: 50;
   .chat-nav {
     margin: 0;
     height: 100%;
@@ -47,7 +56,9 @@
         height: 26px;
         fill: #81868b;
       }
-      svg:hover {
+    }
+    .star:hover {
+      svg {
         fill: #000;
       }
     }
@@ -58,12 +69,14 @@
       right: 0;
       cursor: pointer;
       svg {
-        margin: 29px 0 0 28px;
-        width: 100px;
-        height: 100px;
+        margin: 29px 0 0 23px;
+        width: 35px;
+        height: 28px;
         fill: #81868b;
       }
-      svg:hover {
+    }
+    .phone:hover {
+      svg {
         fill: #000;
       }
     }
@@ -295,8 +308,7 @@
   .submit-button:focus {
     outline: none;
   }
-}
-
-.not-friends {
-  background: #ccc;
+  .submit-button:hover {
+    background-color: #0084ff;
+  }
 }

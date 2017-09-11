@@ -10,11 +10,11 @@
   <div class="unread" *ngIf="unreadLength > 0">
     {{ unreadLength }}
   </div>
-  <div class="chat-settings">
+  <div #popup (click)="triggerPopup()" class="chat-settings">
     <svg viewBox="0 0 17.6 17.2">
       <use xlink:href="assets/sprite.svg#more"></use>
     </svg>
-    <div class="dropdown">
+    <div *ngIf="showPopup" class="dropdown">
       <ul class="dropdown-menu arrow_box">
         <li (click)="deleteChat(room)">Delete chat</li>
       </ul>

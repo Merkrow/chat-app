@@ -1,5 +1,5 @@
-
-  <div class="chat">
+<div *ngIf="!pending && !accepted" class="wrap">
+</div>
     <div class="chat-header">
       <div class="chat-nav">
         <div class="person-typing" *ngIf="typingNames.size > 0 && renderNames()"><span><strong>{{ renderNames() }}</strong> is typing...</span></div>
@@ -9,14 +9,14 @@
           </svg>
         </div>
         <div class="phone" (click)="videoCallUser()">
-          <svg viewBox="0 0 100 100">
+          <svg viewBox="0 0 24 24">
             <use xlink:href="assets/sprite.svg#video"></use>
           </svg>
         </div>
       </div>
     </div>
 
-    <div #chat class="messages-container" [ngClass]="{ 'not-friends': !pending && !accepted }">
+    <div #chat class="messages-container">
 
       <div *ngIf="interlocutors.length && accepted && !pending" class="add-friend">
         <div class="add-message">
@@ -58,7 +58,6 @@
 
     </div>
 
-  </div>
 
   <div class="chat-input">
     <div class="input-container">

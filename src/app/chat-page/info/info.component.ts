@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 
 import { SelectUserService, User, UserService, SocketService, SelectChatService, } from 'app/shared';
@@ -9,11 +9,22 @@ import { SelectUserService, User, UserService, SocketService, SelectChatService,
   styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
+  @ViewChild('popup') popup: any;
   @Input() user: User;
   userInfo: User;
   moment = moment;
   isFriend = false;
   chat: any;
+  showPopup = false;
+  @HostListener('document:click', ['$event.target'])
+  docClicked(target): void {
+    if (!this.popup) {
+      return;
+    }
+    if (!this.popup.nativeElement.contains(target) && this.showPopup) {
+      this.triggerPopup();
+    }
+  }
 
   constructor(
     private selectUser: SelectUserService,
@@ -52,6 +63,10 @@ export class InfoComponent implements OnInit {
     this.selectChatService.getChatIdEmitter().subscribe(chat => {
       this.chat = chat;
     });
+  }
+
+  triggerPopup() {
+    this.showPopup = !this.showPopup;
   }
 
   logout() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 
 import { User, SelectChatService, SelectUserService, RoomService, UserService, SocketService, } from 'app/shared';
@@ -9,6 +9,7 @@ import { User, SelectChatService, SelectUserService, RoomService, UserService, S
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
+  @ViewChild('popup') popup: any;
   @Input() room: any;
   @Input() user: User;
   @Input() onlineUsers: string[];
@@ -21,6 +22,16 @@ export class RoomComponent implements OnInit {
   lastMessage: any = {};
   lastMessageTime: any;
   unreadLength = 0;
+  showPopup = false;
+  @HostListener('document:click', ['$event.target'])
+  docClicked(target): void {
+    if (!this.popup) {
+      return;
+    }
+    if (!this.popup.nativeElement.contains(target) && this.showPopup) {
+      this.triggerPopup();
+    }
+  }
 
   constructor(
     private selectChat: SelectChatService,
@@ -83,6 +94,10 @@ export class RoomComponent implements OnInit {
     const msgMs = moment(this.lastMessage.date).valueOf();
     const ms = moment().valueOf();
     this.lastMessageTime = ms - msgMs >= 3600000 ? null : moment(ms - msgMs).format('mm');
+  }
+
+  triggerPopup() {
+    this.showPopup = !this.showPopup;
   }
 
   deleteChat(room) {

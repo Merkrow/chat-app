@@ -19,7 +19,10 @@
       cursor: pointer;
       padding: 8px 13px;
       border: 1px solid #81868b;
-
+    }
+    button:hover {
+      background-color: #0084ff;
+      color: #fff;
     }
     span {
       position: absolute;
@@ -58,7 +61,6 @@
       fill: #666666;
       cursor: pointer;
       .dropdown {
-        display: none;
         position: absolute;
         right: 0;
         top: 14px;
@@ -82,6 +84,7 @@
           margin-left: -5px;
         }
         .dropdown-menu {
+          border: 1px solid #3d4249;
           border-radius: 5px;
           margin: 0;
           padding: 0;
