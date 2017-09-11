@@ -24,8 +24,27 @@ export class InfoComponent implements OnInit {
 
   ngOnInit() {
     this.selectUser.getUserIdEmitter().subscribe(user => {
+      if (!user) {
+        return;
+      }
       this.isFriend = false;
       this.userInfo = user;
+      this.socketService.on(`update user ${this.userInfo._id} ${this.user._id}`)
+      .subscribe(userInfo => {
+        this.isFriend = false;
+        this.userInfo = userInfo;
+        if (this.user.friends.indexOf(user._id) !== -1) {
+          this.isFriend = true;
+        }
+      });
+      this.socketService.on(`update user ${this.userInfo._id}`)
+      .subscribe(userInfo => {
+        this.isFriend = false;
+        this.userInfo = userInfo;
+        if (this.user.friends.indexOf(user._id) !== -1) {
+          this.isFriend = true;
+        }
+      });
       if (this.user.friends.indexOf(user._id) !== -1) {
         this.isFriend = true;
       }
@@ -41,7 +60,14 @@ export class InfoComponent implements OnInit {
   }
 
   addFriend() {
-    console.log(this.chat);
+    this.socketService.emit('get or create room', [this.user._id, this.userInfo._id])
+    .subscribe(room => room);
+    this.socketService.emit('update user', {
+      userId: this.user._id,
+      friendId: this.userInfo._id,
+      update: { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id ).concat(this.userInfo._id) },
+    })
+    .subscribe(data => data);
   }
 
   unfriendUser() {
@@ -55,6 +81,7 @@ export class InfoComponent implements OnInit {
       friendId: this.userInfo._id,
       update: { friends: this.user.friends.filter(friendId => friendId !== this.userInfo._id) }
     }).subscribe(data => data);
+    this.isFriend = false;
   }
 
 }

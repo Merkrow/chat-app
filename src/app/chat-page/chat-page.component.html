@@ -17,16 +17,32 @@
   <div *ngIf="calling" class="call-answer">
     <div class="call-info">
       <div class="type">
-        <video #video height="100%" autoplay></video>
+        <video #video autoplay class="bg"></video>
+        <img *ngIf="callStatus === 'ringer'" [src]="receiver.picture || './assets/images/noavatar.png'" class="bg">
+        <img *ngIf="callStatus === 'receiver'" [src]="ringer.picture || './assets/images/noavatar.png'" class="bg">
+        <svg *ngIf="!callSettings.video" class="audio" viewBox="0 0 100 100">
+          <use xlink:href="assets/sprite.svg#phone"></use>
+        </svg>
+        <svg *ngIf="callSettings.video" class="video" viewBox="0 0 24 24">
+          <use xlink:href="assets/sprite.svg#video"></use>
+        </svg>
+        <span *ngIf="ringer && !callStatus">{{ ringer.fullName + ' is calling'}}</span>
+        <span *ngIf="callStatus === 'ringer'">{{ 'Calling ' + receiver.fullName }}</span>
       </div>
+      <div class="timer" *ngIf="counter">{{ round(this.counter.asMinutes()) + ':' + round(this.counter.asSeconds()) }}</div>
       <div class="answer-buttons">
-        <div class="accept" *ngIf="user._id !== ringer._id" (click)="acceptCall()">
-
+        <div class="accept" *ngIf="!callStatus" (click)="acceptCall()">
+          <svg viewBox="0 0 100 100">
+            <use xlink:href="assets/sprite.svg#phone"></use>
+          </svg>
         </div>
         <div class="reject" (click)="rejectCall()">
-
+          <svg viewBox="0 0 100 100">
+            <use xlink:href="assets/sprite.svg#phone"></use>
+          </svg>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- *ngIf="user._id !== ringer._id" -->

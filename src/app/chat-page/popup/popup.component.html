@@ -2,6 +2,7 @@
   <div class="container">
     <header>
       <input type="text" (keyup)="search($event)" placeholder="Search...">
+      <button type="button" (click)="triggerPopup.emit(false)">close</button>
     </header>
     <div class="results">
       <div class="chat-person" *ngFor="let user of users" (click)="addFriend(user)">

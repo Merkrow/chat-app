@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 import { UserService, User, SocketService } from 'app/shared';
 
@@ -20,12 +21,21 @@ export class ChatPageComponent implements OnInit {
   receiver: User;
   pc: any;
   callSettings: any;
+  callStatus: string;
+  counter: any;
+  moment = moment;
+  round = Math.round;
+  timer: any;
 
   constructor(
     private userService: UserService,
     private router: Router,
     private socketService: SocketService,
   ) { }
+
+  startCounter() {
+    this.counter = moment.duration(this.counter.asMilliseconds() + 1000);
+  }
 
   ngOnInit() {
     this.userService.isAuthenticated.subscribe(isAuth => {
@@ -57,6 +67,8 @@ export class ChatPageComponent implements OnInit {
           }
           if (description.type === 'answer') {
             this.receiver = receiver;
+            this.counter = moment.duration({ seconds: 0, minutes: 0 });
+            this.timer = window.setInterval(this.startCounter.bind(this), 1000);
             this.pc.setRemoteDescription(new RTCSessionDescription(description));
             return;
           }
@@ -66,10 +78,15 @@ export class ChatPageComponent implements OnInit {
           if (description.closeConnection) {
             this.pc.close();
             this.pc = null;
+            window.clearInterval(this.timer);
+            if (this.callSettings.video) {
+              this.video.nativeElement.src = '';
+            }
+            this.counter = null;
             this.calling = false;
             this.ringer = null;
             this.receiver = null;
-            this.video.nativeElement.src = '';
+            this.callStatus = '';
           }
         });
       }
@@ -89,6 +106,9 @@ export class ChatPageComponent implements OnInit {
   }
 
   createAndSendAnswer() {
+    this.callStatus = 'receiver';
+    this.counter = moment.duration({ seconds: 0, minutes: 0 });
+    this.timer = window.setInterval(this.startCounter.bind(this), 1000);
     this.pc.createAnswer(
       (answer) => {
         const ans = new RTCSessionDescription(answer);
@@ -136,6 +156,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   createAndSendOffer() {
+    this.callStatus = 'ringer';
     this.calling = true;
     this.pc.createOffer(
       (offer) => {

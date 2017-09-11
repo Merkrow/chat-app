@@ -59,6 +59,7 @@ export class ChatComponent implements OnInit, OnChanges {
           .subscribe(data => data);
         });
 
+
         this.socketService.on(`typing emit to ${room._id}`)
         .subscribe(name => {
           this.typingNames.add(name);
@@ -73,6 +74,32 @@ export class ChatComponent implements OnInit, OnChanges {
         }
 
         interlocutorsId.map(id => {
+
+          this.socketService.on('update user ${id}')
+          .subscribe(interlocutor => {
+            console.log(interlocutor);
+            this.interlocutors = this.interlocutors.map(prev => {
+              if (prev._id === interlocutor._id) {
+                return interlocutor;
+              }
+              return prev;
+            });
+            if (this.private) {
+              this.pending = changes.user.currentValue.friends.some(friendId => friendId === interlocutor._id);
+              this.accepted = this.interlocutors[0].friends.some(friendId => friendId === this.user._id);
+              if (this.pending && this.accepted) {
+                this.isFriends = true;
+                this.socketService.emit('get messages', this.room._id)
+                .subscribe(data => data);
+              } else if (this.pending) {
+                this.isFriends = false;
+              } else {
+                this.isFriends = false;
+                this.socketService.emit('get messages', this.room._id)
+                .subscribe(data => data);
+              }
+            }
+          });
 
           this.userService.getUserById(id)
           .subscribe(interlocutor => {
@@ -155,6 +182,31 @@ export class ChatComponent implements OnInit, OnChanges {
 
 
       interlocutorsId.map(id => {
+
+        this.socketService.on('update user ${id}')
+        .subscribe(interlocutor => {
+          this.interlocutors = this.interlocutors.map(prev => {
+            if (prev._id === interlocutor._id) {
+              return interlocutor;
+            }
+            return prev;
+          });
+          if (this.private) {
+            const pending = this.user.friends.some(friendId => friendId === interlocutor._id);
+            const accepted = this.interlocutors[0].friends.some(friendId => friendId === this.user._id);
+            if (pending && accepted) {
+              this.isFriends = true;
+              this.socketService.emit('get messages', this.room._id)
+              .subscribe(data => data);
+            } else if (pending) {
+              this.pending = true;
+              this.isFriends = false;
+            } else {
+              this.isFriends = false;
+              this.pending = false;
+            }
+          }
+        });
 
         this.userService.getUserById(id)
         .subscribe(interlocutor => {

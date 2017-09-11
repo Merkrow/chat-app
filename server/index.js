@@ -103,6 +103,7 @@ io.on('connection', (socket) => {
   socket.on('add friend', ids => {
     User.addFriend(ids[0], ids[1], (err, newUser) => {
       socket.emit('user update', newUser);
+      io.emit('user update ${ids[1]}', newUser);
     })
   })
 

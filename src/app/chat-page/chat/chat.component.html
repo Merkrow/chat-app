@@ -61,9 +61,6 @@
   </div>
 
   <div class="chat-input">
-    <svg class="load-file" viewBox="0 0 24 24">
-      <use xlink:href="assets/sprite.svg#attach"></use>
-    </svg>
     <div class="input-container">
       <input type="text" [placeholder]="!pending && !accepted ? 'Add user to start chatting' : 'Type your message...'" [(ngModel)]="message" [disabled]="!isFriends || !room" (keyup.enter)="sendMessage()" (keypress)="startTyping()">
     </div>
