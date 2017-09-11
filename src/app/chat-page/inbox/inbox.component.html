@@ -13,7 +13,7 @@
   </ul> -->
 
   <ul class="nav second-nav">
-    <li (click)="toggleShowFriends.emit(false)"><a>Chats</a></li>
-    <li (click)="toggleShowFriends.emit(true)"><a>Friends</a></li>
+    <li [ngClass]="{ 'active': !showFriends }" (click)="toggleShowFriends.emit(false)"><a>Chats</a></li>
+    <li [ngClass]="{ 'active': showFriends }" (click)="toggleShowFriends.emit(true)"><a>Friends</a></li>
   </ul>
 </div>

@@ -43,7 +43,7 @@ export class RoomComponent implements OnInit {
 
   ngOnInit() {
     this.selectChat.getChatIdEmitter().subscribe(room => {
-      if (room === null) {
+      if (!room) {
         return;
       }
       this.active = room._id === this.room._id;
@@ -58,7 +58,7 @@ export class RoomComponent implements OnInit {
       .map(userId => {
         this.userService.getUserById(userId).subscribe(user => {
           this.interlocutors = this.interlocutors.concat(user);
-          this.title = this.room.title || user.fullName;
+          this.title = this.room.title || user.fullName || user.username;
           this.picture = this.room.picture || user.picture;
         });
       });
@@ -101,12 +101,8 @@ export class RoomComponent implements OnInit {
   }
 
   deleteChat(room) {
-    this.roomService.deleteRoom(room._id)
-    .subscribe(status => {
-      if (status.success) {
-        this.removeRoom.emit(room._id);
-      }
-    });
+    this.socketService.emit('delete room', room._id)
+    .subscribe(data => data);
   }
 
   setChat() {

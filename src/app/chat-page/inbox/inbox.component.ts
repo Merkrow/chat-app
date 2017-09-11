@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-inbox',
@@ -9,6 +9,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class InboxComponent implements OnInit {
   @Output() triggerPopup = new EventEmitter<boolean>();
   @Output() toggleShowFriends = new EventEmitter<boolean>();
+  @Input() showFriends: boolean;
   popup = false;
   constructor(
   ) { }

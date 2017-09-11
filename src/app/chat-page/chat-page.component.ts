@@ -11,6 +11,8 @@ import { UserService, User, SocketService } from 'app/shared';
 })
 export class ChatPageComponent implements OnInit {
   @ViewChild('video') video: any;
+  @ViewChild('audioCall') audioCall: any;
+  @ViewChild('audioReceive') audioReceive: any;
   isAuthenticated = false;
   user: User;
   popup = false;
@@ -57,6 +59,7 @@ export class ChatPageComponent implements OnInit {
             this.prepareCall();
           }
           if (description.type === 'offer') {
+            this.audioCall.nativeElement.play();
             this.calling = true;
             this.ringer = ringer;
             this.receiver = this.user;
@@ -66,6 +69,7 @@ export class ChatPageComponent implements OnInit {
           }
           if (description.type === 'answer') {
             this.receiver = receiver;
+            this.audioReceive.nativeElement.pause();
             this.counter = moment.duration({ seconds: 0, minutes: 0 });
             this.timer = window.setInterval(this.startCounter.bind(this), 1000);
             this.pc.setRemoteDescription(new RTCSessionDescription(description));
@@ -75,6 +79,8 @@ export class ChatPageComponent implements OnInit {
             this.pc.addIceCandidate(new RTCIceCandidate(description));
           }
           if (description.closeConnection) {
+            this.audioCall.nativeElement.pause();
+            this.audioReceive.nativeElement.pause();
             this.pc.close();
             this.pc = null;
             window.clearInterval(this.timer);
@@ -105,6 +111,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   createAndSendAnswer() {
+    this.audioCall.nativeElement.pause();
     this.callStatus = 'receiver';
     this.counter = moment.duration({ seconds: 0, minutes: 0 });
     this.timer = window.setInterval(this.startCounter.bind(this), 1000);
@@ -157,6 +164,7 @@ export class ChatPageComponent implements OnInit {
   createAndSendOffer() {
     this.callStatus = 'ringer';
     this.calling = true;
+    this.audioReceive.nativeElement.play();
     this.pc.createOffer(
       (offer) => {
         const off = new RTCSessionDescription(offer);

@@ -54,6 +54,14 @@ io.on('connection', (socket) => {
     io.emit(`online users ${id}`, res);
   })
 
+  socket.on('delete room', (roomId) => {
+    Room.deleteRoom(roomId, (err, status) => {
+      Message.deleteByRoomId(roomId, (err, status) => {
+        io.emit(`delete room ${roomId}`, roomId);
+      })
+    })
+  })
+
 
   socket.on('call description', ({ description, ringer, receiver, callSettings }) => {
     if (description.type === 'offer') {
@@ -151,6 +159,7 @@ io.on('connection', (socket) => {
 
   socket.on('update user', ({ userId, friendId, update }) => {
     User.updateUser(userId, update, (err, user) => {
+      console.log(userId, friendId, user);
       io.emit(`update user ${userId}`, user);
       if (friendId) {
         io.emit(`update user ${friendId} ${userId}`, user);
@@ -159,7 +168,7 @@ io.on('connection', (socket) => {
   })
 });
 
-app.use('/', require('express').static(path.join(__dirname, '/public')));
+// app.use('/', require('express').static(path.join(__dirname, '/public')));
 
 
 app.use(function(req, res, next) {

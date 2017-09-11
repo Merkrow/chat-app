@@ -1,5 +1,6 @@
 <div *ngIf="!pending && !accepted || !interlocutors.length" class="wrap">
 </div>
+<audio #audio src="assets/iphone_sms_original.mp3"></audio>
     <div class="chat-header">
       <div class="chat-nav">
         <div class="person-typing" *ngIf="typingNames.size > 0 && renderNames()"><span><strong>{{ renderNames() }}</strong> is typing...</span></div>

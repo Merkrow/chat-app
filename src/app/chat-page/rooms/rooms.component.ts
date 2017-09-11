@@ -23,6 +23,9 @@ export class RoomsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.roomService.getNewRoom().subscribe(room => {
+      if (!room) {
+        return;
+      }
       if (!this.rooms.some(prev => {
         return prev._id === room._id;
       })) {
@@ -36,6 +39,11 @@ export class RoomsComponent implements OnInit, OnChanges {
       this.socketService.on(`new room ${changes.user.currentValue._id}`)
       .subscribe(room => {
         this.rooms = this.rooms.concat(room);
+        this.socketService.on(`delete room ${room._id}`)
+        .subscribe(roomId => {
+          this.rooms = this.rooms.filter(rm => rm._id !== roomId);
+          this.selectChat.emitChatIdChangeEvent(this.rooms[0]);
+        });
         this.selectChat.emitChatIdChangeEvent(room);
         const friendId = room.users.filter(id => id !== changes.user.currentValue._id)[0];
         this.userService.getUserById(friendId)
@@ -72,10 +80,12 @@ export class RoomsComponent implements OnInit, OnChanges {
         });
 
       });
-      this.roomService.getRemovedRoom().subscribe(room => {
-        if (this.rooms.length && room) {
-          this.rooms = this.rooms.filter(prev => prev._id !== room._id);
-        }
+      this.rooms.map(room => {
+        this.socketService.on(`delete room ${room._id}`)
+        .subscribe(roomId => {
+          this.rooms = this.rooms.filter(rm => rm._id !== roomId);
+          this.selectChat.emitChatIdChangeEvent(this.rooms[0]);
+        });
       });
     }
   }

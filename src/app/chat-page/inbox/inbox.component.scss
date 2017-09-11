@@ -40,6 +40,10 @@
     margin: 19px 20px auto;
     padding: 0 0 23px 0;
     border-bottom: 1px solid #2c3239;
+    .active {
+      background-color: #343c45;
+      color: #ffffff;
+    }
     li {
       height: 38px;
       width: 190px;
