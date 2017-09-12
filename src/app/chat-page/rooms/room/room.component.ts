@@ -58,7 +58,7 @@ export class RoomComponent implements OnInit {
       .map(userId => {
         this.userService.getUserById(userId).subscribe(user => {
           this.interlocutors = this.interlocutors.concat(user);
-          this.title = this.room.title || user.fullName || user.username;
+          this.title = this.room.title || user.username || user.fullName;
           this.picture = this.room.picture || user.picture;
         });
       });

@@ -38,6 +38,9 @@ export class RoomsComponent implements OnInit, OnChanges {
     if (changes.user) {
       this.socketService.on(`new room ${changes.user.currentValue._id}`)
       .subscribe(room => {
+        if (this.rooms.some(prev => prev._id === room._id)) {
+          return;
+        }
         this.rooms = this.rooms.concat(room);
         this.socketService.on(`delete room ${room._id}`)
         .subscribe(roomId => {
